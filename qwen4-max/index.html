@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Сравнение моделей NeuralProfit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,800;1,800&display=swap">
+<style>
+  /* Макет: одна колонка «протокол испытаний»: шапка, два теста таблицами, как тестирую, кто следующий.
+     Фирменный вид канала (как в монтаже): баклажан, золото, лиловый. Один темный образ осознанно. */
+  :root {
+    --ground: #1f1133;
+    --panel: #2b1844;
+    --panel-2: #342053;
+    --line: rgba(201, 168, 240, 0.22);
+    --ink: #fbf6e9;
+    --muted: #cdb9e6;
+    --gold: #e9c86b;
+    --lilac: #c9a8f0;
+    --ok: #8fe3a6;
+    --no: #ff9a9a;
+    --display: "Playfair Display", Georgia, "Times New Roman", serif;
+    --text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 16px;
+    line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 64px;
+  }
+  .page { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+  a { color: var(--gold); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+  header { display: flex; flex-direction: column; gap: 14px; }
+  .brand { font-weight: 800; letter-spacing: 0.1em; color: var(--gold); font-size: 13px; text-transform: uppercase; }
+  h1 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 6vw, 60px); line-height: 1.05; margin: 0; text-wrap: balance; }
+  h1 em { color: var(--gold); }
+  .lead { color: var(--muted); font-size: 18px; max-width: 62ch; margin: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--muted); }
+
+  section { display: flex; flex-direction: column; gap: 18px; }
+  .eyebrow { font-weight: 800; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ground); background: var(--gold); padding: 4px 12px; border-radius: 999px; align-self: flex-start; }
+  h2 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 4.2vw, 40px); line-height: 1.1; margin: 0; text-wrap: balance; }
+  .task { color: var(--muted); max-width: 70ch; margin: 0; }
+  .task b { color: var(--ink); font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+  table { width: 100%; min-width: 760px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 14px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  tr.new td { background: rgba(233, 200, 107, 0.09); }
+  .model { font-weight: 700; white-space: nowrap; }
+  .model small { display: block; font-weight: 500; color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .score { font-family: var(--mono); font-weight: 700; font-size: 22px; color: var(--gold); white-space: nowrap; }
+  .num { font-family: var(--mono); font-weight: 500; white-space: nowrap; }
+  .free { color: var(--ok); font-weight: 700; }
+  .yes { color: var(--ok); font-weight: 600; white-space: nowrap; }
+  .nope { color: var(--no); font-weight: 600; white-space: nowrap; }
+  .note { color: var(--muted); font-size: 14px; min-width: 220px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ground); background: var(--gold); border-radius: 6px; padding: 2px 6px; margin-left: 6px; vertical-align: 2px; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .fact { background: var(--panel-2); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .fact b { font-family: var(--mono); font-size: 26px; color: var(--gold); }
+  .fact span { color: var(--muted); font-size: 14px; }
+
+  .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .how div { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+  .how h3 { margin: 0 0 6px; font-size: 16px; }
+  .how p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .next { display: flex; flex-wrap: wrap; gap: 10px; }
+  .next span { border: 1px dashed var(--lilac); color: var(--lilac); border-radius: 12px; padding: 10px 14px; font-weight: 600; }
+  footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 20px; }
+
+  @media (max-width: 520px) {
+    body { padding-block: 24px 48px; }
+    .lead { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">@NeuralProfit · личные тесты</div>
+    <h1>Сравнение моделей <em>на живых задачах</em></h1>
+    <p class="lead">Один промпт для всех, одна попытка, без подсказок, все на видео. Баллы считаю по заранее готовому ключу с правильными ответами. Таблица к посту про Qwen4-Max.</p>
+    <div class="meta">
+      <span class="chip">Обновлено 16 ноября 2026</span>
+      <span class="chip">Моделей в таблице: 4</span>
+      <span class="chip">Тестов: 2</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="t1">
+    <span class="eyebrow">Тест 1 · главный</span>
+    <h2 id="t1">Почему продажи растут, а прибыль падает</h2>
+    <p class="task">Я собрала отчеты выдуманного магазина на маркетплейсе за август, сентябрь и октябрь: продажи, возвраты, реклама, остатки, тарифы, себестоимость, акции. <b>7 файлов, больше 3 000 строк, внутри 5 спрятанных причин.</b> Задание: найти причины, посчитать потери, сделать дашборд одним HTML-файлом и письмо, что делать первым. За каждую причину 1 балл, если нашла, и еще 1, если примерно верно посчитала потери. Максимум 10.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Модель</th><th>Баллы</th><th>Время</th><th>Цена</th><th>Пропажу 1 120 шт.</th><th>Дашборд</th><th>Коротко</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="model">Claude Opus 5.5<small>приложение Claude, агент</small></td>
+            <td class="score">10/10</td>
+            <td class="num">7:49</td>
+            <td class="num">≈ $2,70 по API</td>
+            <td class="yes">нашел</td>
+            <td><a href="opus.html" target="_blank" rel="noopener">открыть</a></td>
+            <td class="note">Самый быстрый. Завысил цифру потерь в шапке дашборда</td>
+          </tr>
+          <tr>
+            <td class="model">Claude Sonnet 5.5<small>приложение Claude, агент</small></td>
+            <td class="score">10/10</td>
+            <td class="num">10:44</td>
+            <td class="num">≈ $2,45 по API</td>
+            <td class="yes">нашел</td>
+            <td><a href="sonnet.html" target="_blank" rel="noopener">открыть</a></td>
+            <td class="note">Самый наглядный: график по неделям и план до кнопок в кабинете</td>
+          </tr>
+          <tr>
+            <td class="model">Kimi K3.1 Pro<small>Claude Code в терминале, API Moonshot</small></td>
+            <td class="score">9,5/10</td>
+            <td class="num">≈ 21:00</td>
+            <td class="num">≈ $1,70</td>
+            <td class="nope">не заметила</td>
+            <td><a href="kimi.html" target="_blank" rel="noopener">открыть</a></td>
+            <td class="note">Стильный дизайн, но не выделила размер S у худи. Дважды упиралась в дневной лимит</td>
+          </tr>
+          <tr class="new">
+            <td class="model">Qwen4-Max <span class="badge">новое</span><small>Qwen Studio, режим агента</small></td>
+            <td class="score">10/10</td>
+            <td class="num">20:00</td>
+            <td><span class="free">бесплатно</span><br><span class="note">60% недельного лимита</span></td>
+            <td class="yes">нашел</td>
+            <td><a href="qwen4-max.html" target="_blank" rel="noopener">открыть</a></td>
+            <td class="note">Прибыль по месяцам совпала с ключом до тысячи. Смешивал языки («Что happend») и сам исправлял</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>3 из 4</b><span>заметили пропажу 1 120 органайзеров, которую я не прятала</span></div>
+      <div class="fact"><b>2,5×</b><span>Qwen4-Max медленнее Opus при том же результате</span></div>
+      <div class="fact"><b>0 ₽</b><span>стоил прогон Qwen4-Max на бесплатном тарифе</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t2">
+    <span class="eyebrow">Тест 2</span>
+    <h2 id="t2">Договор на рекламу с 8 ловушками</h2>
+    <p class="task">Договор блогера с рекламодателем на 60 000 ₽. Внутри <b>8 ловушек</b>: бесконечные правки, пост нельзя удалить никогда под штраф 300 000 ₽, все права на контент и лицо навсегда, эксклюзив на год по всему ИИ, маркировка целиком на блогере, оплата без срока, урезание цены по «прогнозу» заказчика, несимметричные штрафы. Плюс <b>5 нормальных пунктов</b>, чтобы поймать модель на выдуманных рисках. Обычный чат, файл .docx вложением.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Модель</th><th>Ловушки</th><th>Время</th><th>Лимит</th><th>Выдуманные риски</th><th>Коротко</th></tr></thead>
+        <tbody>
+          <tr class="new">
+            <td class="model">Qwen4-Max <span class="badge">новое</span><small>Qwen Studio, «Мышление»</small></td>
+            <td class="score">8/8</td>
+            <td class="num">6:00</td>
+            <td><span class="free">бесплатно</span><br><span class="note">4% недельного лимита</span></td>
+            <td class="yes">0</td>
+            <td class="note">Самый подробный: статьи ГК, штрафы за маркировку. Сам ходил в интернет, снова смешал языки («за THEIR»)</td>
+          </tr>
+          <tr>
+            <td class="model">Claude Opus 5.5<small>приложение Claude, размышления High</small></td>
+            <td class="score">8/8</td>
+            <td class="num">3:30</td>
+            <td class="num">1% недели, тариф Pro</td>
+            <td class="yes">0</td>
+            <td class="note">Короче всех, сразу с планом торга и предоплатой</td>
+          </tr>
+          <tr>
+            <td class="model">Claude Sonnet 5.5<small>приложение Claude, размышления High</small></td>
+            <td class="score">8/8</td>
+            <td class="num">2:10</td>
+            <td class="num">1% недели, тариф Pro</td>
+            <td class="yes">0</td>
+            <td class="note">Самый быстрый и структурный, добавил лимит ответственности блогера</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="how">
+    <span class="eyebrow">Как я тестирую</span>
+    <h2 id="how">Правила одинаковые для всех</h2>
+    <div class="how">
+      <div><h3>Один промпт, одна попытка</h3><p>Текст задания не меняю, подсказок и правок не даю. Что модель выдала с первого раза, то и считаю.</p></div>
+      <div><h3>Ключ готов заранее</h3><p>Правильные ответы посчитаны до прогона, баллы ставлю по нему, а не на глаз.</p></div>
+      <div><h3>Все на видео</h3><p>Запись экрана каждого прогона, время по записи или по логам сессий.</p></div>
+      <div><h3>Честные оговорки</h3><p>Claude знает меня по памяти, Qwen нет. Qwen сам искал в интернете. Kimi работала в терминале, остальные в своих приложениях.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="next">
+    <span class="eyebrow">Раньше в канале</span>
+    <h2 id="next">Первое сравнение на этой задаче</h2>
+    <p class="task">Kimi, Opus и Sonnet с разбором и видео: <a href="https://t.me/NeuralProfit/2481" target="_blank" rel="noopener">пост в канале</a>.</p>
+  </section>
+
+  <footer>Данные магазина и договор выдуманные. Цены API посчитаны по официальным прайсам на день теста, лимиты подписок взяты из кабинетов. Тесты и таблицу веду я, @NeuralProfit.</footer>
+</div>
+
+</body>
+</html>
