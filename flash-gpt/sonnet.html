@@ -1,0 +1,1778 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Почему падает прибыль</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f2; --surface:#fcfcfb; --line:#e3e1db; --grid:#ececE7;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#7a7974;
+  --blue:#2a78d6; --blue-soft:#9ec5f4; --blue-deep:#184f95;
+  --orange:#eb6834;
+  --loss:#d03b3b; --loss-soft:#f6d6d6; --gain-soft:#d9e8fb;
+  --warn-bg:#fff4dc; --warn-line:#e8c778;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --line:#2f2f2c; --grid:#2a2a28;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#97968d;
+    --blue:#3987e5; --blue-soft:#1c5cab; --blue-deep:#6da7ec;
+    --orange:#d95926;
+    --loss:#e66767; --loss-soft:#4a2424; --gain-soft:#1f3552;
+    --warn-bg:#2d2616; --warn-line:#6b5a25;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --surface:#1a1a19; --line:#2f2f2c; --grid:#2a2a28;
+  --ink:#f0efec; --ink2:#c3c2b7; --ink3:#97968d;
+  --blue:#3987e5; --blue-soft:#1c5cab; --blue-deep:#6da7ec;
+  --orange:#d95926;
+  --loss:#e66767; --loss-soft:#4a2424; --gain-soft:#1f3552;
+  --warn-bg:#2d2616; --warn-line:#6b5a25;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:0 0 8px;letter-spacing:-.01em}
+h2{font-size:22px;margin:44px 0 6px;letter-spacing:-.005em}
+h3{font-size:17px;margin:0 0 4px}
+p{margin:0 0 10px}
+.lead{font-size:18px;color:var(--ink2);max-width:760px}
+.sub{color:var(--ink3);font-size:14px;margin-bottom:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:820px){.g3,.g2{grid-template-columns:1fr}}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;margin-top:18px}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+.big{font-size:clamp(34px,6vw,52px);font-weight:700;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.big.neg{color:var(--loss)}
+.lbl{font-size:13px;color:var(--ink3);text-transform:none}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:13px;font-weight:600;background:var(--loss-soft);color:var(--loss)}
+.pill.ok{background:var(--gain-soft);color:var(--blue-deep)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:600;color:var(--ink2);font-size:13px}
+tr.total td{font-weight:700;border-top:2px solid var(--ink3)}
+.scroll{overflow-x:auto}
+.neg{color:var(--loss)}
+.muted{color:var(--ink3)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2);margin:6px 0 2px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:inherit;fill:var(--ink2);font-size:12px}
+svg .strong{fill:var(--ink);font-weight:600}
+svg .gridl{stroke:var(--grid);stroke-width:1}
+svg .axis{stroke:var(--ink3);stroke-width:1}
+/* waterfall */
+.wf{display:grid;gap:8px;margin-top:10px}
+.wfrow{display:grid;grid-template-columns:minmax(120px,230px) 1fr 84px;gap:10px;align-items:center;font-size:14px}
+.wfrow .name{line-height:1.25}
+.wfrow .val{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.track{position:relative;height:26px;border-radius:4px;background:repeating-linear-gradient(90deg,transparent 0 calc(12.5% - 1px),var(--grid) calc(12.5% - 1px) 12.5%)}
+.bar{position:absolute;top:2px;bottom:2px;border-radius:4px}
+.bar.tot{background:var(--blue)}
+.bar.gain{background:var(--blue-soft)}
+.bar.loss{background:var(--loss)}
+@media(max-width:560px){.wfrow{grid-template-columns:1fr 70px;grid-template-areas:"n v" "t t"}.wfrow .name{grid-area:n}.wfrow .val{grid-area:v}.wfrow .track{grid-area:t}}
+.tabs{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.tabs button{appearance:none;background:transparent;border:0;color:var(--ink2);padding:7px 14px;font:inherit;font-size:14px;cursor:pointer;min-height:36px}
+.tabs button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.cause{display:grid;gap:10px}
+.cause .head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.cause .money{font-size:28px;font-weight:700;color:var(--loss);font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap}
+.cause .money small{display:block;font-size:12px;color:var(--ink3);font-weight:400;text-align:right}
+.do{background:var(--gain-soft);border-radius:10px;padding:10px 12px;font-size:15px}
+.do b{color:var(--blue-deep)}
+.num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;font-weight:700;margin-right:8px;flex:none}
+.todo{display:grid;gap:10px;margin:12px 0 0;padding:0;list-style:none}
+.todo li{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.todo .gain{font-weight:700;color:var(--blue-deep);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.todo li{grid-template-columns:auto 1fr}.todo .gain{grid-column:2}}
+.note{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:12px;padding:12px 14px;font-size:14px}
+details{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface)}
+summary{cursor:pointer;font-weight:600}
+details ul{margin:8px 0 2px;padding-left:20px;color:var(--ink2);font-size:14px}
+details li{margin-bottom:5px}
+.heat td.c{font-weight:600}
+#tip{position:fixed;z-index:10;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 9px;border-radius:7px;font-size:13px;line-height:1.35;max-width:260px;opacity:0;transition:opacity .08s}
+[data-tip]{cursor:default}
+@media (prefers-reduced-motion:reduce){#tip{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="sub">Магазин на маркетплейсе · выгрузки за август - октябрь 2026</div>
+  <h1>Продажи растут, а прибыль тает: куда уходят деньги</h1>
+  <p class="lead" id="lead"></p>
+</header>
+
+<section class="hero" id="hero"></section>
+
+<h2>Сколько денег уходит на каждой причине</h2>
+<p class="sub">Прибыль в августе против октября (месяцы по 31 день, сравнение честное). Красное - то, что я нашла и посчитала, голубое - здоровый рост остального магазина.</p>
+<div class="card">
+  <div class="tabs" role="group" aria-label="Сравнить с месяцем">
+    <button id="tOct" aria-pressed="true">Август → Октябрь</button>
+    <button id="tSep" aria-pressed="false">Август → Сентябрь</button>
+  </div>
+  <div class="wf" id="wf"></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <div class="scroll"><table id="causeTable"></table></div>
+  <p class="sub" style="margin:10px 0 0">Каждая причина посчитана так, чтобы вместе с ростом остального магазина они ровно давали падение прибыли (все сходится до рубля). Как считала - в самом низу страницы.</p>
+</div>
+
+<h2>Прибыль по неделям: когда и что сломалось</h2>
+<p class="sub">Прибыль за неделю и расходы на рекламу. Вертикальные линии - события.</p>
+<div class="card"><div id="weekly"></div></div>
+
+<h2>Пять причин подробно</h2>
+<div class="grid g2" style="margin-top:12px" id="causes"></div>
+
+<h2>Прибыль по товарам</h2>
+<p class="sub">Прибыль после комиссии, логистики, закупки, возвратов и рекламы, тыс. ₽. Красным - товары, которые работают в минус.</p>
+<div class="card"><div class="scroll"><table class="heat" id="heat"></table></div></div>
+
+<h2>Отчет по месяцам: из чего складывается прибыль</h2>
+<div class="card"><div class="scroll"><table id="pl"></table></div></div>
+
+<h2>Что еще утекает (в расчет выше не входит)</h2>
+<div class="grid g2" style="margin-top:12px" id="leaks"></div>
+
+<h2>Что делать, по порядку</h2>
+<p class="sub">Суммы - сколько в месяц вернется к октябрьской прибыли, если причина уйдет.</p>
+<ol class="todo" id="todo"></ol>
+<p id="sumTodo" style="margin-top:14px;font-size:17px"></p>
+
+<h2>Как я считала</h2>
+<details>
+  <summary>Допущения и ограничения (нажми, чтобы открыть)</summary>
+  <ul id="assump"></ul>
+</details>
+
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = {
+ "kpi": [
+  {
+   "m": "Август",
+   "sold": 3317,
+   "rev": 4962330.0,
+   "ret": 137,
+   "retrev": 220830.0,
+   "net": 4741500.0,
+   "comm": 1185375.0,
+   "log": 248775.0,
+   "rlog": 6850.0,
+   "cogs": 1591150.0,
+   "ad": 391586.0,
+   "profit": 1317764.0,
+   "margin": 0.2779213329115259,
+   "retrate": 0.0413023816701839,
+   "drr": 0.07891172090530053,
+   "ppu": 397.2758516731987,
+   "brakloss": 0.0
+  },
+  {
+   "m": "Сентябрь",
+   "sold": 3891,
+   "rev": 5671090.0,
+   "ret": 251,
+   "retrev": 422690.0,
+   "net": 5248400.0,
+   "comm": 1312100.0,
+   "log": 428010.0,
+   "rlog": 18825.0,
+   "cogs": 1762400.0,
+   "ad": 874491.0,
+   "profit": 852574.0,
+   "margin": 0.16244455453090464,
+   "retrate": 0.06450783860190182,
+   "drr": 0.1542015732425336,
+   "ppu": 219.11436648676434,
+   "brakloss": 0.0
+  },
+  {
+   "m": "Октябрь",
+   "sold": 5562,
+   "rev": 6247360.0,
+   "ret": 390,
+   "retrev": 511588.0,
+   "net": 5735772.0,
+   "comm": 1433943.0,
+   "log": 611820.0,
+   "rlog": 29250.0,
+   "cogs": 2297600.0,
+   "ad": 959832.0,
+   "profit": 403327.0,
+   "margin": 0.070317822953911,
+   "retrate": 0.07011866235167206,
+   "drr": 0.15363801669825333,
+   "ppu": 72.51474289823804,
+   "brakloss": 0.0
+  }
+ ],
+ "weekly": [
+  {
+   "w": 0,
+   "start": "01.08",
+   "profit": 299519.0,
+   "rev": 1047600.0,
+   "ad": 84806.0
+  },
+  {
+   "w": 1,
+   "start": "08.08",
+   "profit": 291047.0,
+   "rev": 1044740.0,
+   "ad": 87358.0
+  },
+  {
+   "w": 2,
+   "start": "15.08",
+   "profit": 302949.5,
+   "rev": 1080510.0,
+   "ad": 87308.0
+  },
+  {
+   "w": 3,
+   "start": "22.08",
+   "profit": 286070.0,
+   "rev": 1056580.0,
+   "ad": 91165.0
+  },
+  {
+   "w": 4,
+   "start": "29.08",
+   "profit": 228094.5,
+   "rev": 1098130.0,
+   "ad": 142388.0
+  },
+  {
+   "w": 5,
+   "start": "05.09",
+   "profit": 217761.0,
+   "rev": 1315180.0,
+   "ad": 215959.0
+  },
+  {
+   "w": 6,
+   "start": "12.09",
+   "profit": 186415.5,
+   "rev": 1150650.0,
+   "ad": 191602.0
+  },
+  {
+   "w": 7,
+   "start": "19.09",
+   "profit": 196711.0,
+   "rev": 1260380.0,
+   "ad": 216669.0
+  },
+  {
+   "w": 8,
+   "start": "26.09",
+   "profit": 189803.0,
+   "rev": 1353120.0,
+   "ad": 213302.0
+  },
+  {
+   "w": 9,
+   "start": "03.10",
+   "profit": 79546.5,
+   "rev": 1227158.0,
+   "ad": 208692.0
+  },
+  {
+   "w": 10,
+   "start": "10.10",
+   "profit": 74894.0,
+   "rev": 1248672.0,
+   "ad": 213945.0
+  },
+  {
+   "w": 11,
+   "start": "17.10",
+   "profit": 76973.5,
+   "rev": 1210710.0,
+   "ad": 210974.0
+  },
+  {
+   "w": 12,
+   "start": "24.10",
+   "profit": 143880.5,
+   "rev": 1632242.0,
+   "ad": 261741.0
+  }
+ ],
+ "art": [
+  {
+   "id": "A101",
+   "name": "Худи оверсайз",
+   "cost": 900.0,
+   "price": 2490.0,
+   "months": {
+    "8": {
+     "sold": 464,
+     "rev": 1155360.0,
+     "ret": 28,
+     "ad": 90149.0,
+     "adorders": 80,
+     "profit": 290981.0,
+     "contrib": 821.4008620689655,
+     "retrate": 0.0603448275862069
+    },
+    "9": {
+     "sold": 522,
+     "rev": 1299780.0,
+     "ret": 84,
+     "ad": 99285.0,
+     "adorders": 94,
+     "profit": 250860.0,
+     "contrib": 670.7758620689655,
+     "retrate": 0.16091954022988506
+    },
+    "10": {
+     "sold": 604,
+     "rev": 1503960.0,
+     "ret": 106,
+     "ad": 124930.0,
+     "adorders": 107,
+     "profit": 277095.0,
+     "contrib": 665.6043046357615,
+     "retrate": 0.17549668874172186
+    }
+   }
+  },
+  {
+   "id": "A102",
+   "name": "Футболка базовая",
+   "cost": 300.0,
+   "price": 990.0,
+   "months": {
+    "8": {
+     "sold": 559,
+     "rev": 553410.0,
+     "ret": 28,
+     "ad": 43855.0,
+     "adorders": 99,
+     "profit": 145987.5,
+     "contrib": 339.6109123434705,
+     "retrate": 0.05008944543828265
+    },
+    "9": {
+     "sold": 580,
+     "rev": 574200.0,
+     "ret": 44,
+     "ad": 45693.0,
+     "adorders": 106,
+     "profit": 122287.0,
+     "contrib": 289.62068965517244,
+     "retrate": 0.07586206896551724
+    },
+    "10": {
+     "sold": 2570,
+     "rev": 1398080.0,
+     "ret": 181,
+     "ad": 109928.0,
+     "adorders": 500,
+     "profit": -167401.5,
+     "contrib": -22.363229571984437,
+     "retrate": 0.07042801556420233
+    }
+   }
+  },
+  {
+   "id": "A103",
+   "name": "Свитшот",
+   "cost": 700.0,
+   "price": 1990.0,
+   "months": {
+    "8": {
+     "sold": 324,
+     "rev": 644760.0,
+     "ret": 24,
+     "ad": 52828.0,
+     "adorders": 54,
+     "profit": 155922.0,
+     "contrib": 644.2901234567901,
+     "retrate": 0.07407407407407407
+    },
+    "9": {
+     "sold": 312,
+     "rev": 620880.0,
+     "ret": 17,
+     "ad": 49710.0,
+     "adorders": 52,
+     "profit": 147782.5,
+     "contrib": 632.9887820512821,
+     "retrate": 0.05448717948717949
+    },
+    "10": {
+     "sold": 359,
+     "rev": 714410.0,
+     "ret": 24,
+     "ad": 57388.0,
+     "adorders": 57,
+     "profit": 162609.5,
+     "contrib": 612.8064066852368,
+     "retrate": 0.06685236768802229
+    }
+   }
+  },
+  {
+   "id": "B201",
+   "name": "Плед флисовый",
+   "cost": 600.0,
+   "price": 1690.0,
+   "months": {
+    "8": {
+     "sold": 299,
+     "rev": 505310.0,
+     "ret": 8,
+     "ad": 37215.0,
+     "adorders": 47,
+     "profit": 131202.5,
+     "contrib": 563.2692307692307,
+     "retrate": 0.026755852842809364
+    },
+    "9": {
+     "sold": 358,
+     "rev": 605020.0,
+     "ret": 14,
+     "ad": 47576.0,
+     "adorders": 56,
+     "profit": 138614.0,
+     "contrib": 520.0837988826815,
+     "retrate": 0.03910614525139665
+    },
+    "10": {
+     "sold": 464,
+     "rev": 784160.0,
+     "ret": 15,
+     "ad": 62652.0,
+     "adorders": 81,
+     "profit": 180690.5,
+     "contrib": 524.4450431034483,
+     "retrate": 0.032327586206896554
+    }
+   }
+  },
+  {
+   "id": "B202",
+   "name": "Подушка декоративная",
+   "cost": 300.0,
+   "price": 890.0,
+   "months": {
+    "8": {
+     "sold": 321,
+     "rev": 285690.0,
+     "ret": 7,
+     "ad": 22277.0,
+     "adorders": 53,
+     "profit": 68393.0,
+     "contrib": 282.46105919003116,
+     "retrate": 0.021806853582554516
+    },
+    "9": {
+     "sold": 524,
+     "rev": 466360.0,
+     "ret": 23,
+     "ad": 212205.0,
+     "adorders": 275,
+     "profit": -89252.5,
+     "contrib": 234.64217557251908,
+     "retrate": 0.04389312977099236
+    },
+    "10": {
+     "sold": 541,
+     "rev": 481490.0,
+     "ret": 25,
+     "ad": 222704.0,
+     "adorders": 282,
+     "profit": -98359.0,
+     "contrib": 229.84288354898337,
+     "retrate": 0.04621072088724584
+    }
+   }
+  },
+  {
+   "id": "B203",
+   "name": "Органайзер для косметики",
+   "cost": 350.0,
+   "price": 1290.0,
+   "months": {
+    "8": {
+     "sold": 757,
+     "rev": 976530.0,
+     "ret": 23,
+     "ad": 78790.0,
+     "adorders": 138,
+     "profit": 313380.0,
+     "contrib": 518.0581241743726,
+     "retrate": 0.03038309114927345
+    },
+    "9": {
+     "sold": 826,
+     "rev": 1065540.0,
+     "ret": 33,
+     "ad": 81741.0,
+     "adorders": 152,
+     "profit": 313201.5,
+     "contrib": 478.1386198547215,
+     "retrate": 0.039951573849878935
+    },
+    "10": {
+     "sold": 219,
+     "rev": 282510.0,
+     "ret": 10,
+     "ad": 22963.0,
+     "adorders": 40,
+     "profit": 79154.5,
+     "contrib": 466.28995433789953,
+     "retrate": 0.045662100456621
+    }
+   }
+  },
+  {
+   "id": "C301",
+   "name": "Термокружка",
+   "cost": 400.0,
+   "price": 1190.0,
+   "months": {
+    "8": {
+     "sold": 367,
+     "rev": 436730.0,
+     "ret": 13,
+     "ad": 34998.0,
+     "adorders": 59,
+     "profit": 109572.0,
+     "contrib": 393.92370572207085,
+     "retrate": 0.035422343324250684
+    },
+    "9": {
+     "sold": 562,
+     "rev": 668780.0,
+     "ret": 25,
+     "ad": 308616.0,
+     "adorders": 296,
+     "profit": -111438.5,
+     "contrib": 350.8496441281139,
+     "retrate": 0.04448398576512456
+    },
+    "10": {
+     "sold": 597,
+     "rev": 710430.0,
+     "ret": 25,
+     "ad": 329553.0,
+     "adorders": 310,
+     "profit": -118188.0,
+     "contrib": 354.04522613065325,
+     "retrate": 0.04187604690117253
+    }
+   }
+  },
+  {
+   "id": "C302",
+   "name": "Набор полотенец",
+   "cost": 650.0,
+   "price": 1790.0,
+   "months": {
+    "8": {
+     "sold": 226,
+     "rev": 404540.0,
+     "ret": 6,
+     "ad": 31474.0,
+     "adorders": 33,
+     "profit": 102326.0,
+     "contrib": 592.0353982300885,
+     "retrate": 0.02654867256637168
+    },
+    "9": {
+     "sold": 207,
+     "rev": 370530.0,
+     "ret": 11,
+     "ad": 29665.0,
+     "adorders": 29,
+     "profit": 80520.0,
+     "contrib": 532.2946859903382,
+     "retrate": 0.05314009661835749
+    },
+    "10": {
+     "sold": 208,
+     "rev": 372320.0,
+     "ret": 4,
+     "ad": 29714.0,
+     "adorders": 32,
+     "profit": 87726.0,
+     "contrib": 564.6153846153846,
+     "retrate": 0.019230769230769232
+    }
+   }
+  }
+ ],
+ "causes": [
+  {
+   "key": "tariff",
+   "name": "Подорожала логистика",
+   "sep": 124337.8629032258,
+   "oct": 135337.9967948718,
+   "total": 259675.85969809763
+  },
+  {
+   "key": "ads",
+   "name": "Реклама подушек и термокружек выросла в 9-10 раз",
+   "sep": 329082.74348360545,
+   "oct": 353482.62790848885,
+   "total": 682565.3713920943
+  },
+  {
+   "key": "promo",
+   "name": "Акция -45% на футболку",
+   "sep": 0,
+   "oct": 293764.73333333334,
+   "total": 293764.73333333334
+  },
+  {
+   "key": "stock",
+   "name": "Закончился органайзер (B203)",
+   "sep": 0,
+   "oct": 230350.98214285713,
+   "total": 230350.98214285713
+  },
+  {
+   "key": "size",
+   "name": "Худи S: «маломерит», много возвратов",
+   "sep": 56395.88709677419,
+   "oct": 54641.033653846156,
+   "total": 111036.92075062034
+  }
+ ],
+ "adsdetail": {
+  "9B202": {
+   "extra": 190646.61290322582,
+   "eo": 223.70967741935485,
+   "loss": 138154.88749692196,
+   "spend": 212205.0,
+   "base": 21558.387096774193
+  },
+  "9C301": {
+   "extra": 274746.9677419355,
+   "eo": 238.90322580645162,
+   "loss": 190927.8559866835,
+   "spend": 308616.0,
+   "base": 33869.032258064515
+  },
+  "10B202": {
+   "extra": 200427.0,
+   "eo": 229.0,
+   "loss": 147792.9796672828,
+   "spend": 222704.0,
+   "base": 22277.0
+  },
+  "10C301": {
+   "extra": 294555.0,
+   "eo": 251.0,
+   "loss": 205689.648241206,
+   "spend": 329553.0,
+   "base": 34998.0
+  }
+ },
+ "bridge": {
+  "9": {
+   "start": 1317764.0,
+   "organic": 44626.49348360533,
+   "tariff": -124337.8629032258,
+   "ads": -329082.74348360545,
+   "promo": 0,
+   "stock": 0,
+   "size": -56395.88709677419,
+   "end": 852574.0
+  },
+  "10": {
+   "start": 1317764.0,
+   "organic": 153140.37383339717,
+   "tariff": -135337.9967948718,
+   "ads": -353482.62790848885,
+   "promo": -293764.73333333334,
+   "stock": -230350.98214285713,
+   "size": -54641.033653846156,
+   "end": 403327.0
+  }
+ },
+ "vanish": {
+  "units": 1120,
+  "cost": 392000.0
+ },
+ "stock": {
+  "lost_units": 607.5,
+  "days": 23,
+  "per_unit": 379.17857142857144
+ },
+ "b203": [
+  {
+   "d": "01.08",
+   "stock": 1374,
+   "sold": 26
+  },
+  {
+   "d": "02.08",
+   "stock": 1349,
+   "sold": 25
+  },
+  {
+   "d": "03.08",
+   "stock": 1522,
+   "sold": 19
+  },
+  {
+   "d": "04.08",
+   "stock": 1500,
+   "sold": 22
+  },
+  {
+   "d": "05.08",
+   "stock": 1478,
+   "sold": 22
+  },
+  {
+   "d": "06.08",
+   "stock": 1453,
+   "sold": 25
+  },
+  {
+   "d": "07.08",
+   "stock": 1429,
+   "sold": 24
+  },
+  {
+   "d": "08.08",
+   "stock": 1400,
+   "sold": 29
+  },
+  {
+   "d": "09.08",
+   "stock": 1376,
+   "sold": 24
+  },
+  {
+   "d": "10.08",
+   "stock": 1551,
+   "sold": 19
+  },
+  {
+   "d": "11.08",
+   "stock": 1526,
+   "sold": 25
+  },
+  {
+   "d": "12.08",
+   "stock": 1499,
+   "sold": 27
+  },
+  {
+   "d": "13.08",
+   "stock": 1469,
+   "sold": 30
+  },
+  {
+   "d": "14.08",
+   "stock": 1446,
+   "sold": 23
+  },
+  {
+   "d": "15.08",
+   "stock": 1421,
+   "sold": 25
+  },
+  {
+   "d": "16.08",
+   "stock": 1394,
+   "sold": 27
+  },
+  {
+   "d": "17.08",
+   "stock": 1565,
+   "sold": 26
+  },
+  {
+   "d": "18.08",
+   "stock": 1546,
+   "sold": 19
+  },
+  {
+   "d": "19.08",
+   "stock": 1524,
+   "sold": 22
+  },
+  {
+   "d": "20.08",
+   "stock": 1498,
+   "sold": 26
+  },
+  {
+   "d": "21.08",
+   "stock": 1469,
+   "sold": 29
+  },
+  {
+   "d": "22.08",
+   "stock": 1443,
+   "sold": 26
+  },
+  {
+   "d": "23.08",
+   "stock": 1419,
+   "sold": 24
+  },
+  {
+   "d": "24.08",
+   "stock": 1586,
+   "sold": 32
+  },
+  {
+   "d": "25.08",
+   "stock": 1561,
+   "sold": 25
+  },
+  {
+   "d": "26.08",
+   "stock": 1536,
+   "sold": 25
+  },
+  {
+   "d": "27.08",
+   "stock": 1519,
+   "sold": 17
+  },
+  {
+   "d": "28.08",
+   "stock": 1500,
+   "sold": 19
+  },
+  {
+   "d": "29.08",
+   "stock": 1473,
+   "sold": 27
+  },
+  {
+   "d": "30.08",
+   "stock": 1444,
+   "sold": 29
+  },
+  {
+   "d": "31.08",
+   "stock": 1626,
+   "sold": 19
+  },
+  {
+   "d": "01.09",
+   "stock": 1602,
+   "sold": 24
+  },
+  {
+   "d": "02.09",
+   "stock": 1571,
+   "sold": 31
+  },
+  {
+   "d": "03.09",
+   "stock": 1553,
+   "sold": 18
+  },
+  {
+   "d": "04.09",
+   "stock": 1532,
+   "sold": 21
+  },
+  {
+   "d": "05.09",
+   "stock": 1501,
+   "sold": 31
+  },
+  {
+   "d": "06.09",
+   "stock": 1460,
+   "sold": 41
+  },
+  {
+   "d": "07.09",
+   "stock": 1637,
+   "sold": 26
+  },
+  {
+   "d": "08.09",
+   "stock": 1603,
+   "sold": 34
+  },
+  {
+   "d": "09.09",
+   "stock": 1572,
+   "sold": 31
+  },
+  {
+   "d": "10.09",
+   "stock": 1544,
+   "sold": 28
+  },
+  {
+   "d": "11.09",
+   "stock": 1515,
+   "sold": 29
+  },
+  {
+   "d": "12.09",
+   "stock": 1486,
+   "sold": 29
+  },
+  {
+   "d": "13.09",
+   "stock": 1457,
+   "sold": 29
+  },
+  {
+   "d": "14.09",
+   "stock": 1637,
+   "sold": 25
+  },
+  {
+   "d": "15.09",
+   "stock": 1609,
+   "sold": 28
+  },
+  {
+   "d": "16.09",
+   "stock": 1590,
+   "sold": 19
+  },
+  {
+   "d": "17.09",
+   "stock": 1566,
+   "sold": 24
+  },
+  {
+   "d": "18.09",
+   "stock": 1546,
+   "sold": 20
+  },
+  {
+   "d": "19.09",
+   "stock": 1514,
+   "sold": 32
+  },
+  {
+   "d": "20.09",
+   "stock": 1480,
+   "sold": 34
+  },
+  {
+   "d": "21.09",
+   "stock": 335,
+   "sold": 25
+  },
+  {
+   "d": "22.09",
+   "stock": 306,
+   "sold": 29
+  },
+  {
+   "d": "23.09",
+   "stock": 278,
+   "sold": 28
+  },
+  {
+   "d": "24.09",
+   "stock": 248,
+   "sold": 30
+  },
+  {
+   "d": "25.09",
+   "stock": 223,
+   "sold": 25
+  },
+  {
+   "d": "26.09",
+   "stock": 196,
+   "sold": 27
+  },
+  {
+   "d": "27.09",
+   "stock": 161,
+   "sold": 35
+  },
+  {
+   "d": "28.09",
+   "stock": 130,
+   "sold": 31
+  },
+  {
+   "d": "29.09",
+   "stock": 107,
+   "sold": 23
+  },
+  {
+   "d": "30.09",
+   "stock": 88,
+   "sold": 19
+  },
+  {
+   "d": "01.10",
+   "stock": 61,
+   "sold": 27
+  },
+  {
+   "d": "02.10",
+   "stock": 33,
+   "sold": 28
+  },
+  {
+   "d": "03.10",
+   "stock": 2,
+   "sold": 31
+  },
+  {
+   "d": "04.10",
+   "stock": 0,
+   "sold": 2
+  },
+  {
+   "d": "05.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "06.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "07.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "08.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "09.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "10.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "11.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "12.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "13.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "14.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "15.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "16.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "17.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "18.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "19.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "20.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "21.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "22.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "23.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "24.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "25.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "26.10",
+   "stock": 0,
+   "sold": 0
+  },
+  {
+   "d": "27.10",
+   "stock": 671,
+   "sold": 29
+  },
+  {
+   "d": "28.10",
+   "stock": 655,
+   "sold": 16
+  },
+  {
+   "d": "29.10",
+   "stock": 629,
+   "sold": 26
+  },
+  {
+   "d": "30.10",
+   "stock": 596,
+   "sold": 33
+  },
+  {
+   "d": "31.10",
+   "stock": 569,
+   "sold": 27
+  }
+ ],
+ "cover": [
+  {
+   "id": "A101",
+   "name": "Худи оверсайз",
+   "stock": 1004,
+   "value": 903600.0,
+   "rate": 19.483870967741936,
+   "days": 51.52980132450331
+  },
+  {
+   "id": "A102",
+   "name": "Футболка базовая",
+   "stock": 1022,
+   "value": 306600.0,
+   "rate": 82.90322580645162,
+   "days": 12.327626459143968
+  },
+  {
+   "id": "A103",
+   "name": "Свитшот",
+   "stock": 948,
+   "value": 663600.0,
+   "rate": 11.580645161290322,
+   "days": 81.86072423398329
+  },
+  {
+   "id": "B201",
+   "name": "Плед флисовый",
+   "stock": 967,
+   "value": 580200.0,
+   "rate": 14.96774193548387,
+   "days": 64.60560344827587
+  },
+  {
+   "id": "B202",
+   "name": "Подушка декоративная",
+   "stock": 1011,
+   "value": 303300.0,
+   "rate": 17.451612903225808,
+   "days": 57.93160813308687
+  },
+  {
+   "id": "B203",
+   "name": "Органайзер для косметики",
+   "stock": 569,
+   "value": 199150.0,
+   "rate": 26.5,
+   "days": 21.471698113207548
+  },
+  {
+   "id": "C301",
+   "name": "Термокружка",
+   "stock": 1017,
+   "value": 406800.0,
+   "rate": 19.258064516129032,
+   "days": 52.80904522613066
+  },
+  {
+   "id": "C302",
+   "name": "Набор полотенец",
+   "stock": 946,
+   "value": 614900.0,
+   "rate": 6.709677419354839,
+   "days": 140.9903846153846
+  }
+ ],
+ "cover_total": 3978150.0,
+ "sizes": [
+  {
+   "m": "Август",
+   "size": "S",
+   "sold": 129,
+   "ret": 16,
+   "mal": 0
+  },
+  {
+   "m": "Август",
+   "size": "M",
+   "sold": 190,
+   "ret": 14,
+   "mal": 0
+  },
+  {
+   "m": "Август",
+   "size": "L",
+   "sold": 145,
+   "ret": 9,
+   "mal": 0
+  },
+  {
+   "m": "Сентябрь",
+   "size": "S",
+   "sold": 150,
+   "ret": 67,
+   "mal": 31
+  },
+  {
+   "m": "Сентябрь",
+   "size": "M",
+   "sold": 206,
+   "ret": 19,
+   "mal": 0
+  },
+  {
+   "m": "Сентябрь",
+   "size": "L",
+   "sold": 166,
+   "ret": 13,
+   "mal": 0
+  },
+  {
+   "m": "Октябрь",
+   "size": "S",
+   "sold": 188,
+   "ret": 61,
+   "mal": 43
+  },
+  {
+   "m": "Октябрь",
+   "size": "M",
+   "sold": 241,
+   "ret": 12,
+   "mal": 0
+  },
+  {
+   "m": "Октябрь",
+   "size": "L",
+   "sold": 175,
+   "ret": 7,
+   "mal": 0
+  }
+ ],
+ "promo": {
+  "ue_full": {
+   "price": 990,
+   "comm": 247.5,
+   "log": 110,
+   "cost": 300,
+   "margin": 332.5
+  },
+  "ue_promo": {
+   "price": 544,
+   "comm": 136.0,
+   "log": 110,
+   "cost": 300,
+   "margin": -2.0
+  },
+  "ue_aug": {
+   "price": 990,
+   "comm": 247.5,
+   "log": 75,
+   "cost": 300,
+   "margin": 367.5
+  },
+  "units_before": 580,
+  "units_promo": 2570,
+  "rev_before": 574200.0,
+  "rev_promo": 1398080.0,
+  "profit_cf": 126363.23333333334,
+  "profit_act": -167401.5,
+  "ad_before": 45693.0,
+  "ad_promo": 109928.0,
+  "breakeven": 546.6666666666666,
+  "price30": 680.0
+ },
+ "reasons": {
+  "8": {
+   "брак": 46,
+   "не подошел цвет": 58,
+   "передумал": 51,
+   "не подошел размер": 32
+  },
+  "9": {
+   "маломерит": 31,
+   "передумал": 70,
+   "брак": 53,
+   "не подошел размер": 47,
+   "не подошел цвет": 58
+  },
+  "10": {
+   "передумал": 63,
+   "не подошел цвет": 80,
+   "не подошел размер": 62,
+   "брак": 84,
+   "маломерит": 43
+  }
+ },
+ "adroi": [
+  {
+   "id": "A101",
+   "name": "Худи оверсайз",
+   "ad": 124930.0,
+   "orders": 107,
+   "cpo": 1167.5700934579438,
+   "contrib": 665.6043046357615,
+   "earn": 71219.66059602649,
+   "net": -53710.339403973514
+  },
+  {
+   "id": "A102",
+   "name": "Футболка базовая",
+   "ad": 109928.0,
+   "orders": 500,
+   "cpo": 219.856,
+   "contrib": -22.363229571984437,
+   "earn": -11181.614785992218,
+   "net": -121109.61478599222
+  },
+  {
+   "id": "A103",
+   "name": "Свитшот",
+   "ad": 57388.0,
+   "orders": 57,
+   "cpo": 1006.8070175438596,
+   "contrib": 612.8064066852368,
+   "earn": 34929.9651810585,
+   "net": -22458.0348189415
+  },
+  {
+   "id": "B201",
+   "name": "Плед флисовый",
+   "ad": 62652.0,
+   "orders": 81,
+   "cpo": 773.4814814814815,
+   "contrib": 524.4450431034483,
+   "earn": 42480.04849137931,
+   "net": -20171.95150862069
+  },
+  {
+   "id": "B202",
+   "name": "Подушка декоративная",
+   "ad": 222704.0,
+   "orders": 282,
+   "cpo": 789.7304964539007,
+   "contrib": 229.84288354898337,
+   "earn": 64815.69316081331,
+   "net": -157888.3068391867
+  },
+  {
+   "id": "B203",
+   "name": "Органайзер для косметики",
+   "ad": 22963.0,
+   "orders": 40,
+   "cpo": 574.075,
+   "contrib": 466.28995433789953,
+   "earn": 18651.59817351598,
+   "net": -4311.40182648402
+  },
+  {
+   "id": "C301",
+   "name": "Термокружка",
+   "ad": 329553.0,
+   "orders": 310,
+   "cpo": 1063.074193548387,
+   "contrib": 354.04522613065325,
+   "earn": 109754.0201005025,
+   "net": -219798.9798994975
+  },
+  {
+   "id": "C302",
+   "name": "Набор полотенец",
+   "ad": 29714.0,
+   "orders": 32,
+   "cpo": 928.5625,
+   "contrib": 564.6153846153846,
+   "earn": 18067.69230769231,
+   "net": -11646.307692307691
+  }
+ ],
+ "pending": {
+  "units": 94.12705890467961,
+  "loss": 46763.09751869325
+ }
+};
+</script>
+<script>
+(function(){
+const D = DATA;
+const $ = s => document.querySelector(s);
+const nf = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0});
+const N = v => nf.format(Math.round(v));
+const sg = v => (v<0?'-':'')+nf.format(Math.abs(Math.round(v)));
+const K = v => (v<0?'-':'')+nf.format(Math.abs(Math.round(v/1000)))+' тыс.';
+const KP = v => (v>0?'+':v<0?'-':'')+nf.format(Math.abs(Math.round(v/1000)))+' тыс.';
+const M = v => (v/1e6).toFixed(2).replace('.',',')+' млн';
+const P1 = v => (v*100).toFixed(1).replace('.',',')+'%';
+const P0 = v => Math.round(v*100)+'%';
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const kp = D.kpi, aug=kp[0], sep=kp[1], oct=kp[2];
+const causesByKey = Object.fromEntries(D.causes.map(c=>[c.key,c]));
+const art = Object.fromEntries(D.art.map(a=>[a.id,a]));
+
+/* ---------- lead + hero ---------- */
+const revUp = oct.rev/aug.rev-1, profDown = oct.profit/aug.profit-1;
+$('#lead').textContent =
+  `Выручка с августа выросла на ${P0(revUp)}, а прибыль упала на ${P0(-profDown)}: с ${M(aug.profit)} до ${M(oct.profit)} в месяц. `+
+  `Причин пять, и четыре из них можно исправить самой. На первых трех можно вернуть около ${K(causesByKey.ads.oct+causesByKey.promo.oct+causesByKey.stock.oct)} в месяц.`;
+
+$('#hero').innerHTML = `
+  <div class="card">
+    <div class="lbl">Прибыль за месяц (после всех расходов)</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:8px">
+      ${[aug,sep,oct].map((k,i)=>`<div><div class="lbl">${k.m}</div><div class="big ${i==2?'neg':''}" style="font-size:${i==2?'clamp(34px,6vw,48px)':'clamp(24px,4vw,34px)'}">${M(k.profit)}</div></div>`).join('')}
+    </div>
+    <p style="margin:12px 0 0"><span class="pill">${P0(profDown)}</span> <span class="muted">за два месяца, при том что выручка ${P0(revUp)} выше</span></p>
+  </div>
+  <div class="card">
+    <table>
+      <tr><th></th><th>Авг</th><th>Сен</th><th>Окт</th></tr>
+      <tr><td>Продано, шт.</td><td>${N(aug.sold)}</td><td>${N(sep.sold)}</td><td>${N(oct.sold)}</td></tr>
+      <tr><td>Прибыль с 1 штуки, ₽</td><td>${N(aug.ppu)}</td><td>${N(sep.ppu)}</td><td class="neg"><b>${N(oct.ppu)}</b></td></tr>
+      <tr><td>Прибыль с 1 ₽ выручки</td><td>${P1(aug.margin)}</td><td>${P1(sep.margin)}</td><td class="neg"><b>${P1(oct.margin)}</b></td></tr>
+      <tr><td>Реклама, % от выручки</td><td>${P1(aug.drr)}</td><td>${P1(sep.drr)}</td><td class="neg"><b>${P1(oct.drr)}</b></td></tr>
+      <tr><td>Возвраты, % от продаж</td><td>${P1(aug.retrate)}</td><td>${P1(sep.retrate)}</td><td class="neg"><b>${P1(oct.retrate)}</b></td></tr>
+    </table>
+  </div>`;
+
+/* ---------- waterfall ---------- */
+const order = ['ads','promo','stock','tariff','size'];
+const short = {ads:'Реклама подушки и термокружки',promo:'Акция -45% на футболку',stock:'Органайзер закончился',tariff:'Логистика подорожала',size:'Худи размера S: возвраты'};
+function renderWF(which){
+  const b = D.bridge[which];
+  const rows=[]; let run=b.start;
+  rows.push({n:`Прибыль в августе`,from:0,to:b.start,t:'tot',v:K(b.start)});
+  rows.push({n:'Рост остальных товаров (здоровый)',from:run,to:run+b.organic,t:'gain',v:KP(b.organic)}); run+=b.organic;
+  order.forEach(k=>{const x=b[k]; if(!x) return; rows.push({n:short[k],from:run+x,to:run,t:'loss',v:K(x),tip:`${short[k]}: ${K(x)} в этом месяце`}); run+=x;});
+  rows.push({n:`Прибыль в ${which==10?'октябре':'сентябре'}`,from:0,to:b.end,t:'tot',v:K(b.end)});
+  const max = Math.max(...rows.map(r=>Math.max(r.from,r.to)))*1.02;
+  $('#wf').innerHTML = rows.map(r=>{
+    const l=Math.min(r.from,r.to)/max*100, w=Math.abs(r.to-r.from)/max*100;
+    return `<div class="wfrow"><div class="name">${esc(r.n)}</div><div class="track"><div class="bar ${r.t}" style="left:${l}%;width:${Math.max(w,.6)}%" ${r.tip?`data-tip="${esc(r.tip)}"`:''}></div></div><div class="val ${r.t=='loss'?'neg':''}">${r.v}</div></div>`;
+  }).join('');
+  $('#tOct').setAttribute('aria-pressed',which==10); $('#tSep').setAttribute('aria-pressed',which==9);
+}
+renderWF(10);
+$('#tOct').onclick=()=>renderWF(10); $('#tSep').onclick=()=>renderWF(9);
+
+/* ---------- cause table ---------- */
+const fixes = {
+  ads:'Вернуть рекламу на уровень августа или выключить',
+  promo:'Не продлевать; если нужна скидка - не больше 31%',
+  stock:'Найти пропавшие 1 120 шт. и срочно заказать поставку',
+  tariff:'Поднять цены (особенно на дешевые товары)',
+  size:'Проверить размерную сетку и партию худи'
+};
+const tot = D.causes.reduce((s,c)=>({sep:s.sep+c.sep,oct:s.oct+c.oct,total:s.total+c.total}),{sep:0,oct:0,total:0});
+$('#causeTable').innerHTML = `<tr><th>Причина</th><th>Сентябрь</th><th>Октябрь</th><th>Всего за 2 месяца</th><th style="text-align:left">Что делать</th></tr>`+
+  order.map(k=>{const c=causesByKey[k]; return `<tr><td><b>${esc(short[k])}</b></td><td>${c.sep?'-'+K(c.sep).replace('-',''):'-'}</td><td class="neg"><b>-${K(c.oct).replace('-','')}</b></td><td class="neg">-${K(c.total).replace('-','')}</td><td style="text-align:left;min-width:220px">${fixes[k]}</td></tr>`}).join('')+
+  `<tr class="total"><td>Итого потери</td><td>-${K(tot.sep)}</td><td class="neg">-${K(tot.oct)}</td><td class="neg">-${K(tot.total)}</td><td></td></tr>`;
+
+/* ---------- weekly chart ---------- */
+(function(){
+  const w=D.weekly, W=1000,H=300,L=56,R=12,T=34,B=34;
+  const maxV=Math.ceil(Math.max(...w.map(x=>Math.max(x.profit,x.ad)))/100000)*100000;
+  const pw=(W-L-R)/13, y=v=>T+(H-T-B)*(1-v/maxV);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Прибыль и реклама по неделям">`;
+  for(let v=0;v<=maxV;v+=100000){s+=`<line class="gridl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v/1000}</text>`;}
+  s+=`<text x="${L-8}" y="${T-16}" text-anchor="end">тыс. ₽</text>`;
+  w.forEach((x,i)=>{
+    const bx=L+i*pw+pw*.18, bw=pw*.64, h=(H-T-B)*Math.max(x.profit,0)/maxV;
+    s+=`<rect x="${bx}" y="${y(x.profit)}" width="${bw}" height="${h}" rx="3" fill="var(--blue)" data-tip="Неделя с ${x.start}: прибыль ${K(x.profit)}, реклама ${K(x.ad)}"/>`;
+    s+=`<text x="${bx+bw/2}" y="${H-12}" text-anchor="middle">${x.start}</text>`;
+  });
+  s+=`<polyline fill="none" stroke="var(--orange)" stroke-width="2" points="${w.map((x,i)=>`${L+i*pw+pw/2},${y(x.ad)}`).join(' ')}"/>`;
+  w.forEach((x,i)=>{s+=`<circle cx="${L+i*pw+pw/2}" cy="${y(x.ad)}" r="4" fill="var(--orange)" stroke="var(--surface)" stroke-width="2" data-tip="Неделя с ${x.start}: реклама ${K(x.ad)}"/>`});
+  const ev=[[31,'1.09: логистика дороже, реклама ×9',0],[51,'21.09: пропал органайзер',1],[61,'1.10: акция -45%',2]];
+  ev.forEach(([d,t,lv])=>{const x=L+d/7*pw; s+=`<line x1="${x}" x2="${x}" y1="${T-6}" y2="${H-B}" stroke="var(--ink3)" stroke-dasharray="3 4"/><text class="strong" x="${x+5}" y="${T-14+lv*0}" ${lv==1?'dy="14"':''} ${lv==2?'dy="28"':''}>${t}</text>`;});
+  s+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/></svg>`;
+  $('#weekly').innerHTML=`<div class="legend"><span><i style="background:var(--blue)"></i>Прибыль за неделю</span><span><i style="background:var(--orange)"></i>Расходы на рекламу за неделю</span></div>`+s+
+  `<p class="sub" style="margin:6px 0 0">Последний столбец - 8 дней (до 31.10).</p>`;
+})();
+
+/* ---------- cause cards ---------- */
+const cards=[];
+
+// 1 ads
+(function(){
+  const arts=D.art, W=560,H=230,L=44,R=8,T=14,B=34;
+  const maxV=Math.ceil(Math.max(...arts.flatMap(a=>[8,9,10].map(m=>a.months[m].ad)))/100000)*100000;
+  const gw=(W-L-R)/arts.length, bw=gw*.24, y=v=>T+(H-T-B)*(1-v/maxV);
+  const cols=['var(--blue-soft)','var(--blue)','var(--blue-deep)'];
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Расходы на рекламу по товарам и месяцам">`;
+  for(let v=0;v<=maxV;v+=100000) s+=`<line class="gridl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${v/1000}</text>`;
+  arts.forEach((a,i)=>{
+    [8,9,10].forEach((m,j)=>{const v=a.months[m].ad, x=L+i*gw+gw*.12+j*(bw+2);
+      s+=`<rect x="${x}" y="${y(v)}" width="${bw}" height="${y(0)-y(v)}" rx="3" fill="${cols[j]}" data-tip="${esc(a.name)}, ${['авг','сен','окт'][j]}: реклама ${K(v)}"/>`;});
+    const hot=(a.id=='B202'||a.id=='C301');
+    s+=`<text x="${L+i*gw+gw/2}" y="${H-16}" text-anchor="middle" class="${hot?'strong':''}">${a.id}</text>`;
+  });
+  s+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}"/></svg>`;
+  const b2=art.B202.months, c3=art.C301.months;
+  cards.push(`<div class="card cause"><div class="head"><div><h3>1. Реклама подушки и термокружки</h3><span class="muted" style="font-size:14px">B202 и C301</span></div>
+  <div class="money">-${K(causesByKey.ads.oct).replace('-','')}<small>в октябре (в сентябре -${K(causesByKey.ads.sep).replace('-','')})</small></div></div>
+  <p>С 1 сентября расходы на рекламу подушки выросли с ${K(b2[8].ad)} до ${K(b2[9].ad)}, термокружки - с ${K(c3[8].ad)} до ${K(c3[9].ad)} в месяц. Рекламных заказов стало больше, но каждый такой заказ обходится в <b>${N(D.adroi.find(x=>x.id=='B202').cpo)} ₽</b> (подушка) и <b>${N(D.adroi.find(x=>x.id=='C301').cpo)} ₽</b> (термокружка), а зарабатываешь ты на нем <b>${N(D.adroi.find(x=>x.id=='B202').contrib)} ₽</b> и <b>${N(D.adroi.find(x=>x.id=='C301').contrib)} ₽</b>. С каждого рекламного заказа ты доплачиваешь.</p>
+  <div class="legend"><span><i style="background:var(--blue-soft)"></i>авг</span><span><i style="background:var(--blue)"></i>сен</span><span><i style="background:var(--blue-deep)"></i>окт</span></div>${s}
+  <p class="sub" style="margin:0">Расходы на рекламу по товарам, тыс. ₽ в месяц.</p>
+  <div class="do"><b>Что делать:</b> в кабинете вернуть бюджет этих двух товаров к августовскому (около 22 и 35 тыс. в месяц) или выключить рекламу совсем.</div></div>`);
+})();
+
+// 2 promo
+(function(){
+  const p=D.promo, W=560,H=170,L=104,R=44, sc=(W-L-R)/990;
+  const rows=[['990 ₽',p.ue_full],['544 ₽ (акция)',p.ue_promo]];
+  const parts=[['comm','Комиссия 25%','var(--orange)'],['log','Логистика','var(--ink3)'],['cost','Закупка','var(--blue-soft)'],['margin','Остается тебе','var(--blue-deep)']];
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Куда уходит цена футболки">`;
+  rows.forEach(([lab,u],i)=>{
+    const y=18+i*66; let x=L;
+    s+=`<text x="${L-8}" y="${y+22}" text-anchor="end" class="strong">${lab}</text>`;
+    parts.forEach(([k,n,c])=>{const v=Math.max(u[k],0); if(v<=0) return; const w=v*sc;
+      s+=`<rect x="${x}" y="${y}" width="${Math.max(w-2,1)}" height="32" rx="3" fill="${c}" data-tip="${n}: ${N(u[k])} ₽"/>`;
+      if(w>38) s+=`<text x="${x+w/2-1}" y="${y+21}" text-anchor="middle" style="fill:#fff;font-weight:600">${N(u[k])}</text>`; x+=w;});
+    s+=`<text x="${x+6}" y="${y+21}" class="strong" style="fill:${u.margin<=0?'var(--loss)':'var(--ink)'}">${u.margin<=0?'0 ₽':'+'+N(u.margin)+' ₽'}</text>`;
+  });
+  s+=`</svg>`;
+  cards.push(`<div class="card cause"><div class="head"><div><h3>2. Акция -45% на футболку</h3><span class="muted" style="font-size:14px">A102, весь октябрь</span></div>
+  <div class="money">-${K(causesByKey.promo.oct).replace('-','')}<small>в октябре</small></div></div>
+  <p>При цене 544 ₽ после комиссии, логистики и закупки остается <b>минус 2 ₽ с каждой штуки</b> - еще до рекламы и возвратов. Продаж стало в 4,4 раза больше (${N(p.units_before)} → ${N(p.units_promo)} шт.), выручка выросла на ${K(p.rev_promo-p.rev_before)}, но прибыль по футболке из <b>+${K(p.profit_cf)}</b> в месяц стала <b class="neg">${K(p.profit_act)}</b> в месяц.</p>
+  <p>Это и есть тот самый «рост продаж»: весь прирост штук в октябре дала эта акция (+1 990 шт.), по остальным товарам вместе продаж стало меньше.</p>
+  <div class="legend">${parts.map(x=>`<span><i style="background:${x[2]}"></i>${x[1]}</span>`).join('')}</div>${s}
+  <p class="sub" style="margin:0">Куда уходит цена с одной футболки, ₽ (тарифы с сентября).</p>
+  <div class="do"><b>Что делать:</b> акцию не продлевать (она закончилась 31.10 - проверь, что цена вернулась на 990). Ниже ${N(p.breakeven)} ₽ ты работаешь в ноль; чтобы оставалось хотя бы 100 ₽ со штуки, цена не ниже ${N(p.price30)} ₽ - то есть скидка не больше 31%.</div></div>`);
+})();
+
+// 3 stock
+(function(){
+  const b=D.b203, W=560,H=250,L=44,R=8, n=b.length, pw=(W-L-R)/n;
+  const T1=24,B1=130, T2=166,B2=224;
+  const y1=v=>T1+(B1-T1)*(1-v/1800), y2=v=>T2+(B2-T2)*(1-v/45);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Остаток и продажи органайзера по дням">`;
+  [0,600,1200,1800].forEach(v=>s+=`<line class="gridl" x1="${L}" x2="${W-R}" y1="${y1(v)}" y2="${y1(v)}"/><text x="${L-6}" y="${y1(v)+4}" text-anchor="end">${v}</text>`);
+  s+=`<polygon points="${L},${y1(0)} ${b.map((x,i)=>`${L+(i+.5)*pw},${y1(x.stock)}`).join(' ')} ${L+(n-.5)*pw},${y1(0)}" fill="var(--blue)" opacity=".18"/>`;
+  s+=`<polyline fill="none" stroke="var(--blue)" stroke-width="2" points="${b.map((x,i)=>`${L+(i+.5)*pw},${y1(x.stock)}`).join(' ')}"/>`;
+  b.forEach((x,i)=>{
+    s+=`<rect x="${L+i*pw}" y="${T1}" width="${pw}" height="${B1-T1}" fill="transparent" data-tip="${x.d}: остаток ${N(x.stock)} шт., продано ${x.sold}"/>`;
+    s+=`<rect x="${L+i*pw+.5}" y="${y2(x.sold)}" width="${Math.max(pw-1,1)}" height="${y2(0)-y2(x.sold)}" fill="var(--blue-deep)" data-tip="${x.d}: остаток ${N(x.stock)} шт., продано ${x.sold}"/>`;
+  });
+  const idx=d=>b.findIndex(x=>x.d==d);
+  const i21=idx('21.09'), i4=idx('04.10'), i26=idx('26.10');
+  s+=`<text class="strong" x="${L+(i21+2)*pw}" y="${T1+30}">21.09: за один день</text><text class="strong" x="${L+(i21+2)*pw}" y="${T1+44}">пропали 1 120 шт.</text>`;
+  s+=`<rect x="${L+i4*pw}" y="${T2-4}" width="${(i26-i4+1)*pw}" height="${B2-T2+4}" fill="var(--loss)" opacity=".13"/><text class="strong" x="${L+(i4+i26+1)/2*pw}" y="${T2+40}" text-anchor="middle" style="fill:var(--loss)">4-26.10: товара нет</text>`;
+  s+=`<text x="${L}" y="${T1-10}">Остаток, шт.</text><text x="${L}" y="${T2-10}">Продажи за день, шт.</text>`;
+  [['01.08',0],['01.09',idx('01.09')],['01.10',idx('01.10')],['31.10',n-1]].forEach(([t,i])=>s+=`<text x="${L+(i+.5)*pw}" y="${H-6}" text-anchor="middle">${t}</text>`);
+  s+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y2(0)}" y2="${y2(0)}"/></svg>`;
+  cards.push(`<div class="card cause"><div class="head"><div><h3>3. Закончился органайзер</h3><span class="muted" style="font-size:14px">B203 - самый прибыльный товар</span></div>
+  <div class="money">-${K(causesByKey.stock.oct).replace('-','')}<small>в октябре</small></div></div>
+  <p>Органайзер приносил около 313 тыс. в месяц: ~26 штук в день по ${N(D.stock.per_unit)} ₽ прибыли с каждого. <b>21 сентября остаток за один день упал с 1 480 до 335 шт.</b> при продажах всего 25 шт. - то есть минимум 1 120 штук куда-то исчезли, а еженедельные поставки (~200 шт.) прекратились. <b>4 октября товар закончился</b>, и 23 дня (по 26 октября) продаж не было. Недополучено ~${N(D.stock.lost_units)} продаж × ${N(D.stock.per_unit)} ₽.</p>
+  ${s}
+  <p class="sub" style="margin:0">Остаток на конец дня (сверху) и продажи за день (снизу).</p>
+  <div class="do"><b>Что делать:</b> написать в поддержку маркетплейса и запросить, куда делись 1 120 шт. (закупка на них - ${K(D.vanish.cost)}), и сегодня же заказать поставку: 569 шт. на складе хватит примерно на 21 день.</div></div>`);
+})();
+
+// 4 tariff
+(function(){
+  const c=causesByKey.tariff;
+  cards.push(`<div class="card cause"><div class="head"><div><h3>4. Подорожала логистика</h3><span class="muted" style="font-size:14px">тарифы с 1 сентября</span></div>
+  <div class="money">-${K(c.oct).replace('-','')}<small>в месяц (в сентябре -${K(c.sep).replace('-','')})</small></div></div>
+  <table><tr><th></th><th>Август</th><th>С 1 сентября</th><th>Разница</th></tr>
+  <tr><td>Доставка до покупателя, ₽/шт.</td><td>75</td><td>110</td><td class="neg">+35</td></tr>
+  <tr><td>Обратная доставка при возврате, ₽/шт.</td><td>50</td><td>75</td><td class="neg">+25</td></tr>
+  <tr><td>Комиссия</td><td>25%</td><td>25%</td><td>без изменений</td></tr></table>
+  <p>Считала на «здоровых» продажах, без акции и лишней рекламы, чтобы не считать одно и то же дважды. Больнее всего бьет по дешевым товарам: на подушке за 890 ₽ только доставка съедает 12% цены.</p>
+  <div class="do"><b>Что делать:</b> тариф не отменить, но можно переложить на цену. Чтобы остаться при тех же рублях прибыли со штуки, цена должна вырасти примерно на 47 ₽ (35 ÷ 0,75, потому что комиссия 25% берется и с надбавки). Начни с самых дешевых: подушка, футболка. Спрос на подорожание я предсказать не могу.</div></div>`);
+})();
+
+// 5 sizes
+(function(){
+  const z=D.sizes, W=560,H=210,L=44,R=8,T=14,B=34;
+  const maxV=0.5, y=v=>T+(H-T-B)*(1-v/maxV), gw=(W-L-R)/3, bw=gw*.22;
+  const cols={S:'var(--loss)',M:'var(--blue-soft)',L:'var(--blue)'};
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Доля возвратов худи по размерам">`;
+  [0,.1,.2,.3,.4,.5].forEach(v=>s+=`<line class="gridl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${Math.round(v*100)}%</text>`);
+  ['Август','Сентябрь','Октябрь'].forEach((mname,i)=>{
+    ['S','M','L'].forEach((sz,j)=>{const r=z.find(q=>q.m==mname&&q.size==sz), v=r.ret/r.sold, x=L+i*gw+gw*.14+j*(bw+3);
+      s+=`<rect x="${x}" y="${y(v)}" width="${bw}" height="${y(0)-y(v)}" rx="3" fill="${cols[sz]}" data-tip="${mname}, размер ${sz}: вернули ${r.ret} из ${r.sold} (${P0(v)})${r.mal?', «маломерит» - '+r.mal:''}"/>`;
+      s+=`<text x="${x+bw/2}" y="${y(v)-4}" text-anchor="middle" ${sz=='S'?'class="strong"':''}>${P0(v)}</text>`;});
+    s+=`<text x="${L+i*gw+gw/2}" y="${H-12}" text-anchor="middle">${mname}</text>`;});
+  s+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}"/></svg>`;
+  const c=causesByKey.size;
+  cards.push(`<div class="card cause"><div class="head"><div><h3>5. Худи размера S возвращают</h3><span class="muted" style="font-size:14px">A101</span></div>
+  <div class="money">-${K(c.oct).replace('-','')}<small>в месяц (в сентябре -${K(c.sep).replace('-','')})</small></div></div>
+  <p>В августе худи возвращали как обычно, 6-12%. С сентября у размера S возвраты выросли до <b>45% и 32%</b>, а в M и L остались 4-9%. Появилась новая причина возврата «маломерит» (31 шт. в сентябре, 43 в октябре, в августе ее не было). Каждый лишний возврат стоит 1 042 ₽: недополученные 857 ₽ прибыли и 185 ₽ за доставку туда-обратно. Лишних возвратов ~53 в месяц.</p>
+  <div class="legend"><span><i style="background:var(--loss)"></i>S</span><span><i style="background:var(--blue-soft)"></i>M</span><span><i style="background:var(--blue)"></i>L</span></div>${s}
+  <p class="sub" style="margin:0">Доля вернувших худи по размерам, % от проданного.</p>
+  <div class="do"><b>Что делать:</b> посмотреть отзывы на размер S и размерную сетку, проверить, не сменилась ли партия или поставщик. Пока не разберешься - добавить в карточку «маломерит, берите на размер больше».</div></div>`);
+})();
+
+$('#causes').innerHTML = cards.join('');
+
+/* ---------- heat table ---------- */
+(function(){
+  const arts=D.art; const mx=300000;
+  let h=`<tr><th>Товар</th><th>Август</th><th>Сентябрь</th><th>Октябрь</th><th>Изменение</th></tr>`;
+  arts.forEach(a=>{
+    const v=[8,9,10].map(m=>a.months[m].profit), d=v[2]-v[0];
+    h+=`<tr><td><b>${a.id}</b> ${esc(a.name)}</td>`+v.map(x=>{const al=Math.min(Math.abs(x)/mx,1)*.55;
+      return `<td class="c" style="background:${x<0?`rgba(208,59,59,${al+.12})`:`rgba(42,120,214,${al*.6})`}">${sg(x/1000)}</td>`}).join('')+
+      `<td class="${d<0?'neg':''}">${d>0?'+':''}${sg(d/1000)}</td></tr>`;
+  });
+  const tv=[aug,sep,oct].map(k=>k.profit);
+  h+=`<tr class="total"><td>Всего</td>${tv.map(x=>`<td>${sg(x/1000)}</td>`).join('')}<td class="neg">${sg((tv[2]-tv[0])/1000)}</td></tr>`;
+  $('#heat').innerHTML=h;
+})();
+
+/* ---------- P&L ---------- */
+(function(){
+  const rows=[
+    ['Выручка (продано)',k=>k.rev],
+    ['Возвраты покупателям',k=>-k.retrev],
+    ['Комиссия маркетплейса',k=>-k.comm],
+    ['Логистика (туда и обратно)',k=>-(k.log+k.rlog)],
+    ['Закупка проданного товара',k=>-k.cogs],
+    ['Реклама',k=>-k.ad]];
+  let h=`<tr><th>тыс. ₽</th><th>Август</th><th>Сентябрь</th><th>Октябрь</th><th>Окт к авг</th></tr>`;
+  rows.forEach(([n,f])=>{const a=f(aug),b=f(sep),c=f(oct);
+    h+=`<tr><td>${n}</td><td>${sg(a/1000)}</td><td>${sg(b/1000)}</td><td>${sg(c/1000)}</td><td class="${(c-a)<0?'neg':''}">${c-a>0?'+':''}${sg((c-a)/1000)}</td></tr>`;});
+  h+=`<tr class="total"><td>Прибыль</td><td>${sg(aug.profit/1000)}</td><td>${sg(sep.profit/1000)}</td><td class="neg">${sg(oct.profit/1000)}</td><td class="neg">${sg((oct.profit-aug.profit)/1000)}</td></tr>`;
+  $('#pl').innerHTML=h;
+  $('#pl').insertAdjacentHTML('afterend','');
+})();
+
+/* ---------- leaks ---------- */
+(function(){
+  const oth=D.adroi.filter(x=>['A101','A103','B201','C302','B203'].includes(x.id));
+  const othSum=oth.reduce((s,x)=>s+x.net,0);
+  const slow=[...D.cover].sort((a,b)=>b.days-a.days).slice(0,2);
+  $('#leaks').innerHTML = `
+  <div class="card"><h3>Куда делись 1 120 органайзеров</h3>
+    <div class="big neg" style="font-size:30px">${K(D.vanish.cost)}</div>
+    <p class="sub">по цене закупки (350 ₽ × 1 120 шт.)</p>
+    <p>Эти деньги в прибыль выше не входят: в выгрузках нет списаний. Если товар потерян и не компенсирован, реальная прибыль еще ниже, а деньги на счету - уже ушли на закупку. Проверь в кабинете акты потерь и списаний: за потерянный на складе товар маркетплейс может компенсировать.</p></div>
+  <div class="card"><h3>Реклама остальных товаров тоже в минус</h3>
+    <div class="big neg" style="font-size:30px">${K(othSum)}</div>
+    <p class="sub">в месяц, по заказам, которые приписаны рекламе</p>
+    <div class="scroll"><table><tr><th>Товар</th><th>Реклама</th><th>Заказ стоит</th><th>Прибыль с заказа</th></tr>
+    ${oth.map(x=>`<tr><td>${x.id}</td><td>${K(x.ad)}</td><td>${N(x.cpo)} ₽</td><td>${N(x.contrib)} ₽</td></tr>`).join('')}</table></div>
+    <p class="sub" style="margin:8px 0 0">Так было и в августе, поэтому причиной падения это не стало. Но часть этих заказов пришла бы и без рекламы, поэтому проверь по каждому товару, прежде чем резать.</p></div>
+  <div class="card"><h3>Деньги, замороженные в товаре</h3>
+    <div class="big" style="font-size:30px">${M(D.cover_total)}</div>
+    <p class="sub">остатки на 31.10 по цене закупки</p>
+    <div class="scroll"><table><tr><th>Товар</th><th>Остаток</th><th>Лежит, дней</th><th>В закупке</th></tr>
+    ${[...D.cover].sort((a,b)=>b.days-a.days).map(x=>`<tr><td>${x.id} ${esc(x.name)}</td><td>${N(x.stock)}</td><td class="${x.days>100?'neg':''}">${N(x.days)}</td><td>${K(x.value)}</td></tr>`).join('')}</table></div>
+    <p class="sub" style="margin:8px 0 0">Дни считала по продажам октября (у органайзера - по обычным 26,5 шт. в день). Больше всего заморожено в полотенцах и свитшотах - их пока не докупай.</p></div>
+  <div class="card"><h3>Возвраты октября еще не дошли</h3>
+    <div class="big neg" style="font-size:30px">≈ -${K(D.pending.loss).replace('-','')}</div>
+    <p class="sub">придет в ноябре, примерно ${N(D.pending.units)} возвратов</p>
+    <p>Покупатели возвращают товар через 3-10 дней. Из продаж 22-31 октября возвраты еще не пришли, поэтому октябрьская прибыль чуть завышена - реальная ниже примерно на эту сумму.</p></div>`;
+})();
+
+/* ---------- todo ---------- */
+(function(){
+  const a=causesByKey;
+  const items=[
+    ['Сегодня: вернуть рекламу подушки и термокружки к августовскому уровню','Кабинет → реклама → B202 и C301. Бюджеты примерно 22 и 35 тыс. в месяц вместо 220 и 330 тыс. Займет 10 минут.',a.ads.oct],
+    ['Сегодня: заказать поставку органайзера и написать в поддержку про 1 120 шт.','Остатка 569 шт. хватит примерно на 3 недели. Пока товара не будет, самый прибыльный товар не работает. В обращении укажи 21.09 - день, когда остаток упал с 1 480 до 335.',a.stock.oct],
+    ['Не продлевать акцию на футболку','Акция закончилась 31.10. Проверь, что цена вернулась на 990 ₽. Если захочешь скидку - не больше 31% (цена от 680 ₽).',a.promo.oct],
+    ['Поднять цены, начиная с дешевых товаров','Для компенсации новой логистики нужно около +47 ₽ к цене. Подушка (890 ₽) и футболка (990 ₽) страдают сильнее всего. Эффект зависит от спроса: если покупатели не уйдут.',a.tariff.oct,'до '],
+    ['Разобраться с размером S у худи','Отзывы, размерная сетка, партия. Добавить в карточку «маломерит».',a.size.oct]];
+  $('#todo').innerHTML=items.map((x,i)=>`<li><span class="num">${i+1}</span><div><b>${x[0]}</b><div class="muted" style="font-size:14px">${x[1]}</div></div><div class="gain">${x[3]||''}+${K(x[2]).replace('-','')}/мес.</div></li>`).join('');
+  const three=a.ads.oct+a.stock.oct+a.promo.oct;
+  $('#sumTodo').innerHTML=`Первые три пункта вместе - около <b>+${K(three)} в месяц</b>. К октябрьским ${M(oct.profit)} это дает примерно <b>${M(oct.profit+three)}</b>, то есть почти августовский уровень (${M(aug.profit)}), хотя логистика останется дорогой.`;
+})();
+
+/* ---------- assumptions ---------- */
+$('#assump').innerHTML=[
+  'Прибыль = выручка минус возвраты, комиссия, логистика, закупка товара и реклама. Налоги, хранение, штрафы, упаковка и зарплата в выгрузках не указаны, поэтому не вошли.',
+  'Комиссия 25% при возврате возвращается. Доставка до покупателя и обратная доставка при возврате не возвращаются.',
+  'Возвращенный товар снова попадает на склад (закупка возвращается), кроме причины «брак» - такой товар считаю списанным.',
+  'Возвраты считаю по дате возврата, как они видны в личном кабинете. Тариф на доставку - по дате продажи, на обратную доставку - по дате возврата.',
+  'Реклама: потеря = лишние расходы на рекламу (против уровня августа) минус прибыль с лишних рекламных заказов. Все лишние заказы считаю пришедшими от рекламы - это похоже на правду: общие продажи подушки и термокружки выросли почти на столько же.',
+  'Акция: сравниваю с сентябрем (месяц с ценой 990 ₽ и новыми тарифами), приведенным к 31 дню.',
+  'Органайзер: продажи без остановки - 26,5 шт. в день (средние по августу - началу октября), потерянные дни - с 4 по 26 октября, прибыль со штуки - как в сентябре (с рекламой).',
+  'Худи S: лишние возвраты = возвраты размера S минус доля возвратов M и L в том же месяце. Один лишний возврат = недополученная прибыль 857 ₽ + доставка туда-обратно 185 ₽.',
+  'Логистику считаю на «здоровом» объеме (без лишних штук от акции и рекламы, с учетом продаж органайзера, которых не было), чтобы не считать одну и ту же потерю дважды.',
+  'Пропавшие 1 120 шт. органайзера в прибыль не включены (в выгрузках нет списаний), показаны отдельно. Минимум 1 120: значение получено из падения остатка 21.09 за вычетом продаж этого дня.',
+  'Данные проверила: нет дублей, возвраты не раньше продаж, возвратов не больше проданного, рекламных заказов не больше продаж. Прибыль посчитана двумя независимыми способами (по месяцам и по товарам), результаты совпали.'
+].map(t=>`<li>${t}</li>`).join('');
+
+/* ---------- tooltips ---------- */
+const tip=$('#tip');
+document.addEventListener('mousemove',e=>{
+  const t=e.target.closest&&e.target.closest('[data-tip]');
+  if(!t){tip.style.opacity=0;return}
+  tip.textContent=t.getAttribute('data-tip'); tip.style.opacity=1;
+  const w=tip.offsetWidth, x=Math.min(e.clientX+14, innerWidth-w-8);
+  tip.style.left=Math.max(8,x)+'px'; tip.style.top=(e.clientY+16)+'px';
+});
+document.addEventListener('mouseleave',()=>tip.style.opacity=0);
+})();
+</script>
+</body>
+</html>

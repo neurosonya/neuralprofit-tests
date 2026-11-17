@@ -1,0 +1,976 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Почему падает прибыль · август–октябрь 2026</title>
+<style>
+  :root{
+    --bg:#f4f6f8; --card:#ffffff; --ink:#16191d; --ink2:#5b6570; --ink3:#8b95a1;
+    --line:#e3e8ed; --red:#d92d20; --red-l:#fee4e2; --green:#0f9d58; --green-l:#e3f5ea;
+    --blue:#1f6feb; --blue-l:#e7f0fe; --amber:#b54708; --amber-l:#fef4e6; --violet:#6941c6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+  h1,h2,h3,h4{margin:0;font-weight:650;letter-spacing:-.01em}
+  h1{font-size:30px;line-height:1.2}
+  h2{font-size:22px;margin-bottom:4px}
+  h3{font-size:16px}
+  p{margin:8px 0}
+  .muted{color:var(--ink2)}
+  .small{font-size:13px}
+  .tiny{font-size:12px;color:var(--ink3)}
+  b,strong{font-weight:650}
+
+  /* ---------- header ---------- */
+  .hero{background:linear-gradient(135deg,#1b1f27 0%,#2b3240 100%);color:#fff;padding:34px 0 30px}
+  .hero h1{color:#fff}
+  .hero .sub{color:#b9c2cd;margin-top:8px;font-size:15px}
+  .hero-grid{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+  .verdict{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+    border-radius:12px;padding:14px 18px;max-width:520px}
+  .verdict .big{font-size:19px;font-weight:650;color:#fff}
+  .verdict .big em{font-style:normal;color:#ff9b93}
+  .verdict .big i{font-style:normal;color:#7ee2a8}
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px 20px}
+  nav a{color:var(--ink2);text-decoration:none;font-size:13px;font-weight:550;
+    padding:7px 11px;border-radius:8px;white-space:nowrap}
+  nav a:hover{background:var(--blue-l);color:var(--blue)}
+
+  /* ---------- layout ---------- */
+  section{padding:30px 0 6px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .sec-num{font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-l);
+    border-radius:6px;padding:3px 8px;letter-spacing:.04em}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g6{grid-template-columns:repeat(6,1fr)}
+  @media(max-width:1000px){.g4,.g6{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}}
+  @media(max-width:620px){.g4,.g6,.g3{grid-template-columns:1fr}h1{font-size:24px}}
+
+  /* ---------- kpi ---------- */
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .kpi .lbl{font-size:12.5px;color:var(--ink2);font-weight:550}
+  .kpi .val{font-size:25px;font-weight:680;margin-top:6px;letter-spacing:-.02em}
+  .kpi .row{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+  .chip{font-size:12px;font-weight:650;border-radius:20px;padding:2px 9px;white-space:nowrap}
+  .chip.bad{background:var(--red-l);color:var(--red)}
+  .chip.good{background:var(--green-l);color:var(--green)}
+  .chip.warn{background:var(--amber-l);color:var(--amber)}
+  .chip.neutral{background:#eef1f5;color:var(--ink2)}
+  .spark{margin-top:8px}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-size:12px;color:var(--ink2);font-weight:600;text-align:right;background:#fafbfc}
+  th:first-child,td:first-child{text-align:left}
+  th.l,td.l{text-align:left;white-space:normal}
+  tbody tr:hover{background:#fafbfc}
+  tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:none;background:#fafbfc}
+  .num{font-variant-numeric:tabular-nums}
+  .neg{color:var(--red);font-weight:650}
+  .pos{color:var(--green);font-weight:650}
+  .scroll{overflow-x:auto}
+  .heat-neg{background:#fdd9d6}
+  .heat-neg2{background:#fbb3ae}
+  .heat-pos{background:#e3f5ea}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px}
+  .b-crit{background:var(--red);color:#fff}
+  .b-high{background:#f79009;color:#fff}
+  .b-mid{background:#e9eef4;color:var(--ink2)}
+  .sku-tag{display:inline-block;font-size:11px;font-weight:700;color:var(--ink2);
+    background:#eef1f5;border-radius:5px;padding:1px 6px;margin-right:6px}
+
+  /* ---------- callouts ---------- */
+  .alert{border-radius:12px;padding:14px 16px;border:1px solid;display:flex;gap:12px;align-items:flex-start}
+  .alert.red{background:var(--red-l);border-color:#fbc7c3}
+  .alert.amber{background:var(--amber-l);border-color:#f5d9a8}
+  .alert.blue{background:var(--blue-l);border-color:#c7dbfd}
+  .alert.green{background:var(--green-l);border-color:#bfe6cd}
+  .alert .ic{font-size:18px;line-height:1.2}
+  .alert .t{font-weight:650;margin-bottom:2px}
+  .note{font-size:12.5px;color:var(--ink2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2);margin-top:10px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .chart{width:100%;display:block;overflow:visible}
+  .kv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .kv:last-child{border-bottom:none}
+  .kv .k{color:var(--ink2)}
+  .kv .v{font-weight:650;font-variant-numeric:tabular-nums}
+  .unitbar{display:flex;height:34px;border-radius:8px;overflow:hidden;font-size:11.5px;font-weight:650;color:#fff}
+  .unitbar div{display:flex;align-items:center;justify-content:center;min-width:0;overflow:hidden}
+  details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 16px;margin-top:12px}
+  summary{cursor:pointer;font-weight:650;font-size:14px}
+  details ul{margin:10px 0 4px;padding-left:20px;font-size:13.5px;color:var(--ink2)}
+  details li{margin:5px 0}
+  .step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .step .n{flex:0 0 30px;height:30px;border-radius:9px;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .step .body{flex:1;min-width:0}
+  .step .eff{flex:0 0 auto;text-align:right}
+  .step .eff .m{font-size:17px;font-weight:700;color:var(--green);white-space:nowrap}
+  footer{padding:26px 0 40px;color:var(--ink3);font-size:12.5px}
+  .flag{font-size:12px;font-weight:650;color:var(--amber);background:var(--amber-l);
+    border-radius:6px;padding:2px 8px;display:inline-block}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="tiny" style="color:#8d97a3;letter-spacing:.08em;font-weight:700">РАЗБОР ПРИБЫЛИ · МАРКЕТПЛЕЙС · 8 АРТИКУЛОВ</div>
+      <h1 style="margin-top:8px">Продажи растут, а прибыль падает.<br>Вот куда уходят деньги</h1>
+      <div class="sub">Август — октябрь 2026 · одежда и товары для дома · по 7 отчётам из личного кабинета</div>
+    </div>
+    <div class="verdict">
+      <div class="big">Выручка <i>+26%</i>, прибыль <em>−67%</em>, деньги на счету <em>−85%</em></div>
+      <div class="small" style="color:#b9c2cd;margin-top:6px">
+        Найдено 6 причин потерь на <b style="color:#fff">1 268 000 ₽ в месяц</b>
+        и одна разовая пропажа товара на <b style="color:#fff">392 000 ₽</b>.
+        Четыре действия возвращают ~<b style="color:#fff">876 000 ₽ прибыли в месяц</b>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav><div class="wrap">
+  <a href="#itogi">Итоги</a>
+  <a href="#prichiny">Все причины и суммы</a>
+  <a href="#reklama">Реклама</a>
+  <a href="#akciya">Акция −45%</a>
+  <a href="#polka">Пустая полка</a>
+  <a href="#vozvraty">Возвраты</a>
+  <a href="#tarify">Тарифы</a>
+  <a href="#dengi">Деньги</a>
+  <a href="#sku">Артикулы</a>
+  <a href="#plan">Что делать</a>
+  <a href="#metod">Как считали</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============ 1. ИТОГИ ============ -->
+<section id="itogi">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Что произошло за три месяца</h2>
+    <span class="muted small">октябрь к августу</span></div>
+  <div class="grid g6" id="kpis"></div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3>Выручка растёт, прибыль и деньги тают</h3>
+      <p class="small muted">Прибыль — то, что заработано. Деньги — то, что реально осталось после закупок товара.</p>
+      <div id="ch-main"></div>
+      <div class="legend" id="lg-main"></div>
+    </div>
+    <div class="card">
+      <h3>Куда девается маржа</h3>
+      <p class="small muted">Из каждых 100 ₽ выручки до возвратов. Зелёная полоса — ваша прибыль: 27 ₽ → 15 ₽ → 7 ₽.</p>
+      <div id="ch-struct"></div>
+      <div class="legend" id="lg-struct"></div>
+    </div>
+  </div>
+
+  <div class="alert red" style="margin-top:14px">
+    <div class="ic">⚠️</div>
+    <div>
+      <div class="t">Рост продаж — не рост бизнеса. Октябрьская прибавка выручки почти целиком сделана убыточными продажами.</div>
+      <div class="small">Прирост октября к сентябрю — +1 671 штука. Из них <b>+1 990 штук дала футболка A102 по акции</b>, которая приносит <b>минус 2 ₽ с каждой штуки</b> ещё до рекламы. Одновременно прибыльный органайзер B203 стоял с нулевым остатком 23 дня. Вы поменяли прибыльные продажи на убыточные — выручка выросла, прибыль упала.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. ПРИЧИНЫ ============ -->
+<section id="prichiny">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Все причины потерь и сколько стоит каждая</h2></div>
+
+  <div class="card">
+    <h3>Мост от прибыли августа к прибыли октября</h3>
+    <p class="small muted">Каждая причина посчитана отдельно, без двойного счёта. Сумма сходится точно.</p>
+    <div id="ch-waterfall"></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Прайс-лист ваших потерь</h3>
+    <div class="scroll" style="margin-top:10px"><table id="tbl-causes"></table></div>
+    <div class="note">Потери больше, чем падение прибыли (894 137 ₽), потому что рост продаж здоровых артикулов вернул вам <b>+374 226 ₽</b> и частично закрыл дыры. Строка «пропажа товара» — разовая потеря склада, она не в отчёте о прибыли, но деньги за этот товар вы заплатили.</div>
+  </div>
+
+  <div class="alert amber" style="margin-top:14px">
+    <div class="ic">🔎</div>
+    <div>
+      <div class="t">Отдельно: 21 сентября со склада исчезло 1 120 органайзеров B203</div>
+      <div class="small">Остаток упал с 1 480 до 335 штук за один день, при этом продали в тот день всего 25. Это не продажи и не возвраты — товар просто выбыл. <b>392 000 ₽ закупочных денег.</b> Именно это выбытие и обрушило полку в октябре. Нужно поднять акт сверки и открыть спор с маркетплейсом: недостача, утилизация или ошибка приёмки.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. РЕКЛАМА ============ -->
+<section id="reklama">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Причина №1 · Реклама двух артикулов сжигает 458 000 ₽ в месяц</h2>
+    <span class="chip bad">критично</span></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Доля рекламных расходов в выручке (ДРР)</h3>
+      <p class="small muted">У шести артикулов норма ~8%. У подушки B202 и термокружки C301 с сентября — 46%.</p>
+      <div id="ch-drr"></div>
+      <div class="legend" id="lg-drr"></div>
+    </div>
+    <div class="card">
+      <h3>Цена заказа с рекламы против маржи со штуки</h3>
+      <p class="small muted">Палка — сколько вы платите за заказ. Полоса — сколько зарабатываете со штуки до рекламы. Дальше полосы — работа в убыток.</p>
+      <div id="ch-cpo"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Что именно сломалось 1 сентября</h3>
+    <div class="scroll" style="margin-top:10px"><table id="tbl-ads"></table></div>
+    <div class="note">Заказы с рекламы у B202 и C301 выросли в 5 раз, а расход — в 10 раз. Каждый заказ с рекламы стоит дороже, чем вы зарабатываете с продажи: подушка — платите 790 ₽ при марже 258 ₽, кружка — 1 063 ₽ при марже 383 ₽. Это не «дорогой трафик», это покупка убытка в масштабе.</div>
+  </div>
+
+  <div class="alert blue" style="margin-top:14px">
+    <div class="ic">💡</div>
+    <div>
+      <div class="t">Важный нюанс: прямая реклама не окупается ни у одного артикула</div>
+      <div class="small">Если считать только заказы, которые пришли с рекламы, октябрьский минус по всем 8 артикулам — <b>554 890 ₽</b>. У «спокойных» артикулов реклама пока съедает лишь 8% выручки и остаётся терпимой, но запас прочности у них тонкий: поднимете ставку ещё немного — и они уйдут в минус следом за B202 и C301. Держите потолок ставки = маржа со штуки.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. АКЦИЯ ============ -->
+<section id="akciya">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Причина №2 · Акция −45% на футболку A102 продаёт в убыток</h2>
+    <span class="chip bad">критично</span></div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Куда уходит каждый рубль цены</h3>
+      <p class="small muted">Октябрьские тарифы: комиссия 25%, логистика 110 ₽, закупка 300 ₽.</p>
+      <div id="unit-bars"></div>
+      <div class="grid g2" style="margin-top:14px;gap:10px">
+        <div class="alert green" style="padding:12px 14px"><div><div class="t small">Было: 990 ₽</div><div class="small">Маржа <b>+332,5 ₽</b> со штуки до рекламы</div></div></div>
+        <div class="alert red" style="padding:12px 14px"><div><div class="t small">Стало: 544 ₽</div><div class="small">Маржа <b>−2 ₽</b> со штуки до рекламы</div></div></div>
+      </div>
+      <div class="note">Скидка 45% снимает 446 ₽ с цены, а комиссия возвращается только 111,5 ₽. Итог: <b>−334,5 ₽ маржи с каждой штуки</b>. Продать больше не помогает: при отрицательной марже рост объёма только умножает убыток.</div>
+    </div>
+    <div class="card">
+      <h3>Продажи A102 по дням: акция включилась 1 октября</h3>
+      <p class="small muted">Штук в день. Объём вырос в 4,4 раза — и весь этот объём убыточный.</p>
+      <div id="ch-a102"></div>
+      <div class="grid g3" style="margin-top:12px;gap:10px" id="a102-kpi"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Сколько стоило участие в акции</h3>
+    <div class="grid g2" style="gap:20px;margin-top:8px">
+      <div>
+        <div class="kv"><span class="k">Прибыль артикула в сентябре (без акции)</span><span class="v pos">+124 387 ₽</span></div>
+        <div class="kv"><span class="k">Прибыль артикула в октябре (с акцией)</span><span class="v neg">−151 202 ₽</span></div>
+        <div class="kv"><span class="k">Если бы октябрь шёл без акции: ~599 шт по 990 ₽</span><span class="v pos">+130 415 ₽</span></div>
+        <div class="kv"><span class="k"><b>Цена участия в акции</b></span><span class="v neg">−282 480 ₽</span></div>
+      </div>
+      <div>
+        <div class="kv"><span class="k">Продано по акции</span><span class="v">2 570 шт</span></div>
+        <div class="kv"><span class="k">Из них «лишних» (не купили бы без скидки)</span><span class="v">~1 971 шт</span></div>
+        <div class="kv"><span class="k">Закуплено товара под акцию в октябре</span><span class="v">2 518 шт · 755 400 ₽</span></div>
+        <div class="kv"><span class="k">Реклама на убыточный товар</span><span class="v neg">109 928 ₽</span></div>
+      </div>
+    </div>
+    <div class="note"><b>Какая скидка допустима.</b> С учётом рекламы 8% и возвратов 8,9% футболка выходит в ноль при цене ~652 ₽ — это скидка <b>34%</b>. Всё, что глубже, — убыток. Рабочий вариант: скидка не глубже <b>10%</b> (891 ₽) — тогда остаётся ~143 ₽ прибыли со штуки.</div>
+  </div>
+</section>
+
+<!-- ============ 5. ПОЛКА ============ -->
+<section id="polka">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Причина №3 · Самый выгодный товар стоял без остатка 23 дня</h2>
+    <span class="chip bad">критично</span></div>
+  <div class="card">
+    <h3>Органайзер B203: остаток на конец дня, август–октябрь</h3>
+    <p class="small muted">Маржа 507,5 ₽ со штуки — лучшая в ассортименте после худи и свитшота. Продавал ~27 штук в день.</p>
+    <div id="ch-b203"></div>
+    <div class="grid g4" style="margin-top:14px" id="b203-kpi"></div>
+    <div class="note">Хронология: 21.09 списалось 1 120 штук → остаток 335 → 3 октября полка опустела → <b>с 4 по 26 октября продаж почти нет</b> → 27 октября привезли 700 штук и продажи сразу вернулись к 27 шт/день. Спрос никуда не делся — вы просто не могли его обслужить. Реклама в дни пустой полки почти не тратилась (204 ₽), так что дело не в бюджете.</div>
+  </div>
+</section>
+
+<!-- ============ 6. ВОЗВРАТЫ ============ -->
+<section id="vozvraty">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Причина №4 · Возвраты: худи A101 маломерит в размере S</h2>
+    <span class="chip warn">важно</span></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Доля возвратов по артикулам</h3>
+      <p class="small muted">Считано по месяцу продажи, только «дозревшие» заказы (возврат приходит на 3–10 день).</p>
+      <div class="scroll"><table id="tbl-ret"></table></div>
+      <div class="note">У худи A101 доля возвратов удвоилась: 8,4% → 19,0% в сентябре. Ровно с 1 сентября появилась причина <b>«маломерит» — и все 74 возврата только в размере S</b>. Похоже, пришла партия с другой посадкой или в карточке неверные замеры.</div>
+    </div>
+    <div class="card">
+      <h3>Причины возвратов по месяцам</h3>
+      <p class="small muted">Штук. «Маломерит» — новая причина, которой в августе не было вовсе.</p>
+      <div id="ch-reasons"></div>
+      <div class="legend" id="lg-reasons"></div>
+      <div class="alert amber" style="margin-top:12px;padding:12px 14px">
+        <div><div class="t small">Сколько стоит один возврат худи</div>
+        <div class="small">1 133 ₽: потерянная маржа 967 ₽ + обратная логистика 75 ₽ + доля брака. Прямая логистика 110 ₽ уже уплачена и не возвращается. <b>50 лишних возвратов в октябре = 56 269 ₽.</b></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Брак: отдельная тихая утечка</h3>
+    <div class="grid g4" style="margin-top:10px" id="def-kpi"></div>
+    <div class="note">Возврат по причине «брак» — это не просто потерянная продажа: товар нельзя продать снова, закупочная стоимость сгорает. В октябре списано <b>100 штук на 39 450 ₽</b> против 37 штук и 19 150 ₽ в августе. Больше всего брака у футболки A102 (67 штук за период) — стоит проверить партию, которая пришла под акцию.</div>
+  </div>
+</section>
+
+<!-- ============ 7. ТАРИФЫ ============ -->
+<section id="tarify">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Причина №5 · Логистика подорожала на 47% с 1 сентября</h2>
+    <span class="chip warn">не отменить, но можно отбить</span></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Что изменилось в тарифах</h3>
+      <div class="scroll" style="margin-top:10px"><table id="tbl-tar"></table></div>
+      <div class="note">Комиссия не менялась — 25%. Подорожала именно логистика: доставка +35 ₽ за штуку, возврат +25 ₽. Для дешёвых товаров это удар сильнее всего: у футболки за 544 ₽ логистика теперь съедает 20% цены.</div>
+    </div>
+    <div class="card">
+      <h3>Сколько это стоит вам каждый месяц</h3>
+      <div id="ch-tar"></div>
+      <div class="alert blue" style="margin-top:12px;padding:12px 14px">
+        <div><div class="t small">Как отбить</div>
+        <div class="small">Чтобы компенсировать +35 ₽ логистики при комиссии 25%, цену надо поднять на <b>47 ₽</b> (35 ÷ 0,75). Это +5% к подушке и +4% к кружке. Второй путь — уменьшить габариты упаковки: тариф считается по объёму.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. ДЕНЬГИ ============ -->
+<section id="dengi">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Почему на счету пусто, хотя прибыль ещё есть</h2></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Прибыль, закупки и остаток денег</h3>
+      <p class="small muted">Прибыль — «на бумаге». Деньги — после оплаты закупок товара.</p>
+      <div id="ch-cash"></div>
+      <div class="legend" id="lg-cash"></div>
+    </div>
+    <div class="card">
+      <h3>Три причины, почему деньги кончаются быстрее прибыли</h3>
+      <div class="step"><div class="n">1</div><div class="body"><b>Закупили 755 400 ₽ футболки под убыточную акцию.</b><div class="small muted">В октябре закупок на 2 572 400 ₽ против 1 778 000 ₽ в сентябре. Деньги ушли в товар, который продаётся ниже себестоимости с учётом комиссии и логистики.</div></div></div>
+      <div class="step"><div class="n">2</div><div class="body"><b>392 000 ₽ товара просто исчезли со склада.</b><div class="small muted">1 120 органайзеров B203 оплачены, но не проданы и не возвращены. Эти деньги не вернутся сами — нужен спор с маркетплейсом.</div></div></div>
+      <div class="step"><div class="n">3</div><div class="body"><b>Реклама оплачивается сразу, а выручка приходит с задержкой.</b><div class="small muted">959 832 ₽ в октябре ушли живыми деньгами, и почти половина — на два убыточных артикула.</div></div></div>
+      <div class="note">Запасы на складе почти не изменились: 4,36 млн ₽ в августе → 3,98 млн ₽ в октябре (по закупочным ценам). Значит деньги не «заморожены в остатках» — они потеряны в убыточных продажах и в исчезнувшем товаре.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. АРТИКУЛЫ ============ -->
+<section id="sku">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Разбор по каждому артикулу</h2></div>
+  <div class="card">
+    <h3>Прибыль по артикулам, ₽</h3>
+    <p class="small muted">Красное — убыток. Три артикула из восьми работают в минус.</p>
+    <div class="scroll" style="margin-top:10px"><table id="tbl-sku"></table></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Юнит-экономика октября: сколько зарабатывает одна штука</h3>
+    <p class="small muted">До рекламы и возвратов. Это ваш потолок ставки за заказ с рекламы.</p>
+    <div class="scroll" style="margin-top:10px"><table id="tbl-unit"></table></div>
+    <div class="note">Читать так: у подушки B202 со штуки остаётся 258 ₽. Значит заказ с рекламы дороже 258 ₽ — убыток, а вся реклама на артикул не должна превышать 29% выручки. Сейчас 46%.</div>
+  </div>
+</section>
+
+<!-- ============ 10. ПЛАН ============ -->
+<section id="plan">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Что делать: порядок действий</h2>
+    <span class="chip good">+876 000 ₽ прибыли в месяц</span></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Первые четыре шага</h3>
+      <div id="plan-steps"></div>
+      <div class="alert green" style="margin-top:14px">
+        <div class="ic">📈</div>
+        <div><div class="t">Прибыль октября была 442 777 ₽. После этих четырёх шагов — около 1 318 000 ₽ в месяц.</div>
+        <div class="small">Это уровень августа. Выручка при этом станет ~5,75 млн ₽ вместо 6,25 млн — и это правильно: вы перестанете покупать убыточные продажи.</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Дальше, на этой же неделе</h3>
+      <div class="step"><div class="n">5</div><div class="body"><b>Открыть спор по пропаже 1 120 органайзеров</b><div class="small muted">Запросить акт сверки и движение товара за 21.09, поднять документы приёмки. К возмещению 392 000 ₽ закупочной стоимости.</div></div><div class="eff"><div class="m">392 000 ₽</div><div class="tiny">разово</div></div></div>
+      <div class="step"><div class="n">6</div><div class="body"><b>Поднять цены на 47–50 ₽ там, где маржа тонкая</b><div class="small muted">Подушка 890→940, кружка 1190→1240, футболка 990→1040. Компенсирует рост логистики без потери позиции в выдаче.</div></div><div class="eff"><div class="m">до 204 000 ₽</div><div class="tiny">в месяц</div></div></div>
+      <div class="step"><div class="n">7</div><div class="body"><b>Ввести правило «стоп-кран» для рекламы</b><div class="small muted">Потолок ставки за заказ = маржа со штуки (таблица выше). Проверять ДРР по каждому артикулу раз в неделю, а не общий по кабинету — общий ДРР 15% выглядел терпимо и спрятал два артикула с 46%.</div></div><div class="eff"><div class="m">защита</div><div class="tiny">от повторения</div></div></div>
+      <div class="step"><div class="n">8</div><div class="body"><b>Страховой запас и автозаказ по ходовым артикулам</b><div class="small muted">Для B203 держать минимум 14 дней продаж (~380 шт) и заказывать при остатке ниже 21 дня. Проверить партию A102 на брак и замеры худи S.</div></div><div class="eff"><div class="m">защита</div><div class="tiny">от пустой полки</div></div></div>
+      <div class="note">Правило на будущее: перед входом в любую акцию считайте маржу со штуки после комиссии, логистики и закупки. Если она отрицательная — акция не «поднимает продажи», а ускоряет потерю денег.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. МЕТОД ============ -->
+<section id="metod">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Как считали и что стоит проверить</h2></div>
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <h3>Формула прибыли</h3>
+        <p class="small muted">Выручка − возвраты − комиссия 25% − прямая логистика (за все проданные штуки) − обратная логистика (за возвраты) − закупка проданного − списание брака − реклама.</p>
+        <ul class="small muted" style="padding-left:18px">
+          <li>Комиссия и логистика берутся по тарифу на дату события: до 31.08 логистика 75/50 ₽, с 01.09 — 110/75 ₽.</li>
+          <li>Возвраты отнесены к месяцу, когда деньги реально ушли (дата возврата). Возврат приходит на 3–10 день после продажи.</li>
+          <li>Возвращённый товар считается вернувшимся в продажу, кроме брака — брак списывается по закупочной цене.</li>
+          <li>Прибыль до налогов, хранения, приёмки и постоянных расходов — их нет в выгрузках.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Как посчитаны потери</h3>
+        <ul class="small muted" style="padding-left:18px">
+          <li><b>Реклама:</b> фактический расход минус «норма» — августовский ДРР этого же артикула, умноженный на октябрьскую выручку.</li>
+          <li><b>Акция:</b> прибыль артикула против сценария «без акции» — сентябрьский темп продаж (19,3 шт/день) по цене 990 ₽, те же тарифы, реклама и доля возвратов.</li>
+          <li><b>Пустая полка:</b> 23 дня × сентябрьский темп 27,5 шт/день минус фактически проданное = 631 недопроданная штука × 371 ₽ прибыли со штуки.</li>
+          <li><b>Возвраты:</b> прирост доли возвратов к августу × октябрьские продажи × стоимость одного возврата.</li>
+          <li><b>Логистика:</b> +35 ₽ × все проданные штуки + 25 ₽ × все возвраты.</li>
+        </ul>
+      </div>
+    </div>
+    <details>
+      <summary>Проверки данных и допущения, которые могут сдвинуть цифры</summary>
+      <ul>
+        <li><b>Данные чистые:</b> 1 260 строк продаж, 482 возврата, 714 строк рекламы, 736 остатков — 92 дня без пропусков, дубликатов нет, возвратов раньше продажи нет, заказы с рекламы нигде не превышают продажи.</li>
+        <li><b>Остатки не учитывают возврат товара на склад.</b> Движение остатков сходится ровно как «остаток − продажи + поставки». Если возвращённый товар на самом деле не возвращается в продажу, прибыль октября ниже ещё на <b>159 650 ₽</b> (август — на 55 300 ₽). Это стоит уточнить в кабинете: цифры потерь от возвратов тогда вырастут.</li>
+        <li><b>Цена акции округлена:</b> 990 × 0,55 = 544,50 ₽, в отчёте 544 ₽. На выводы не влияет.</li>
+        <li><b>Заказы с рекламы считаются прямыми.</b> Если реклама приводит повторные и органические заказы, реальная окупаемость выше — но у B202 и C301 разрыв слишком велик (в 3 раза), чтобы это его объяснило.</li>
+        <li><b>Темп продаж B203 в октябре проверен:</b> в дни с товаром продавали 27,1 шт/день против 27,5 в сентябре — оценка недопроданного устойчива.</li>
+        <li><b>Пропажа 1 120 штук</b> — единственное движение остатка, не объясняемое продажами и поставками. Природа (недостача, утилизация, изъятие, ошибка) из выгрузки не видна, нужен акт сверки.</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<footer>
+  Отчёт собран по файлам: продажи.csv, возвраты.csv, реклама.csv, остатки.csv, тарифы.csv, себестоимость.csv, акции.csv · период 01.08.2026–31.10.2026 · все суммы в рублях.
+</footer>
+</main>
+
+<script>
+const D = {"months": ["2026-08", "2026-09", "2026-10"], "skus": ["A101", "A102", "A103", "B201", "B202", "B203", "C301", "C302"], "P": {"2026-08": {"units": 3317, "rev": 4962330.0, "ret_units": 137, "ret_rev": 220830.0, "def_units": 37, "comm": 1185375.0, "fwd": 248775.0, "rev_log": 6850.0, "cogs": 1552850.0, "def_cogs": 19150.0, "ads": 391586.0, "ad_orders": 563, "clicks": 130703, "imp": 4114981, "net_units": 3180, "net_rev": 4741500.0, "profit": 1336914.0, "drr": 7.891172090530054, "ret_rate": 4.13023816701839, "margin_pct": 28.19601391964568, "cpo": 695.5346358792185}, "2026-09": {"units": 3891, "rev": 5671090.0, "ret_units": 251, "ret_rev": 422690.0, "def_units": 46, "comm": 1312100.0, "fwd": 428010.0, "rev_log": 18825.0, "cogs": 1713500.0, "def_cogs": 24450.0, "ads": 874491.0, "ad_orders": 1060, "clicks": 301022, "imp": 9264824, "net_units": 3640, "net_rev": 5248400.0, "profit": 877024.0, "drr": 15.420157324253362, "ret_rate": 6.450783860190182, "margin_pct": 16.710311714046185, "cpo": 824.9915094339623}, "2026-10": {"units": 5562, "rev": 6247360.0, "ret_units": 390, "ret_rev": 511588.0, "def_units": 100, "comm": 1433943.0, "fwd": 611820.0, "rev_log": 29250.0, "cogs": 2218700.0, "def_cogs": 39450.0, "ads": 959832.0, "ad_orders": 1409, "clicks": 334203, "imp": 10144741, "net_units": 5172, "net_rev": 5735772.0, "profit": 442777.0, "drr": 15.363801669825333, "ret_rate": 7.011866235167206, "margin_pct": 7.719571140554401, "cpo": 681.2150461320085}}, "PS": {"2026-08|A101": {"units": 464, "rev": 1155360.0, "ret_units": 28, "ret_rev": 69720.0, "def_units": 5, "comm": 271410.0, "fwd": 34800.0, "rev_log": 1400.0, "cogs": 387900.0, "def_cogs": 4500.0, "ads": 90149.0, "ad_orders": 80, "clicks": 29652, "imp": 954358, "net_units": 436, "net_rev": 1085640.0, "profit": 295481.0, "drr": 7.802676222129899, "ret_rate": 6.0344827586206895, "margin_pct": 27.217217493828528, "cpo": 1126.8625}, "2026-08|A102": {"units": 559, "rev": 553410.0, "ret_units": 28, "ret_rev": 27720.0, "def_units": 6, "comm": 131422.5, "fwd": 41925.0, "rev_log": 1400.0, "cogs": 157500.0, "def_cogs": 1800.0, "ads": 43855.0, "ad_orders": 99, "clicks": 14722, "imp": 459374, "net_units": 531, "net_rev": 525690.0, "profit": 147787.5, "drr": 7.924504436132343, "ret_rate": 5.008944543828265, "margin_pct": 28.113051418136166, "cpo": 442.979797979798}, "2026-08|A103": {"units": 324, "rev": 644760.0, "ret_units": 24, "ret_rev": 47760.0, "def_units": 5, "comm": 149250.0, "fwd": 24300.0, "rev_log": 1200.0, "cogs": 206500.0, "def_cogs": 3500.0, "ads": 52828.0, "ad_orders": 54, "clicks": 17710, "imp": 564955, "net_units": 300, "net_rev": 597000.0, "profit": 159422.0, "drr": 8.193436317389416, "ret_rate": 7.4074074074074066, "margin_pct": 26.70385259631491, "cpo": 978.2962962962963}, "2026-08|B201": {"units": 299, "rev": 505310.0, "ret_units": 8, "ret_rev": 13520.0, "def_units": 5, "comm": 122947.5, "fwd": 22425.0, "rev_log": 400.0, "cogs": 171600.0, "def_cogs": 3000.0, "ads": 37215.0, "ad_orders": 47, "clicks": 12101, "imp": 382551, "net_units": 291, "net_rev": 491790.0, "profit": 134202.5, "drr": 7.364785972967089, "ret_rate": 2.6755852842809364, "margin_pct": 27.28857845828504, "cpo": 791.8085106382979}, "2026-08|B202": {"units": 321, "rev": 285690.0, "ret_units": 7, "ret_rev": 6230.0, "def_units": 1, "comm": 69865.0, "fwd": 24075.0, "rev_log": 350.0, "cogs": 93900.0, "def_cogs": 300.0, "ads": 22277.0, "ad_orders": 53, "clicks": 7645, "imp": 232051, "net_units": 314, "net_rev": 279460.0, "profit": 68693.0, "drr": 7.797612797087752, "ret_rate": 2.1806853582554515, "margin_pct": 24.58061976669291, "cpo": 420.3207547169811}, "2026-08|B203": {"units": 757, "rev": 976530.0, "ret_units": 23, "ret_rev": 29670.0, "def_units": 9, "comm": 236715.0, "fwd": 56775.0, "rev_log": 1150.0, "cogs": 253750.0, "def_cogs": 3150.0, "ads": 78790.0, "ad_orders": 138, "clicks": 26178, "imp": 825374, "net_units": 734, "net_rev": 946860.0, "profit": 316530.0, "drr": 8.068364515171064, "ret_rate": 3.038309114927345, "margin_pct": 33.429440466383625, "cpo": 570.9420289855072}, "2026-08|C301": {"units": 367, "rev": 436730.0, "ret_units": 13, "ret_rev": 15470.0, "def_units": 4, "comm": 105315.0, "fwd": 27525.0, "rev_log": 650.0, "cogs": 140000.0, "def_cogs": 1600.0, "ads": 34998.0, "ad_orders": 59, "clicks": 11882, "imp": 370564, "net_units": 354, "net_rev": 421260.0, "profit": 111172.0, "drr": 8.01364687564399, "ret_rate": 3.5422343324250685, "margin_pct": 26.39035275127, "cpo": 593.1864406779661}, "2026-08|C302": {"units": 226, "rev": 404540.0, "ret_units": 6, "ret_rev": 10740.0, "def_units": 2, "comm": 98450.0, "fwd": 16950.0, "rev_log": 300.0, "cogs": 141700.0, "def_cogs": 1300.0, "ads": 31474.0, "ad_orders": 33, "clicks": 10813, "imp": 325754, "net_units": 220, "net_rev": 393800.0, "profit": 103626.0, "drr": 7.780194789143224, "ret_rate": 2.6548672566371683, "margin_pct": 26.31437277805993, "cpo": 953.7575757575758}, "2026-09|A101": {"units": 522, "rev": 1299780.0, "ret_units": 84, "ret_rev": 209160.0, "def_units": 11, "comm": 272655.0, "fwd": 57420.0, "rev_log": 6300.0, "cogs": 384300.0, "def_cogs": 9900.0, "ads": 99285.0, "ad_orders": 94, "clicks": 34038, "imp": 1036727, "net_units": 438, "net_rev": 1090620.0, "profit": 260760.0, "drr": 7.638600378525597, "ret_rate": 16.091954022988507, "margin_pct": 23.90933597403312, "cpo": 1056.223404255319}, "2026-09|A102": {"units": 580, "rev": 574200.0, "ret_units": 44, "ret_rev": 43560.0, "def_units": 7, "comm": 132660.0, "fwd": 63800.0, "rev_log": 3300.0, "cogs": 158700.0, "def_cogs": 2100.0, "ads": 45693.0, "ad_orders": 106, "clicks": 15574, "imp": 478975, "net_units": 536, "net_rev": 530640.0, "profit": 124387.0, "drr": 7.9576802507836994, "ret_rate": 7.586206896551724, "margin_pct": 23.44093924317805, "cpo": 431.0660377358491}, "2026-09|A103": {"units": 312, "rev": 620880.0, "ret_units": 17, "ret_rev": 33830.0, "def_units": 1, "comm": 146762.5, "fwd": 34320.0, "rev_log": 1275.0, "cogs": 205800.0, "def_cogs": 700.0, "ads": 49710.0, "ad_orders": 52, "clicks": 17865, "imp": 534945, "net_units": 295, "net_rev": 587050.0, "profit": 148482.5, "drr": 8.006378044066487, "ret_rate": 5.448717948717949, "margin_pct": 25.29299037560685, "cpo": 955.9615384615385}, "2026-09|B201": {"units": 358, "rev": 605020.0, "ret_units": 14, "ret_rev": 23660.0, "def_units": 5, "comm": 145340.0, "fwd": 39380.0, "rev_log": 1050.0, "cogs": 203400.0, "def_cogs": 3000.0, "ads": 47576.0, "ad_orders": 56, "clicks": 15714, "imp": 486472, "net_units": 344, "net_rev": 581360.0, "profit": 141614.0, "drr": 7.86354170110079, "ret_rate": 3.910614525139665, "margin_pct": 24.35908903261318, "cpo": 849.5714285714286}, "2026-09|B202": {"units": 524, "rev": 466360.0, "ret_units": 23, "ret_rev": 20470.0, "def_units": 6, "comm": 111472.5, "fwd": 57640.0, "rev_log": 1725.0, "cogs": 148500.0, "def_cogs": 1800.0, "ads": 212205.0, "ad_orders": 275, "clicks": 76991, "imp": 2297455, "net_units": 501, "net_rev": 445890.0, "profit": -87452.5, "drr": 45.50240157817995, "ret_rate": 4.3893129770992365, "margin_pct": -19.61302114871381, "cpo": 771.6545454545454}, "2026-09|B203": {"units": 826, "rev": 1065540.0, "ret_units": 33, "ret_rev": 42570.0, "def_units": 4, "comm": 255742.5, "fwd": 90860.0, "rev_log": 2475.0, "cogs": 276150.0, "def_cogs": 1400.0, "ads": 81741.0, "ad_orders": 152, "clicks": 28538, "imp": 864727, "net_units": 793, "net_rev": 1022970.0, "profit": 314601.5, "drr": 7.67132158342249, "ret_rate": 3.9951573849878934, "margin_pct": 30.75373666871951, "cpo": 537.7697368421053}, "2026-09|C301": {"units": 562, "rev": 668780.0, "ret_units": 25, "ret_rev": 29750.0, "def_units": 9, "comm": 159757.5, "fwd": 61820.0, "rev_log": 1875.0, "cogs": 211200.0, "def_cogs": 3600.0, "ads": 308616.0, "ad_orders": 296, "clicks": 101886, "imp": 3245210, "net_units": 537, "net_rev": 639030.0, "profit": -107838.5, "drr": 46.14611680971321, "ret_rate": 4.448398576512456, "margin_pct": -16.875342315697228, "cpo": 1042.6216216216217}, "2026-09|C302": {"units": 207, "rev": 370530.0, "ret_units": 11, "ret_rev": 19690.0, "def_units": 3, "comm": 87710.0, "fwd": 22770.0, "rev_log": 825.0, "cogs": 125450.0, "def_cogs": 1950.0, "ads": 29665.0, "ad_orders": 29, "clicks": 10416, "imp": 320313, "net_units": 196, "net_rev": 350840.0, "profit": 82470.0, "drr": 8.006099371171025, "ret_rate": 5.314009661835748, "margin_pct": 23.50644168281838, "cpo": 1022.9310344827586}, "2026-10|A101": {"units": 604, "rev": 1503960.0, "ret_units": 106, "ret_rev": 263940.0, "def_units": 6, "comm": 310005.0, "fwd": 66440.0, "rev_log": 7950.0, "cogs": 442800.0, "def_cogs": 5400.0, "ads": 124930.0, "ad_orders": 107, "clicks": 43122, "imp": 1319466, "net_units": 498, "net_rev": 1240020.0, "profit": 282495.0, "drr": 8.306736881300035, "ret_rate": 17.549668874172188, "margin_pct": 22.781487395364593, "cpo": 1167.5700934579438}, "2026-10|A102": {"units": 2570, "rev": 1398080.0, "ret_units": 181, "ret_rev": 102478.0, "def_units": 54, "comm": 323900.5, "fwd": 282700.0, "rev_log": 13575.0, "cogs": 700500.0, "def_cogs": 16200.0, "ads": 109928.0, "ad_orders": 500, "clicks": 39222, "imp": 1174378, "net_units": 2389, "net_rev": 1295602.0, "profit": -151201.5, "drr": 7.862783245593957, "ret_rate": 7.042801556420233, "margin_pct": -11.670366362509474, "cpo": 219.856}, "2026-10|A103": {"units": 359, "rev": 714410.0, "ret_units": 24, "ret_rev": 47760.0, "def_units": 6, "comm": 166662.5, "fwd": 39490.0, "rev_log": 1800.0, "cogs": 230300.0, "def_cogs": 4200.0, "ads": 57388.0, "ad_orders": 57, "clicks": 19794, "imp": 598092, "net_units": 335, "net_rev": 666650.0, "profit": 166809.5, "drr": 8.032922271524754, "ret_rate": 6.685236768802229, "margin_pct": 25.02205055126378, "cpo": 1006.8070175438596}, "2026-10|B201": {"units": 464, "rev": 784160.0, "ret_units": 15, "ret_rev": 25350.0, "def_units": 7, "comm": 189702.5, "fwd": 51040.0, "rev_log": 1125.0, "cogs": 265200.0, "def_cogs": 4200.0, "ads": 62652.0, "ad_orders": 81, "clicks": 20158, "imp": 650342, "net_units": 449, "net_rev": 758810.0, "profit": 184890.5, "drr": 7.989695980412161, "ret_rate": 3.2327586206896552, "margin_pct": 24.36584915855089, "cpo": 773.4814814814815}, "2026-10|B202": {"units": 541, "rev": 481490.0, "ret_units": 25, "ret_rev": 22250.0, "def_units": 13, "comm": 114810.0, "fwd": 59510.0, "rev_log": 1875.0, "cogs": 150900.0, "def_cogs": 3900.0, "ads": 222704.0, "ad_orders": 282, "clicks": 77068, "imp": 2332916, "net_units": 516, "net_rev": 459240.0, "profit": -94459.0, "drr": 46.25308936841886, "ret_rate": 4.621072088724584, "margin_pct": -20.568548035885375, "cpo": 789.7304964539007}, "2026-10|B203": {"units": 219, "rev": 282510.0, "ret_units": 10, "ret_rev": 12900.0, "def_units": 6, "comm": 67402.5, "fwd": 24090.0, "rev_log": 750.0, "cogs": 71050.0, "def_cogs": 2100.0, "ads": 22963.0, "ad_orders": 40, "clicks": 6862, "imp": 238131, "net_units": 209, "net_rev": 269610.0, "profit": 81254.5, "drr": 8.12820785104952, "ret_rate": 4.5662100456621, "margin_pct": 30.13779162493973, "cpo": 574.075}, "2026-10|C301": {"units": 597, "rev": 710430.0, "ret_units": 25, "ret_rev": 29750.0, "def_units": 7, "comm": 170170.0, "fwd": 65670.0, "rev_log": 1875.0, "cogs": 226000.0, "def_cogs": 2800.0, "ads": 329553.0, "ad_orders": 310, "clicks": 117362, "imp": 3517467, "net_units": 572, "net_rev": 680680.0, "profit": -115388.0, "drr": 46.38782146024239, "ret_rate": 4.1876046901172534, "margin_pct": -16.951871657754012, "cpo": 1063.074193548387}, "2026-10|C302": {"units": 208, "rev": 372320.0, "ret_units": 4, "ret_rev": 7160.0, "def_units": 1, "comm": 91290.0, "fwd": 22880.0, "rev_log": 300.0, "cogs": 131950.0, "def_cogs": 650.0, "ads": 29714.0, "ad_orders": 32, "clicks": 10615, "imp": 313949, "net_units": 204, "net_rev": 365160.0, "profit": 88376.0, "drr": 7.98076923076923, "ret_rate": 1.9230769230769231, "margin_pct": 24.20199364662066, "cpo": 928.5625}}, "cost": {"A101": 900.0, "A102": 300.0, "A103": 700.0, "B201": 600.0, "B202": 300.0, "B203": 350.0, "C301": 400.0, "C302": 650.0}, "name": {"A101": "Худи оверсайз", "A102": "Футболка базовая", "A103": "Свитшот", "B201": "Плед флисовый", "B202": "Подушка декоративная", "B203": "Органайзер для косметики", "C301": "Термокружка", "C302": "Набор полотенец"}, "price_oct": {"A101": 2490.0, "A102": 544.0, "A103": 1990.0, "B201": 1690.0, "B202": 890.0, "B203": 1290.0, "C301": 1190.0, "C302": 1790.0}, "tar_eff": {"2026-08": 119520.0, "2026-09": 142460.0, "2026-10": 204420.0}, "ad_norm": {"A101": 0.07802676222129899, "A102": 0.07924504436132343, "A103": 0.08193436317389416, "B201": 0.07364785972967089, "B202": 0.07797612797087752, "B203": 0.08068364515171064, "C301": 0.0801364687564399, "C302": 0.07780194789143224}, "ad_excess": {"2026-08": {"A101": 0.0, "A102": 0.0, "A103": 0.0, "B201": 0.0, "B202": 0.0, "B203": 0.0, "C301": 0.0, "C302": 0.0}, "2026-09": {"A101": -2132.625, "A102": 190.49552772808966, "A103": -1161.4074074074088, "B201": 3017.5719063545184, "B202": 175840.05295950157, "B203": -4230.651254953758, "C301": 255022.33242506813, "C302": 837.0442477876095}, "2026-10": {"A101": 7580.870689655174, "A102": -862.9116206790641, "A103": -1146.7283950617275, "B201": 4900.294314381274, "B202": 185159.27414330217, "B203": 169.06340819022807, "C301": 272621.6485013624, "C302": 746.7787610619453}}, "mature": {"2026-08|A101": [464, 39, 8.405172413793103], "2026-08|A102": [559, 38, 6.797853309481217], "2026-08|A103": [324, 31, 9.5679012345679], "2026-08|B201": [299, 14, 4.682274247491638], "2026-08|B202": [321, 9, 2.803738317757009], "2026-08|B203": [757, 28, 3.6988110964332894], "2026-08|C301": [367, 18, 4.904632152588556], "2026-08|C302": [226, 10, 4.424778761061947], "2026-09|A101": [522, 99, 18.96551724137931], "2026-09|A102": [580, 43, 7.413793103448276], "2026-09|A103": [312, 14, 4.487179487179487], "2026-09|B201": [358, 10, 2.793296089385475], "2026-09|B202": [524, 25, 4.770992366412214], "2026-09|B203": [826, 37, 4.479418886198547], "2026-09|C301": [562, 22, 3.9145907473309607], "2026-09|C302": [207, 9, 4.3478260869565215], "2026-10|A101": [403, 67, 16.62531017369727], "2026-10|A102": [1728, 153, 8.854166666666668], "2026-10|A103": [232, 19, 8.189655172413794], "2026-10|B201": [311, 11, 3.536977491961415], "2026-10|B202": [366, 20, 5.46448087431694], "2026-10|B203": [88, 1, 1.1363636363636365], "2026-10|C301": [413, 20, 4.842615012106537], "2026-10|C302": [141, 2, 1.4184397163120568]}, "promo": {"cf": 130415.47754467055, "act": -152064.41162067908, "eff": -282479.88916534965, "cf_units": 599.3333333333333, "base_daily": 19.333333333333332, "price_before": 990, "price_after": 544, "discount": 45}, "ret_eff": {"A101": 56269.20342812094, "A102": 13869.584073187947, "A103": 0.0, "B201": 0.0, "B202": 7939.94000445701, "B203": 0.0, "C301": 0.0, "C302": 0.0}, "ret_detail": {"A101": [8.405172413793103, 16.62531017369727, 49.64963206982116, 1133.3256880733945], "A102": [6.797853309481217, 8.854166666666668, 52.84725327966611, 262.44664031620556], "A103": [9.5679012345679, 8.189655172413794, 0, 996.7307692307693], "B201": [4.682274247491638, 3.536977491961415, 0, 1018.1756756756756], "B202": [2.803738317757009, 5.46448087431694, 14.394617230989223, 551.5909090909091], "B203": [3.6988110964332894, 1.1363636363636365, 0, 793.2575757575758], "C301": [4.904632152588556, 4.842615012106537, 0, 694.484126984127], "C302": [4.424778761061947, 1.4184397163120568, 0, 953.2142857142857]}, "ret_total": {"2026-08": 108002.20903299264, "2026-09": 204657.44373501194, "2026-10": 249726.84723199543}, "sens": {"2026-08": 55300.0, "2026-09": 120250.0, "2026-10": 159650.0}, "oos": {"days": 23, "lost_units": 631.2666666666667, "ppu": 371.0251141552511, "eff": 234215.78706240485, "sept_daily": 27.533333333333335, "oct_instock_avg": 27.125}, "lost_goods": 392000.0, "lost_units_goods": 1120, "effects": [["Реклама: подушка B202 и термокружка C301", -457780.9226446646], ["Акция −45% на футболку A102", -282479.88916534965], ["Нет товара B203: 23 дня пустой полки", -234215.78706240485], ["Подорожала логистика с 1 сентября", -204420.0], ["Выросли возвраты (худи A101, размер S)", -78078.7275057659], ["Реклама прочих артикулов", -11387.36715754783]], "resid": 374225.6935357328, "purch": {"2026-08": 2051100.0, "2026-09": 1778000.0, "2026-10": 2572400.0}, "cash": {"2026-08": 857814.0, "2026-09": 836974.0, "2026-10": 128527.0}, "inv": {"2026-08": 4359650.0, "2026-09": 3863000.0, "2026-10": 3978150.0}, "supply_sku": {"A101|2026-08": 590, "A101|2026-09": 526, "A101|2026-10": 578, "A102|2026-08": 724, "A102|2026-09": 589, "A102|2026-10": 2518, "A103|2026-08": 373, "A103|2026-09": 324, "A103|2026-10": 346, "B201|2026-08": 368, "B201|2026-09": 374, "B201|2026-10": 446, "B202|2026-08": 405, "B202|2026-09": 538, "B202|2026-10": 554, "B203|2026-08": 983, "B203|2026-09": 408, "B203|2026-10": 700, "C301|2026-08": 445, "C301|2026-09": 590, "C301|2026-10": 608, "C302|2026-08": 273, "C302|2026-09": 210, "C302|2026-10": 204}, "unit": {"A101": {"price": 2490.0, "comm": 622.5, "fwd": 110.0, "cost": 900.0, "margin": 857.5}, "A102": {"price": 544.0, "comm": 136.0, "fwd": 110.0, "cost": 300.0, "margin": -2.0}, "A103": {"price": 1990.0, "comm": 497.5, "fwd": 110.0, "cost": 700.0, "margin": 682.5}, "B201": {"price": 1690.0, "comm": 422.5, "fwd": 110.0, "cost": 600.0, "margin": 557.5}, "B202": {"price": 890.0, "comm": 222.5, "fwd": 110.0, "cost": 300.0, "margin": 257.5}, "B203": {"price": 1290.0, "comm": 322.5, "fwd": 110.0, "cost": 350.0, "margin": 507.5}, "C301": {"price": 1190.0, "comm": 297.5, "fwd": 110.0, "cost": 400.0, "margin": 382.5}, "C302": {"price": 1790.0, "comm": 447.5, "fwd": 110.0, "cost": 650.0, "margin": 582.5}}, "fix": {"B202": {"save": 185159.27414330217, "lost_orders": 229, "lost_margin": 58967.5, "net": 126191.77414330217}, "C301": {"save": 272621.6485013624, "lost_orders": 251, "lost_margin": 96007.5, "net": 176614.14850136242}, "A102": {"net": 282479.88916534965}, "A101": {"net": 56269.20342812094}, "B203": {"net": 234215.78706240485}, "tariff": {"need_price": 46.666666666666664}}, "b203_stock": [["01.08", 1374, 26], ["02.08", 1349, 25], ["03.08", 1522, 19], ["04.08", 1500, 22], ["05.08", 1478, 22], ["06.08", 1453, 25], ["07.08", 1429, 24], ["08.08", 1400, 29], ["09.08", 1376, 24], ["10.08", 1551, 19], ["11.08", 1526, 25], ["12.08", 1499, 27], ["13.08", 1469, 30], ["14.08", 1446, 23], ["15.08", 1421, 25], ["16.08", 1394, 27], ["17.08", 1565, 26], ["18.08", 1546, 19], ["19.08", 1524, 22], ["20.08", 1498, 26], ["21.08", 1469, 29], ["22.08", 1443, 26], ["23.08", 1419, 24], ["24.08", 1586, 32], ["25.08", 1561, 25], ["26.08", 1536, 25], ["27.08", 1519, 17], ["28.08", 1500, 19], ["29.08", 1473, 27], ["30.08", 1444, 29], ["31.08", 1626, 19], ["01.09", 1602, 24], ["02.09", 1571, 31], ["03.09", 1553, 18], ["04.09", 1532, 21], ["05.09", 1501, 31], ["06.09", 1460, 41], ["07.09", 1637, 26], ["08.09", 1603, 34], ["09.09", 1572, 31], ["10.09", 1544, 28], ["11.09", 1515, 29], ["12.09", 1486, 29], ["13.09", 1457, 29], ["14.09", 1637, 25], ["15.09", 1609, 28], ["16.09", 1590, 19], ["17.09", 1566, 24], ["18.09", 1546, 20], ["19.09", 1514, 32], ["20.09", 1480, 34], ["21.09", 335, 25], ["22.09", 306, 29], ["23.09", 278, 28], ["24.09", 248, 30], ["25.09", 223, 25], ["26.09", 196, 27], ["27.09", 161, 35], ["28.09", 130, 31], ["29.09", 107, 23], ["30.09", 88, 19], ["01.10", 61, 27], ["02.10", 33, 28], ["03.10", 2, 31], ["04.10", 0, 2], ["05.10", 0, 0], ["06.10", 0, 0], ["07.10", 0, 0], ["08.10", 0, 0], ["09.10", 0, 0], ["10.10", 0, 0], ["11.10", 0, 0], ["12.10", 0, 0], ["13.10", 0, 0], ["14.10", 0, 0], ["15.10", 0, 0], ["16.10", 0, 0], ["17.10", 0, 0], ["18.10", 0, 0], ["19.10", 0, 0], ["20.10", 0, 0], ["21.10", 0, 0], ["22.10", 0, 0], ["23.10", 0, 0], ["24.10", 0, 0], ["25.10", 0, 0], ["26.10", 0, 0], ["27.10", 671, 29], ["28.10", 655, 16], ["29.10", 629, 26], ["30.10", 596, 33], ["31.10", 569, 27]], "a102_series": [["01.08", 16], ["02.08", 21], ["03.08", 15], ["04.08", 20], ["05.08", 15], ["06.08", 24], ["07.08", 9], ["08.08", 24], ["09.08", 14], ["10.08", 20], ["11.08", 19], ["12.08", 11], ["13.08", 21], ["14.08", 18], ["15.08", 15], ["16.08", 24], ["17.08", 20], ["18.08", 9], ["19.08", 15], ["20.08", 26], ["21.08", 15], ["22.08", 21], ["23.08", 19], ["24.08", 19], ["25.08", 23], ["26.08", 15], ["27.08", 19], ["28.08", 19], ["29.08", 19], ["30.08", 17], ["31.08", 17], ["01.09", 15], ["02.09", 18], ["03.09", 15], ["04.09", 18], ["05.09", 25], ["06.09", 19], ["07.09", 23], ["08.09", 25], ["09.09", 19], ["10.09", 12], ["11.09", 18], ["12.09", 22], ["13.09", 20], ["14.09", 16], ["15.09", 20], ["16.09", 15], ["17.09", 21], ["18.09", 16], ["19.09", 21], ["20.09", 26], ["21.09", 16], ["22.09", 19], ["23.09", 18], ["24.09", 15], ["25.09", 25], ["26.09", 22], ["27.09", 18], ["28.09", 18], ["29.09", 23], ["30.09", 22], ["01.10", 114], ["02.10", 121], ["03.10", 116], ["04.10", 88], ["05.10", 66], ["06.10", 81], ["07.10", 53], ["08.10", 85], ["09.10", 68], ["10.10", 99], ["11.10", 94], ["12.10", 67], ["13.10", 82], ["14.10", 78], ["15.10", 59], ["16.10", 99], ["17.10", 91], ["18.10", 62], ["19.10", 76], ["20.10", 77], ["21.10", 52], ["22.10", 77], ["23.10", 79], ["24.10", 99], ["25.10", 82], ["26.10", 90], ["27.10", 77], ["28.10", 75], ["29.10", 74], ["30.10", 76], ["31.10", 113]], "reasons": {"2026-08": {"брак": 46, "не подошел цвет": 58, "передумал": 51, "не подошел размер": 32}, "2026-09": {"маломерит": 31, "передумал": 70, "брак": 53, "не подошел размер": 47, "не подошел цвет": 58}, "2026-10": {"передумал": 63, "не подошел цвет": 80, "не подошел размер": 62, "брак": 84, "маломерит": 43}}, "a101_reasons": {"2026-08": {"передумал": 8, "не подошел цвет": 12, "брак": 8, "не подошел размер": 11}, "2026-09": {"маломерит": 31, "передумал": 24, "брак": 11, "не подошел цвет": 4, "не подошел размер": 29}, "2026-10": {"передумал": 14, "маломерит": 43, "не подошел размер": 13, "брак": 3, "не подошел цвет": 7}}, "ad_oct": {"A101": {"spend": 124930.0, "orders": 107, "cpo": 1167.5700934579438, "margin": 857.5, "drr": 8.306736881300035, "be_drr": 34.437751004016064, "be_cpo": 857.5, "direct": -33177.5}, "A102": {"spend": 109928.0, "orders": 500, "cpo": 219.856, "margin": -2.0, "drr": 7.862783245593957, "be_drr": -0.3676470588235294, "be_cpo": -2.0, "direct": -110928.0}, "A103": {"spend": 57388.0, "orders": 57, "cpo": 1006.8070175438596, "margin": 682.5, "drr": 8.032922271524754, "be_drr": 34.2964824120603, "be_cpo": 682.5, "direct": -18485.5}, "B201": {"spend": 62652.0, "orders": 81, "cpo": 773.4814814814815, "margin": 557.5, "drr": 7.989695980412161, "be_drr": 32.98816568047337, "be_cpo": 557.5, "direct": -17494.5}, "B202": {"spend": 222704.0, "orders": 282, "cpo": 789.7304964539007, "margin": 257.5, "drr": 46.25308936841886, "be_drr": 28.932584269662918, "be_cpo": 257.5, "direct": -150089.0}, "B203": {"spend": 22963.0, "orders": 40, "cpo": 574.075, "margin": 507.5, "drr": 8.12820785104952, "be_drr": 39.34108527131783, "be_cpo": 507.5, "direct": -2663.0}, "C301": {"spend": 329553.0, "orders": 310, "cpo": 1063.074193548387, "margin": 382.5, "drr": 46.38782146024239, "be_drr": 32.142857142857146, "be_cpo": 382.5, "direct": -210978.0}, "C302": {"spend": 29714.0, "orders": 32, "cpo": 928.5625, "margin": 582.5, "drr": 7.98076923076923, "be_drr": 32.54189944134078, "be_cpo": 582.5, "direct": -11074.0}}, "defshare": {"A101": 0.10091743119266056, "A102": 0.2648221343873518, "A103": 0.18461538461538463, "B201": 0.4594594594594595, "B202": 0.36363636363636365, "B203": 0.2878787878787879, "C301": 0.31746031746031744, "C302": 0.2857142857142857}, "tariff": {"comm": 25, "fwd_aug": 75, "fwd_now": 110, "rev_aug": 50, "rev_now": 75}, "effects_sept": [["Реклама: подушка B202 и термокружка C301", -430862.3853845697], ["Акция −45% на футболку A102", 0], ["Нет товара B203: 23 дня пустой полки", 0], ["Подорожала логистика с 1 сентября", -142460.0], ["Выросли возвраты (худи A101, размер S)", -74212.96451442866], ["Реклама прочих артикулов", 3479.5719804909495]], "resid_sept": 184165.77791850735, "ret_eff_sept": {"A101": 62474.57855504587, "A102": 937.5777114695206, "A103": 0.0, "B201": 0.0, "B202": 5686.025913338998, "B203": 5114.782334574276, "C301": 0.0, "C302": 0.0}, "effects_2m": [["Реклама: подушка B202 и термокружка C301", -888643.3080292343], ["Акция −45% на футболку A102", -282479.88916534965], ["Нет товара B203: 23 дня пустой полки", -234215.78706240485], ["Подорожала логистика с 1 сентября", -346880.0], ["Выросли возвраты (худи A101, размер S)", -152291.69202019455], ["Реклама прочих артикулов", -7907.79517705688]], "loss_2m": 1912418.4714542404, "loss_oct": 1268362.6935357328, "plan": [["Отключить убыточную рекламу B202 и C301", 302805.9226446646], ["Отменить акцию −45% на A102", 282479.88916534965], ["Вернуть B203 в наличие и держать страховой запас", 234215.78706240485], ["Починить размерную сетку худи A101 (S)", 56269.20342812094]], "plan_total": 875770.8023005401};
+
+/* ---------- helpers ---------- */
+const nf = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat('ru-RU',{minimumFractionDigits:1,maximumFractionDigits:1});
+const rub = n => nf.format(Math.round(n))+' ₽';
+const sgn = n => (n>0?'+':'')+nf.format(Math.round(n));
+const short = n => {const a=Math.abs(n);
+  if(a>=1e6) return nf1.format(n/1e6)+' млн';
+  if(a>=1e3) return nf.format(Math.round(n/1e3))+' тыс.';
+  return nf.format(Math.round(n));};
+const pct = n => nf1.format(n)+'%';
+const MN = {'2026-08':'Август','2026-09':'Сентябрь','2026-10':'Октябрь'};
+const M = D.months, S = D.skus;
+const P = m => D.P[m], T = (m,s) => D.PS[m+'|'+s];
+const nm = s => D.name[s];
+const SN={A101:'Худи',A102:'Футболка',A103:'Свитшот',B201:'Плед',B202:'Подушка',B203:'Органайзер',C301:'Термокружка',C302:'Полотенца'};
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const el = id => document.getElementById(id);
+const SVGNS='http://www.w3.org/2000/svg';
+function svg(w,h){const s=document.createElementNS(SVGNS,'svg');
+  s.setAttribute('viewBox','0 0 '+w+' '+h);s.setAttribute('class','chart');
+  s.setAttribute('preserveAspectRatio','xMidYMid meet');s.style.height='auto';return s;}
+function mk(tag,attrs,text){const e=document.createElementNS(SVGNS,tag);
+  for(const k in attrs) e.setAttribute(k,attrs[k]);
+  if(text!=null) e.textContent=text; return e;}
+function tip(node,txt){node.appendChild(mk('title',{},txt));return node;}
+function txt(p,x,y,t,o={}){return p.appendChild(mk('text',Object.assign({x,y,
+  'font-size':o.size||12.5,fill:o.fill||'#5b6570','text-anchor':o.anchor||'start',
+  'font-weight':o.weight||400,'font-family':'inherit'},o.extra||{}),t));}
+function legend(id,items){el(id).innerHTML=items.map(i=>
+  `<span><i style="background:${i.c}"></i>${i.t}</span>`).join('');}
+const C={red:'#d92d20',redl:'#fbb3ae',green:'#0f9d58',greenl:'#8fd6ac',blue:'#1f6feb',
+  bluel:'#a9c8fb',amber:'#f79009',violet:'#6941c6',gray:'#98a2b3',ink:'#16191d',line:'#e3e8ed'};
+
+/* ---------- KPI ---------- */
+function sparkline(vals,color,invert){
+  const w=150,h=30,max=Math.max(...vals),min=Math.min(...vals),rg=(max-min)||1;
+  const s=svg(w,h);
+  const pts=vals.map((v,i)=>[6+i*(w-12)/(vals.length-1),h-4-((v-min)/rg)*(h-10)]);
+  s.appendChild(mk('path',{d:'M'+pts.map(p=>p.join(',')).join('L'),fill:'none',stroke:color,'stroke-width':2.2,'stroke-linejoin':'round'}));
+  pts.forEach((p,i)=>s.appendChild(tip(mk('circle',{cx:p[0],cy:p[1],r:3.2,fill:color}),MN[M[i]]+': '+nf.format(Math.round(vals[i])))));
+  return s;
+}
+function kpi(lbl,val,chipTxt,chipCls,vals,color,sub){
+  const d=document.createElement('div');d.className='kpi';
+  d.innerHTML=`<div class="lbl">${lbl}</div><div class="val num">${val}</div>
+    <div class="row"><span class="chip ${chipCls}">${chipTxt}</span>${sub?`<span class="tiny">${sub}</span>`:''}</div>
+    <div class="spark"></div>`;
+  d.querySelector('.spark').appendChild(sparkline(vals,color));
+  return d;
+}
+(function(){
+  const rev=M.map(m=>P(m).rev), pr=M.map(m=>P(m).profit), mg=M.map(m=>P(m).margin_pct),
+        drr=M.map(m=>P(m).drr), rr=M.map(m=>P(m).ret_rate), cash=M.map(m=>D.cash[m]);
+  const g=(a)=>((a[2]/a[0]-1)*100);
+  const box=el('kpis');
+  box.appendChild(kpi('Выручка',short(rev[2])+' ₽',pct(g(rev))+' к августу','good',rev,C.blue,'растёт'));
+  box.appendChild(kpi('Прибыль',short(pr[2])+' ₽',pct(g(pr))+' к августу','bad',pr,C.red,'падает'));
+  box.appendChild(kpi('Маржа',pct(mg[2]),'было '+pct(mg[0]),'bad',mg,C.red,'−20,5 п.п.'));
+  box.appendChild(kpi('Деньги после закупок',short(cash[2])+' ₽',pct(g(cash))+' к августу','bad',cash,C.red,'остаток потока'));
+  box.appendChild(kpi('Реклама / выручка',pct(drr[2]),'было '+pct(drr[0]),'bad',drr,C.amber,'ДРР'));
+  box.appendChild(kpi('Возвраты',pct(rr[2]),'было '+pct(rr[0]),'warn',rr,C.amber,'от продаж'));
+})();
+
+/* ---------- grouped bars ---------- */
+function grouped(id,cats,series,o={}){
+  const w=560,h=o.h||260,pl=52,pb=34,pt=22,pr=12;
+  const s=svg(w,h);
+  const iw=w-pl-pr, ih=h-pt-pb;
+  const max=o.max||Math.max(...series.flatMap(x=>x.values))*1.14;
+  for(let i=0;i<=4;i++){const y=pt+ih-ih*i/4;
+    s.appendChild(mk('line',{x1:pl,x2:w-pr,y1:y,y2:y,stroke:C.line,'stroke-width':1}));
+    txt(s,pl-8,y+4,o.fmtAxis?o.fmtAxis(max*i/4):short(max*i/4),{anchor:'end',size:11});}
+  const gw=iw/cats.length, bw=Math.min(o.bw||34,(gw-16)/series.length);
+  cats.forEach((c,i)=>{
+    const cx=pl+gw*i+gw/2;
+    series.forEach((se,j)=>{
+      const v=se.values[i], bh=Math.max(1,Math.abs(v)/max*ih);
+      const x=cx-(series.length*bw+(series.length-1)*6)/2+j*(bw+6);
+      const r=mk('rect',{x,y:pt+ih-bh,width:bw,height:bh,fill:se.color,rx:3});
+      tip(r,se.name+' · '+c+': '+rub(v));s.appendChild(r);
+      if(o.labels!==false) txt(s,x+bw/2,pt+ih-bh-6,se.fmt?se.fmt(v):short(v),
+        {anchor:'middle',size:11,weight:650,fill:se.color});
+    });
+    txt(s,cx,h-12,c,{anchor:'middle',size:12.5,weight:600,fill:C.ink});
+  });
+  el(id).appendChild(s);
+}
+grouped('ch-main',M.map(m=>MN[m]),[
+  {name:'Выручка',color:C.bluel,values:M.map(m=>P(m).rev)},
+  {name:'Прибыль',color:C.green,values:M.map(m=>P(m).profit)},
+  {name:'Деньги после закупок',color:C.ink,values:M.map(m=>D.cash[m])}
+],{h:270,bw:40});
+legend('lg-main',[{c:C.bluel,t:'Выручка'},{c:C.green,t:'Прибыль'},{c:C.ink,t:'Деньги после закупок товара'}]);
+
+/* ---------- structure 100% ---------- */
+(function(){
+  const w=560,h=270,pl=52,pb=34,pt=22,pr=12,iw=w-pl-pr,ih=h-pt-pb;
+  const s=svg(w,h);
+  const items=[
+    {k:'Возвраты',c:'#fbb3ae',f:m=>P(m).ret_rev},
+    {k:'Закупка товара',c:'#98a2b3',f:m=>P(m).cogs+P(m).def_cogs},
+    {k:'Комиссия',c:'#a9c8fb',f:m=>P(m).comm},
+    {k:'Логистика',c:'#6941c6',f:m=>P(m).fwd+P(m).rev_log},
+    {k:'Реклама',c:'#f79009',f:m=>P(m).ads},
+    {k:'Прибыль',c:'#0f9d58',f:m=>P(m).profit}];
+  for(let i=0;i<=4;i++){const y=pt+ih-ih*i/4;
+    s.appendChild(mk('line',{x1:pl,x2:w-pr,y1:y,y2:y,stroke:C.line}));
+    txt(s,pl-8,y+4,(25*i)+' ₽',{anchor:'end',size:11});}
+  const gw=iw/3,bw=76;
+  M.forEach((m,i)=>{
+    const rev=P(m).rev; let acc=0; const cx=pl+gw*i+gw/2;
+    items.forEach(it=>{
+      const share=it.f(m)/rev*100, bh=share/100*ih;
+      const y=pt+ih-acc-bh;
+      const r=mk('rect',{x:cx-bw/2,y,width:bw,height:Math.max(0.5,bh),fill:it.c});
+      tip(r,it.k+' · '+MN[m]+': '+pct(share)+' выручки ('+rub(it.f(m))+')');s.appendChild(r);
+      if(share>5) txt(s,cx,y+bh/2+4,nf1.format(share)+'%',{anchor:'middle',size:11.5,weight:700,fill:'#fff'});
+      acc+=bh;
+    });
+    txt(s,cx,h-12,MN[m],{anchor:'middle',size:12.5,weight:600,fill:C.ink});
+  });
+  el('ch-struct').appendChild(s);
+  legend('lg-struct',items.map(i=>({c:i.c,t:i.k})));
+})();
+
+/* ---------- waterfall ---------- */
+(function(){
+  const steps=[{t:'Прибыль\nавгуста',v:P('2026-08').profit,type:'total'}]
+    .concat(D.effects.map(e=>({t:e[0],v:e[1],type:'delta'})))
+    .concat([{t:'Рост продаж\nздоровых товаров',v:D.resid,type:'delta'},
+             {t:'Прибыль\nоктября',v:P('2026-10').profit,type:'total'}]);
+  const shortLbl=['Прибыль\nавгуста','Реклама\nB202+C301','Акция\n−45% A102','Пустая полка\nB203','Логистика\n+47%','Возвраты\nхуди S','Реклама\nпрочие','Рост\nпродаж','Прибыль\nоктября'];
+  const w=1160,h=390,pl=64,pb=64,pt=34,pr=16,iw=w-pl-pr,ih=h-pt-pb;
+  const s=svg(w,h);
+  const max=1500000;
+  for(let i=0;i<=5;i++){const y=pt+ih-ih*i/5;
+    s.appendChild(mk('line',{x1:pl,x2:w-pr,y1:y,y2:y,stroke:C.line}));
+    txt(s,pl-8,y+4,short(max*i/5),{anchor:'end',size:11});}
+  const gw=iw/steps.length,bw=Math.min(78,gw-22);
+  let run=0;
+  steps.forEach((st,i)=>{
+    const cx=pl+gw*i+gw/2; let y0,y1,color;
+    if(st.type==='total'){y0=pt+ih; y1=pt+ih-st.v/max*ih; color=i===0?C.ink:C.red; run=st.v;}
+    else{
+      const from=run, to=run+st.v; run=to;
+      y0=pt+ih-Math.max(from,to)/max*ih; y1=pt+ih-Math.min(from,to)/max*ih;
+      color=st.v<0?C.red:C.green;
+    }
+    const bh=Math.max(2,y1-y0);
+    const r=mk('rect',{x:cx-bw/2,y:y0,width:bw,height:bh,fill:color,rx:3,opacity:st.type==='total'?1:.92});
+    tip(r,st.t.replace('\n',' ')+': '+rub(st.v));s.appendChild(r);
+    txt(s,cx,y0-8,(st.type==='total'?'':sgn(st.v/1000)+' тыс.'),{anchor:'middle',size:11.5,weight:700,fill:color});
+    if(st.type==='total') txt(s,cx,y0-8,short(st.v),{anchor:'middle',size:12,weight:700,fill:color});
+    shortLbl[i].split('\n').forEach((ln,k)=>txt(s,cx,h-40+k*15,ln,{anchor:'middle',size:11.5,
+      weight:k===0?650:500,fill:k===0?C.ink:'#5b6570'}));
+    if(i<steps.length-1){
+      const nxt=steps[i+1];
+      const level=st.type==='total'?st.v:run;
+      s.appendChild(mk('line',{x1:cx+bw/2,x2:cx+gw-bw/2,y1:pt+ih-level/max*ih,y2:pt+ih-level/max*ih,
+        stroke:C.gray,'stroke-width':1,'stroke-dasharray':'3 3'}));
+    }
+  });
+  el('ch-waterfall').appendChild(s);
+})();
+
+/* ---------- causes table ---------- */
+(function(){
+  const meta=[
+    {p:'bad',b:'КРИТИЧНО',what:'С 1 сентября ДРР подушки B202 и термокружки C301 вырос с 8% до 46%. Каждый заказ с рекламы дороже маржи со штуки.',
+     do:'Отключить или урезать ставки до потолка маржи: 258 ₽ (B202) и 383 ₽ (C301).'},
+    {p:'bad',b:'КРИТИЧНО',what:'Скидка 45% увела цену с 990 до 544 ₽. Маржа со штуки стала −2 ₽ до рекламы. Продали 2 570 штук в убыток.',
+     do:'Выйти из акции. Максимальная скидка — 34%, рабочая — 10%.'},
+    {p:'bad',b:'КРИТИЧНО',what:'После исчезновения 1 120 штук остаток обнулился: 23 дня без продаж товара с маржой 507 ₽.',
+     do:'Держать страховой запас 14 дней (~380 шт), автозаказ при остатке ниже 21 дня.'},
+    {p:'warn',b:'ВАЖНО',what:'С 1 сентября доставка 75→110 ₽ (+47%), возврат 50→75 ₽ (+50%). Комиссия не менялась.',
+     do:'Поднять цены на 47–50 ₽ или уменьшить габариты упаковки.'},
+    {p:'warn',b:'ВАЖНО',what:'Худи A101: возвраты 8,4%→16,6%, новая причина «маломерит» — все 74 случая в размере S. Плюс рост брака.',
+     do:'Перемерить партию S, поправить таблицу размеров в карточке, проверить поставщика.'},
+    {p:'mid',b:'СЛЕДИТЬ',what:'У остальных артикулов ДРР вырос с 7,4–8,2% до 8,0–8,3% — пока в норме, но CPO уже выше маржи.',
+     do:'Не поднимать ставки. Недельный контроль ДРР по каждому артикулу.'}];
+  const two=Object.fromEntries(D.effects_2m);
+  let h=`<thead><tr><th class="l">Причина</th><th class="l">Что произошло</th>
+    <th>Потеря в октябре<br>₽ / месяц</th><th>За сентябрь<br>и октябрь, ₽</th><th class="l">Что делать</th></tr></thead><tbody>`;
+  D.effects.forEach((e,i)=>{
+    const m=meta[i];
+    h+=`<tr><td class="l"><span class="badge b-${m.p==='bad'?'crit':m.p==='warn'?'high':'mid'}">${m.b}</span><br><b>${e[0]}</b></td>
+      <td class="l small muted" style="max-width:330px">${m.what}</td>
+      <td class="num neg">${nf.format(Math.round(-e[1]))}</td>
+      <td class="num neg">${nf.format(Math.round(-two[e[0]]))}</td>
+      <td class="l small" style="max-width:260px">${m.do}</td></tr>`;
+  });
+  h+=`<tr class="total"><td class="l">Итого потерь</td><td></td>
+      <td class="num neg">${nf.format(Math.round(D.loss_oct))}</td>
+      <td class="num neg">${nf.format(Math.round(D.loss_2m))}</td><td></td></tr>`;
+  h+=`<tr><td class="l"><span class="badge b-crit">РАЗОВО</span><br><b>Пропажа товара со склада</b></td>
+      <td class="l small muted" style="max-width:330px">21.09 выбыло 1 120 органайзеров B203 мимо продаж и возвратов. Закупочная стоимость 350 ₽/шт.</td>
+      <td class="num neg">—</td><td class="num neg">${nf.format(D.lost_goods)}</td>
+      <td class="l small" style="max-width:260px">Акт сверки, спор с маркетплейсом, возмещение.</td></tr>`;
+  h+=`<tr class="total"><td class="l">Всего потеряно за 2 месяца</td><td></td><td></td>
+      <td class="num neg">${nf.format(Math.round(D.loss_2m+D.lost_goods))}</td><td></td></tr>`;
+  el('tbl-causes').innerHTML=h+'</tbody>';
+})();
+
+/* ---------- ДРР bars ---------- */
+(function(){
+  const w=560,rowH=34,pt=26,pb=26,pl=150,pr=64,h=pt+pb+S.length*rowH;
+  const s=svg(w,h); const iw=w-pl-pr, max=50;
+  [0,10,20,30,40,50].forEach(v=>{const x=pl+v/max*iw;
+    s.appendChild(mk('line',{x1:x,x2:x,y1:pt-6,y2:h-pb+4,stroke:C.line}));
+    txt(s,x,pt-12,v+'%',{anchor:'middle',size:10.5});});
+  S.forEach((sk,i)=>{
+    const y=pt+i*rowH;
+    txt(s,pl-10,y+15,sk+' · '+SN[sk],{anchor:'end',size:11.5,fill:C.ink,weight:550});
+    const a=T('2026-08',sk).drr, b=T('2026-10',sk).drr;
+    const r1=mk('rect',{x:pl,y:y+3,width:Math.max(1,a/max*iw),height:9,fill:C.bluel,rx:2});
+    tip(r1,'Август ДРР '+pct(a));s.appendChild(r1);
+    const col=b>30?C.red:(b>a*1.15?C.amber:C.green);
+    const r2=mk('rect',{x:pl,y:y+15,width:Math.max(1,b/max*iw),height:12,fill:col,rx:2});
+    tip(r2,'Октябрь ДРР '+pct(b)+' · расход '+rub(T('2026-10',sk).ads));s.appendChild(r2);
+    txt(s,pl+Math.max(1,b/max*iw)+7,y+25,pct(b),{size:11.5,weight:700,fill:col});
+  });
+  el('ch-drr').appendChild(s);
+  legend('lg-drr',[{c:C.bluel,t:'Август (норма ~8%)'},{c:C.red,t:'Октябрь: убыточно'},{c:C.green,t:'Октябрь: в норме'}]);
+})();
+
+/* ---------- CPO bullet ---------- */
+(function(){
+  const w=560,rowH=36,pt=28,pb=24,pl=150,pr=70,h=pt+pb+S.length*rowH;
+  const s=svg(w,h); const iw=w-pl-pr, max=1250;
+  [0,250,500,750,1000,1250].forEach(v=>{const x=pl+v/max*iw;
+    s.appendChild(mk('line',{x1:x,x2:x,y1:pt-6,y2:h-pb+4,stroke:C.line}));
+    txt(s,x,pt-12,nf.format(v),{anchor:'middle',size:10.5});});
+  txt(s,pl,pt-24,'₽ за заказ с рекламы',{size:10.5,fill:'#8b95a1'});
+  S.forEach((sk,i)=>{
+    const y=pt+i*rowH, a=D.ad_oct[sk];
+    txt(s,pl-10,y+16,sk+' · '+SN[sk],{anchor:'end',size:11.5,fill:C.ink,weight:550});
+    const bw=Math.max(1,a.margin/max*iw);
+    const zone=mk('rect',{x:pl,y:y+5,width:Math.max(1,bw),height:19,fill:'#e3f5ea',rx:3});
+    tip(zone,'Маржа со штуки (потолок ставки): '+rub(a.margin));s.appendChild(zone);
+    const over=a.cpo>a.margin;
+    const bar=mk('rect',{x:pl,y:y+10,width:Math.max(1,a.cpo/max*iw),height:9,
+      fill:over?C.red:C.green,rx:2,opacity:.95});
+    tip(bar,'CPO '+rub(a.cpo)+' · маржа '+rub(a.margin)+(over?' · убыток '+rub(a.cpo-a.margin)+' с заказа':' · окупается'));
+    s.appendChild(bar);
+    s.appendChild(mk('line',{x1:pl+bw,x2:pl+bw,y1:y+2,y2:y+27,stroke:C.green,'stroke-width':2.5}));
+    txt(s,w-pr+8,y+19,(over?'−':'+')+nf.format(Math.round(Math.abs(a.margin-a.cpo)))+' ₽',
+      {size:11.5,weight:700,fill:over?C.red:C.green});
+  });
+  el('ch-cpo').appendChild(s);
+})();
+
+/* ---------- ads table ---------- */
+(function(){
+  let h=`<thead><tr><th class="l">Артикул</th><th>Расход авг</th><th>Расход сен</th><th>Расход окт</th>
+    <th>ДРР авг</th><th>ДРР окт</th><th>Заказы с рекламы<br>окт / всего</th><th>CPO окт</th>
+    <th>Маржа/шт</th><th>Сверх нормы<br>окт, ₽</th><th>Прибыль окт</th></tr></thead><tbody>`;
+  S.forEach(sk=>{
+    const a=D.ad_oct[sk], ex=D.ad_excess['2026-10'][sk], t=T('2026-10',sk);
+    const bad=a.drr>30;
+    h+=`<tr${bad?' style="background:#fff5f4"':''}><td class="l"><b>${sk}</b> ${nm(sk)}${bad?' <span class="badge b-crit">убыток</span>':''}</td>
+      <td class="num">${nf.format(T('2026-08',sk).ads)}</td>
+      <td class="num">${nf.format(T('2026-09',sk).ads)}</td>
+      <td class="num"><b>${nf.format(t.ads)}</b></td>
+      <td class="num">${pct(T('2026-08',sk).drr)}</td>
+      <td class="num ${bad?'neg':''}">${pct(a.drr)}</td>
+      <td class="num">${t.ad_orders} / ${t.units}</td>
+      <td class="num ${a.cpo>a.margin?'neg':'pos'}">${nf.format(a.cpo)}</td>
+      <td class="num">${nf.format(a.margin)}</td>
+      <td class="num ${ex>1000?'neg':''}">${ex>0?nf.format(ex):'—'}</td>
+      <td class="num ${t.profit<0?'neg':'pos'}">${nf.format(t.profit)}</td></tr>`;
+  });
+  h+=`<tr class="total"><td class="l">Итого</td>
+    <td class="num">${nf.format(P('2026-08').ads)}</td><td class="num">${nf.format(P('2026-09').ads)}</td>
+    <td class="num">${nf.format(P('2026-10').ads)}</td><td class="num">${pct(P('2026-08').drr)}</td>
+    <td class="num">${pct(P('2026-10').drr)}</td>
+    <td class="num">${P('2026-10').ad_orders} / ${P('2026-10').units}</td>
+    <td class="num">${nf.format(P('2026-10').cpo)}</td><td></td>
+    <td class="num neg">${nf.format(D.ad_excess['2026-10'].B202+D.ad_excess['2026-10'].C301)}</td>
+    <td class="num">${nf.format(P('2026-10').profit)}</td></tr>`;
+  el('tbl-ads').innerHTML=h+'</tbody>';
+})();
+
+/* ---------- A102 unit bars ---------- */
+(function(){
+  const SCALE=994;
+  const rows=[
+    {t:'Было: цена 990 ₽',price:990,parts:[['Закупка',300,'#98a2b3'],['Комиссия 25%',247.5,'#a9c8fb'],['Логистика',110,'#6941c6'],['Маржа +332,5 ₽',332.5,'#0f9d58']]},
+    {t:'Стало: цена 544 ₽ (акция −45%)',price:544,parts:[['Закупка',300,'#98a2b3'],['Комиссия 25%',136,'#a9c8fb'],['Логистика',110,'#6941c6'],['Убыток 2 ₽',2,'#d92d20'],['Отдано скидкой 446 ₽',446,'#e9edf2']]}];
+  el('unit-bars').innerHTML=rows.map(r=>{
+    return `<div style="margin-top:16px"><div class="small" style="font-weight:650;margin-bottom:6px">${r.t}</div>
+      <div style="position:relative">
+        <div class="unitbar" style="background:#f4f6f8">${r.parts.map(p=>
+          `<div style="background:${p[2]};flex:${p[1]};${p[1]<20?'min-width:3px':''};${p[0].indexOf('Отдано')===0?'color:#5b6570':''}" title="${p[0]}: ${rub(p[1])}">${p[1]/SCALE>0.10?nf.format(p[1])+' ₽':''}</div>`).join('')}</div>
+        <div style="position:absolute;top:-3px;bottom:-3px;left:${r.price/SCALE*100}%;border-left:2px dashed #16191d"></div>
+      </div>
+      <div class="tiny" style="margin-top:6px">${r.parts.map(p=>p[0]).join(' · ')} &nbsp;|&nbsp; пунктир — уровень цены</div></div>`;
+  }).join('')+`<div class="alert red" style="margin-top:16px;padding:11px 14px"><div class="small">
+    При цене 544 ₽ после комиссии остаётся 408 ₽, а закупка плюс логистика — 410 ₽.
+    <b>Вы доплачиваете 2 ₽ за каждую проданную футболку</b>. Сверху 43 ₽ рекламы и 14 ₽ возвратов — итого <b>минус 59 ₽ с каждой штуки</b>.</div></div>`;
+  const k=[['Продано в октябре','2 570 шт','было 580 шт в сентябре'],
+           ['Прибыль артикула','−151 202 ₽','было +124 387 ₽'],
+           ['Цена участия в акции','−282 480 ₽','против сценария без акции']];
+  el('a102-kpi').innerHTML=k.map(x=>`<div class="kpi" style="padding:12px 14px">
+    <div class="lbl">${x[0]}</div><div class="val num" style="font-size:19px;color:${C.red}">${x[1]}</div>
+    <div class="tiny" style="margin-top:4px">${x[2]}</div></div>`).join('');
+})();
+
+/* ---------- A102 daily line ---------- */
+function dailyChart(id,series,o){
+  const w=1160,h=o.h||230,pl=52,pb=32,pt=20,pr=16,iw=w-pl-pr,ih=h-pt-pb;
+  const s=svg(w,h);
+  const vals=series.map(d=>d[1]);
+  const max=o.max||Math.max(...vals)*1.12;
+  for(let i=0;i<=4;i++){const y=pt+ih-ih*i/4;
+    s.appendChild(mk('line',{x1:pl,x2:w-pr,y1:y,y2:y,stroke:C.line}));
+    txt(s,pl-8,y+4,nf.format(Math.round(max*i/4)),{anchor:'end',size:11});}
+  const X=i=>pl+i*iw/(series.length-1);
+  if(o.zones) o.zones.forEach(z=>{
+    const x1=X(z[0]),x2=X(z[1]);
+    s.appendChild(mk('rect',{x:x1,y:pt,width:Math.max(1,x2-x1),height:ih,fill:z[2],opacity:.13}));
+    if(z[3]) txt(s,(x1+x2)/2,pt+14,z[3],{anchor:'middle',size:11.5,weight:700,fill:z[4]||C.ink});
+  });
+  const pts=series.map((d,i)=>[X(i),pt+ih-d[1]/max*ih]);
+  if(o.area){
+    s.appendChild(mk('path',{d:'M'+pts[0][0]+','+(pt+ih)+'L'+pts.map(p=>p.join(',')).join('L')+'L'+pts[pts.length-1][0]+','+(pt+ih)+'Z',
+      fill:o.color,opacity:.14}));
+  }
+  s.appendChild(mk('path',{d:'M'+pts.map(p=>p.join(',')).join('L'),fill:'none',stroke:o.color,'stroke-width':2.2,'stroke-linejoin':'round'}));
+  series.forEach((d,i)=>{
+    const hit=mk('rect',{x:X(i)-iw/series.length/2,y:pt,width:iw/series.length,height:ih,fill:'transparent'});
+    tip(hit,d[0]+': '+nf.format(d[1])+(o.unit||''));s.appendChild(hit);
+    if(d[1]===0&&o.markZero) s.appendChild(mk('circle',{cx:X(i),cy:pt+ih,r:2.6,fill:C.red}));
+  });
+  series.forEach((d,i)=>{ if(i%7===0||i===series.length-1)
+    txt(s,X(i),h-12,d[0],{anchor:'middle',size:10.5}); });
+  if(o.marks) o.marks.forEach(m=>{
+    const x=X(m.i);
+    s.appendChild(mk('line',{x1:x,x2:x,y1:pt,y2:pt+ih,stroke:m.c,'stroke-width':1.6,'stroke-dasharray':'4 3'}));
+    txt(s,x+(m.dx||6),pt+(m.dy||30),m.t,{size:11.5,weight:700,fill:m.c,anchor:m.anchor||'start'});
+  });
+  el(id).appendChild(s);
+}
+dailyChart('ch-a102',D.a102_series,{h:250,color:C.red,area:true,unit:' шт',
+  zones:[[61,91,C.red,'АКЦИЯ −45%: 1–31 ОКТЯБРЯ',C.red]]});
+
+/* ---------- B203 stock ---------- */
+dailyChart('ch-b203',D.b203_stock.map(d=>[d[0],d[1]]),{h:270,color:C.blue,area:true,unit:' шт на складе',
+  max:1800,markZero:true,
+  zones:[[64,86,C.red,'ПУСТАЯ ПОЛКА: 4–26 ОКТЯБРЯ · 23 ДНЯ',C.red]],
+  marks:[{i:51,t:'21.09: исчезло 1 120 шт',c:C.amber,dx:-8,dy:52,anchor:'end'},
+         {i:87,t:'27.10: привезли 700 шт',c:C.green,dx:-8,dy:100,anchor:'end'}]});
+(function(){
+  const o=D.oos;
+  const k=[['Дней без товара',o.days+' дня','с 4 по 26 октября','bad'],
+    ['Недопродано','~'+nf.format(Math.round(o.lost_units))+' шт','темп 27,5 шт/день','bad'],
+    ['Упущенная прибыль',nf.format(Math.round(o.eff))+' ₽','371 ₽ прибыли со штуки','bad'],
+    ['Исчезло товара','392 000 ₽','1 120 шт × 350 ₽ закупки','bad']];
+  el('b203-kpi').innerHTML=k.map(x=>`<div class="kpi"><div class="lbl">${x[0]}</div>
+    <div class="val num" style="font-size:21px;color:${C.red}">${x[1]}</div>
+    <div class="tiny" style="margin-top:4px">${x[2]}</div></div>`).join('');
+})();
+
+/* ---------- returns table ---------- */
+(function(){
+  let h=`<thead><tr><th class="l">Артикул</th><th>Август</th><th>Сентябрь</th><th>Октябрь</th>
+    <th>Стоимость 1 возврата</th><th>Лишних возвратов<br>в октябре, шт</th><th>Потеря в октябре</th></tr></thead><tbody>`;
+  S.forEach(sk=>{
+    const v=M.map(m=>D.mature[m+'|'+sk][2]), d=D.ret_detail[sk], e=D.ret_eff[sk];
+    const jump=v[2]>v[0]*1.5;
+    h+=`<tr${jump?' style="background:#fff8f0"':''}><td class="l"><b>${sk}</b> ${nm(sk)}${sk==='A101'?' <span class="badge b-high">маломерит S</span>':''}</td>
+      ${v.map((x,i)=>`<td class="num ${i>0&&x>v[0]*1.4?'neg':''}">${pct(x)}</td>`).join('')}
+      <td class="num">${nf.format(d[3])} ₽</td>
+      <td class="num">${d[2]>0.5?nf.format(Math.round(d[2])):'—'}</td>
+      <td class="num ${e>0?'neg':''}">${e>0?nf.format(Math.round(e))+' ₽':'—'}</td></tr>`;
+  });
+  h+=`<tr class="total"><td class="l">Итого лишних возвратов</td><td colspan="4"></td>
+    <td class="num">${nf.format(Math.round(S.reduce((a,s)=>a+D.ret_detail[s][2],0)))}</td>
+    <td class="num neg">${nf.format(Math.round(S.reduce((a,s)=>a+D.ret_eff[s],0)))} ₽</td></tr>`;
+  el('tbl-ret').innerHTML=h+'</tbody>';
+})();
+
+/* ---------- reasons stacked ---------- */
+(function(){
+  const order=['брак','не подошел размер','маломерит','не подошел цвет','передумал'];
+  const cols={'брак':'#d92d20','не подошел размер':'#f79009','маломерит':'#6941c6','не подошел цвет':'#a9c8fb','передумал':'#98a2b3'};
+  const w=560,h=260,pl=48,pb=34,pt=22,pr=12,iw=w-pl-pr,ih=h-pt-pb;
+  const s=svg(w,h);
+  const totals=M.map(m=>order.reduce((a,r)=>a+(D.reasons[m][r]||0),0));
+  const max=Math.max(...totals)*1.16;
+  for(let i=0;i<=4;i++){const y=pt+ih-ih*i/4;
+    s.appendChild(mk('line',{x1:pl,x2:w-pr,y1:y,y2:y,stroke:C.line}));
+    txt(s,pl-8,y+4,nf.format(Math.round(max*i/4)),{anchor:'end',size:11});}
+  const gw=iw/3,bw=78;
+  M.forEach((m,i)=>{
+    let acc=0;const cx=pl+gw*i+gw/2;
+    order.forEach(r=>{
+      const v=D.reasons[m][r]||0; if(!v) return;
+      const bh=v/max*ih,y=pt+ih-acc-bh;
+      const rect=mk('rect',{x:cx-bw/2,y,width:bw,height:bh,fill:cols[r]});
+      tip(rect,MN[m]+' · '+r+': '+v+' шт');s.appendChild(rect);
+      if(bh>15) txt(s,cx,y+bh/2+4,v,{anchor:'middle',size:11,weight:700,fill:'#fff'});
+      acc+=bh;
+    });
+    txt(s,cx,pt+ih-acc-7,totals[i]+' шт',{anchor:'middle',size:11.5,weight:700,fill:C.ink});
+    txt(s,cx,h-12,MN[m],{anchor:'middle',size:12.5,weight:600,fill:C.ink});
+  });
+  el('ch-reasons').appendChild(s);
+  legend('lg-reasons',order.map(r=>({c:cols[r],t:r})));
+})();
+
+/* ---------- defect kpi ---------- */
+(function(){
+  const k=[['Брак в августе',P('2026-08').def_units+' шт',rub(P('2026-08').def_cogs)+' списано'],
+    ['Брак в сентябре',P('2026-09').def_units+' шт',rub(P('2026-09').def_cogs)+' списано'],
+    ['Брак в октябре',P('2026-10').def_units+' шт',rub(P('2026-10').def_cogs)+' списано'],
+    ['Рост списаний','×2,1','+20 300 ₽ к августу']];
+  el('def-kpi').innerHTML=k.map((x,i)=>`<div class="kpi"><div class="lbl">${x[0]}</div>
+    <div class="val num" style="font-size:21px;color:${i>1?C.red:C.ink}">${x[1]}</div>
+    <div class="tiny" style="margin-top:4px">${x[2]}</div></div>`).join('');
+})();
+
+/* ---------- tariffs ---------- */
+(function(){
+  el('tbl-tar').innerHTML=`<thead><tr><th class="l">Тариф</th><th>Август</th><th>Сентябрь–октябрь</th><th>Изменение</th></tr></thead><tbody>
+    <tr><td class="l">Комиссия маркетплейса</td><td class="num">25%</td><td class="num">25%</td><td class="num">без изменений</td></tr>
+    <tr><td class="l">Логистика до покупателя, ₽/шт</td><td class="num">75</td><td class="num"><b>110</b></td><td class="num neg">+35 ₽ · +47%</td></tr>
+    <tr><td class="l">Обратная логистика при возврате, ₽/шт</td><td class="num">50</td><td class="num"><b>75</b></td><td class="num neg">+25 ₽ · +50%</td></tr>
+    </tbody>`;
+  grouped('ch-tar',M.map(m=>MN[m]),[
+    {name:'Переплата за доставку',color:C.violet,values:M.map(m=>P(m).units*35)},
+    {name:'Переплата за возвраты',color:C.amber,values:M.map(m=>P(m).ret_units*25)}
+  ],{h:250,bw:52,fmt:v=>nf.format(Math.round(v/1000))+' тыс.'});
+})();
+
+/* ---------- cash ---------- */
+grouped('ch-cash',M.map(m=>MN[m]),[
+  {name:'Прибыль',color:C.green,values:M.map(m=>P(m).profit)},
+  {name:'Закупки товара',color:C.bluel,values:M.map(m=>D.purch[m])},
+  {name:'Осталось денег',color:C.ink,values:M.map(m=>D.cash[m])}
+],{h:270,bw:40});
+legend('lg-cash',[{c:C.green,t:'Прибыль по отчётам'},{c:C.bluel,t:'Закупки товара (живые деньги)'},{c:C.ink,t:'Денежный поток'}]);
+
+/* ---------- SKU profit table ---------- */
+(function(){
+  let h=`<thead><tr><th class="l">Артикул</th>${M.map(m=>`<th>${MN[m]}<br>прибыль, ₽</th>`).join('')}
+    <th>Октябрь<br>штук</th><th>Октябрь<br>выручка, ₽</th><th>Октябрь<br>маржа</th><th class="l">Диагноз</th></tr></thead><tbody>`;
+  const diag={A101:'Возвраты размера S съедают прибыль',A102:'Акция −45%: убыток со штуки',
+    A103:'Здоровый, реклама на потолке',B201:'Здоровый, растёт',B202:'Реклама 46% выручки: убыток',
+    B203:'Пустая полка 23 дня',C301:'Реклама 46% выручки: убыток',C302:'Здоровый, стабильный'};
+  S.forEach(sk=>{
+    const t=T('2026-10',sk);
+    h+=`<tr><td class="l"><b>${sk}</b> ${nm(sk)}</td>`;
+    M.forEach(m=>{const p=T(m,sk).profit;
+      h+=`<td class="num ${p<0?'heat-neg2 neg':(p<T('2026-08',sk).profit*0.8?'heat-neg':'heat-pos')}">${nf.format(p)}</td>`;});
+    h+=`<td class="num">${nf.format(t.units)}</td><td class="num">${nf.format(t.rev)}</td>
+      <td class="num ${t.margin_pct<0?'neg':''}">${pct(t.margin_pct)}</td>
+      <td class="l small muted">${diag[sk]}</td></tr>`;
+  });
+  h+=`<tr class="total"><td class="l">Всего</td>${M.map(m=>`<td class="num">${nf.format(P(m).profit)}</td>`).join('')}
+    <td class="num">${nf.format(P('2026-10').units)}</td><td class="num">${nf.format(P('2026-10').rev)}</td>
+    <td class="num">${pct(P('2026-10').margin_pct)}</td><td></td></tr>`;
+  el('tbl-sku').innerHTML=h+'</tbody>';
+})();
+
+/* ---------- unit economics table ---------- */
+(function(){
+  let h=`<thead><tr><th class="l">Артикул</th><th>Цена окт</th><th>Комиссия 25%</th><th>Логистика</th>
+    <th>Закупка</th><th>Маржа со штуки</th><th>Потолок ставки<br>за заказ (CPO)</th><th>Потолок ДРР</th>
+    <th>Факт CPO окт</th><th>Факт ДРР окт</th></tr></thead><tbody>`;
+  S.forEach(sk=>{
+    const u=D.unit[sk], a=D.ad_oct[sk], over=a.cpo>a.margin;
+    h+=`<tr${u.margin<0?' style="background:#fff5f4"':''}><td class="l"><b>${sk}</b> ${nm(sk)}</td>
+      <td class="num">${nf.format(u.price)}</td><td class="num">${nf.format(u.comm)}</td>
+      <td class="num">${nf.format(u.fwd)}</td><td class="num">${nf.format(u.cost)}</td>
+      <td class="num ${u.margin<0?'neg':'pos'}"><b>${nf1.format(u.margin)}</b></td>
+      <td class="num">${nf.format(Math.max(0,a.be_cpo))} ₽</td><td class="num">${pct(Math.max(0,a.be_drr))}</td>
+      <td class="num ${over?'neg':'pos'}">${nf.format(a.cpo)} ₽</td>
+      <td class="num ${a.drr>a.be_drr?'neg':''}">${pct(a.drr)}</td></tr>`;
+  });
+  el('tbl-unit').innerHTML=h+'</tbody>';
+})();
+
+/* ---------- plan ---------- */
+(function(){
+  const steps=[
+    {t:'Сегодня: остановить рекламу подушки B202 и термокружки C301',
+     d:'Снизить ставки до потолка маржи (258 ₽ и 383 ₽ за заказ) или выключить кампании. Экономия бюджета 457 781 ₽/мес; даже с учётом потери части рекламных заказов чистый плюс — 302 806 ₽.',
+     e:D.fix.B202.net+D.fix.C301.net,tag:'₽ / месяц'},
+    {t:'Сегодня: выйти из акции −45% на футболку A102',
+     d:'Вернуть цену 990 ₽ или дать скидку не глубже 10%. Продажи упадут примерно до 600 шт/мес — это нормально: сейчас каждая проданная штука забирает деньги. Заодно остановит закупку товара под убыток (755 400 ₽ в октябре).',
+     e:D.fix.A102.net,tag:'₽ / месяц'},
+    {t:'В течение недели: вернуть органайзер B203 в наличие и не допускать нуля',
+     d:'Товар уже приехал 27 октября и сразу продаётся по 27 шт/день. Страховой запас 14 дней (~380 шт), точка заказа — остаток на 21 день продаж. Разобраться, почему выбыло 1 120 штук.',
+     e:D.fix.B203.net,tag:'₽ / месяц'},
+    {t:'В течение недели: починить размер S у худи A101',
+     d:'Перемерить партию, обновить таблицу размеров и фото посадки в карточке, добавить предупреждение «маломерит, берите на размер больше». Возвраты должны вернуться к 8%.',
+     e:D.fix.A101.net,tag:'₽ / месяц'}];
+  el('plan-steps').innerHTML=steps.map((s,i)=>`<div class="step">
+    <div class="n">${i+1}</div><div class="body"><b>${s.t}</b><div class="small muted">${s.d}</div></div>
+    <div class="eff"><div class="m">+${nf.format(Math.round(s.e))}</div><div class="tiny">${s.tag}</div></div></div>`).join('');
+})();
+</script>
+</body>
+</html>

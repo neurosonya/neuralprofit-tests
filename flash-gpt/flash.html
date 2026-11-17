@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Анализ прибыли · август–октябрь 2026</title>
+<style>
+:root{
+  --ink:#131c2b; --muted:#5c6b84; --bg:#f3f5f9; --card:#ffffff; --line:#e4e9f2;
+  --blue:#2f6bff; --blue-d:#1e4fd6; --red:#e0263f; --red-d:#a4133c; --green:#0e9f6e;
+  --amber:#b45309; --shadow:0 1px 2px rgba(16,29,54,.05),0 6px 20px -6px rgba(16,29,54,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px 80px}
+header.hero{background:linear-gradient(135deg,#0d1524 0%,#1a2b4d 70%,#20386b 100%);color:#fff;padding:34px 20px 118px}
+header.hero .wrap{padding-bottom:0}
+.hero h1{font-size:27px;font-weight:800;letter-spacing:.2px}
+.hero .sub{color:#aebdd8;margin-top:6px;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;
+  padding:7px 14px;font-size:13.5px;color:#e8eefb}
+.chip b{color:#fff}
+.chip.bad b{color:#ff9db0} .chip.good b{color:#7ef0c0}
+.verdict{margin-top:-84px}
+.verdict .card{border-left:5px solid var(--red)}
+h2{font-size:20px;font-weight:800;margin:0 0 4px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;
+  background:#0e1726;color:#fff;font-size:13px;margin-right:9px;vertical-align:-3px}
+h3{font-size:15.5px;font-weight:700;margin:0 0 8px}
+.lead{color:var(--muted);font-size:13.5px;margin:2px 0 14px}
+section{margin-top:34px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px 20px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13.8px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);border-bottom:2px solid var(--line)}
+tr.hl td{background:#fff7f8;font-weight:700}
+tr.sep td{border-top:2px solid var(--line)}
+td.pos{color:var(--green)} td.neg{color:var(--red)} .mut{color:var(--muted)}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:700}
+.badge.red{background:#ffecef;color:var(--red-d)} .badge.green{background:#e5f8f1;color:#067a55}
+.badge.grey{background:#eef1f6;color:var(--muted)} .badge.amber{background:#fdf1e0;color:var(--amber)}
+.big{font-size:30px;font-weight:800;letter-spacing:-.5px}
+.big.red{color:var(--red)} .big.blue{color:var(--blue-d)} .big.green{color:var(--green)}
+.klabel{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
+.callout{background:#f7f9ff;border:1px solid #dbe4f8;border-radius:12px;padding:12px 15px;font-size:13.8px;color:#1c2b4a}
+.callout.red{background:#fff5f6;border-color:#f6cdd4;color:#5c1522}
+.callout.green{background:#f2fbf7;border-color:#c9ecdd;color:#0d4f3c}
+.mrow{display:flex;gap:22px;flex-wrap:wrap;align-items:baseline}
+.mrow .m .v{font-size:21px;font-weight:800}
+.mrow .m .t{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+ul.tight{padding-left:20px} ul.tight li{margin:5px 0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto}
+.svg-t{font-size:11px;fill:var(--muted)} .svg-b{font-size:11.5px;font-weight:700;fill:var(--ink)}
+.actions .act{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed var(--line)}
+.actions .act:last-child{border-bottom:none}
+.actions .pr{flex:0 0 30px;height:30px;border-radius:9px;background:var(--blue);color:#fff;font-weight:800;
+  display:flex;align-items:center;justify-content:center;font-size:14px}
+.actions .pr.p1{background:var(--red)} .actions .pr.p2{background:var(--amber)}
+.actions .eff{margin-left:auto;text-align:right;flex:0 0 150px;font-weight:800;color:var(--green);font-size:14px}
+.actions b{font-size:14.5px} .actions .d{color:var(--muted);font-size:13px;margin-top:2px}
+footer{margin-top:44px;color:var(--muted);font-size:12.3px;border-top:1px solid var(--line);padding-top:16px}
+.ledger-row{display:grid;grid-template-columns:290px 1fr 130px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+.ledger-row:last-child{border-bottom:none}
+.ledger-row .t1{font-weight:700;font-size:14px} .ledger-row .t2{color:var(--muted);font-size:12.3px}
+.ledger-row .sum{text-align:right;font-weight:800;color:var(--red);font-size:15.5px}
+.bar-track{height:14px;background:#f0f3f9;border-radius:7px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#ff8d9c,#e0263f);border-radius:7px}
+.bar-fill.grey{background:linear-gradient(90deg,#9db1c9,#66788f)}
+.bar-fill.amber{background:linear-gradient(90deg,#fbbf6b,#d97706)}
+a.tl{text-decoration:none;color:inherit} a.tl:hover .t1{color:var(--blue-d)}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.toc a{font-size:12.5px;color:#cfe0ff;text-decoration:none;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);padding:5px 11px;border-radius:999px}
+.toc a:hover{background:rgba(255,255,255,.18)}
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:14px}
+@media(max-width:900px){.kpi-strip{grid-template-columns:repeat(3,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;box-shadow:var(--shadow)}
+.kpi .v{font-size:19px;font-weight:800;margin-top:3px}
+.kpi .d{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi.red .v{color:var(--red)} .kpi.green .v{color:var(--green)} .kpi.blue .v{color:var(--blue-d)}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <h1>Почему прибыль падает, пока продажи растут</h1>
+    <div class="sub">Маркетплейс · одежда и товары для дома · отчёты за август — октябрь 2026 · выручка считается по факту отгрузок за вычетом возвратов</div>
+    <div class="chips" id="chips"></div>
+    <nav class="toc">
+      <a href="#kpi">Итоги по месяцам</a><a href="#ledger">Куда уходят деньги</a><a href="#cash">Почему пустеет счёт</a>
+      <a href="#promo">Акция −45%</a><a href="#ads">Реклама</a><a href="#oos">Out-of-stock</a>
+      <a href="#returns">Возвраты</a><a href="#pl">P&amp;L</a><a href="#plan">Что делать</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="tldr" style="margin-top:0">
+    <div class="card verdict" style="border-left-width:5px">
+      <div class="klabel" style="color:var(--red)">Коротко</div>
+      <p style="font-size:15.5px;margin-top:6px">
+        За три месяца выручка выросла <b>+21%</b>, а операционная прибыль упала <b>на 69%</b>: с 1,32 до 0,40 млн ₽ в месяц.
+        Рост покупили ценой и трафиком, а не заработали. Найдено <b>5 причин</b> прямых потерь на
+        <b id="tldr-loss">—</b> ₽ за сентябрь–октябрь, и ещё <b id="tldr-cash">—</b> ₽ свободных денег ушло в товарные остатки —
+        поэтому на счёте пусто, хотя «в отчёте о продажах» всё растёт.
+      </p>
+    </div>
+  </section>
+
+  <section id="kpi">
+    <h2><span class="n">1</span>Как менялись показатели</h2>
+    <p class="lead">Красное — то, что должно расти, а падает. Зелёное — то, что должно падать, а растёт.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Выручка и прибыль по месяцам</h3>
+        <div id="chart-revprofit"></div>
+        <div class="legend"><i style="background:#9db8f7"></i>чистая выручка (после возвратов)
+          <i style="background:#0e9f6e"></i>операционная прибыль
+          <i style="background:#e0263f"></i>рентабельность, %</div>
+      </div>
+      <div class="card">
+        <h3>Что при этом творилось с расходами</h3>
+        <div id="chart-costs"></div>
+        <div class="legend"><i style="background:#c8d2e4"></i>себестоимость + комиссия</div>
+        <div class="note">Прибыль считается после всех расходов, включая логистику туда/обратно и рекламу.</div>
+      </div>
+    </div>
+    <div class="kpi-strip" id="kpis"></div>
+  </section>
+
+  <section id="ledger">
+    <h2><span class="n">2</span>Куда уходят деньги — реестр потерь за сентябрь–октябрь</h2>
+    <p class="lead">Каждая строка — независимая причина со своей методикой (см. раздел ниже и «Методологию» в конце). Наведите/нажмите — детали в секциях дашборда.</p>
+    <div class="card">
+      <div class="mrow" style="margin-bottom:10px">
+        <div class="m"><div class="t">Итого найдено потерь</div><div class="v" style="color:var(--red)" id="ledger-total">—</div></div>
+        <div class="m"><div class="t">Управляемых (наших решений)</div><div class="v" id="ledger-managed">—</div></div>
+        <div class="m"><div class="t">Внешних (тарифы)</div><div class="v mut" id="ledger-ext">—</div></div>
+      </div>
+      <div id="ledger-rows"></div>
+    </div>
+  </section>
+
+  <section id="cash">
+    <h2><span class="n">3</span>Почему пустеет счёт: деньги превратились в товар</h2>
+    <p class="lead">Это не убыток в отчёте — это кассовый разрыв: прибыль есть «на бумаге», а живые деньги ушли поставщикам и лежат на складах маркетплейса.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Прибыль против закупок, ₽ в месяц</h3>
+        <div id="chart-cash"></div>
+        <div class="callout red" style="margin-top:10px" id="cash-callout"></div>
+      </div>
+      <div class="card">
+        <h3>Запас на 31 октября, в днях продаж</h3>
+        <div id="chart-days"></div>
+        <div class="note">Пунктир — норматив 45 дней. Справа — сумма, замороженная сверх норматива.</div>
+        <div class="callout" style="margin-top:10px" id="frozen-callout"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="promo">
+    <h2><span class="n">4</span>Причина №1 по «свежести»: акция −45% на футболку A102</h2>
+    <p class="lead">Октябрьская акция (01–31.10): цена 990 → 544 ₽. Это ниже точки безубыточности — каждая продажа в минусе ещё до рекламы.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Юнит-экономика футболки, ₽ на 1 шт</h3>
+        <div id="chart-a102ue"></div>
+        <div class="note">Вклад с единицы = цена − комиссия 25% − логистика − закупка. Точка безубыточности при акционной цене — 546 ₽.</div>
+      </div>
+      <div class="card">
+        <h3>Цена акции в деньгах</h3>
+        <div class="mrow" style="margin:6px 0 14px">
+          <div class="m"><div class="t">Вклад в октябре</div><div class="v" id="a102-oct">—</div></div>
+          <div class="m"><div class="t">Вклад в сентябре (без акции)</div><div class="v" id="a102-sep">—</div></div>
+          <div class="m"><div class="t">Потеря vs сентябрь</div><div class="v" style="color:var(--red)" id="a102-loss">—</div></div>
+        </div>
+        <ul class="tight" id="a102-facts"></ul>
+        <div class="callout red">Скидка −45% не «разогнала» маржу — она её обнулила: продали в 4,4 раза больше штук, а итог хуже сентябрьского на 262 тыс. ₽. Плюс под акцию закупили 2 505 шт (751,5 тыс. ₽ живыми деньгами), из которых на 31.10 нераспроданными лежали 1 022 шт.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ads">
+    <h2><span class="n">5</span>Причина №2: реклама, которая не окупается</h2>
+    <p class="lead">Сентябрь–октябрь: расход на рекламу вырос в 2,4 раза к августу. Стоимость рекламного заказа по всем позициям выше, чем заработок с этого заказа.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Реклама по товарам: расход и маржа с атрибутированных заказов</h3>
+        <div id="chart-ads"></div>
+        <div class="note">Считано по «заказам с рекламы»: маржа = заказы × вклад с единицы × (1 − доля возвратов). Худшие два товара — красные.</div>
+      </div>
+      <div class="card">
+        <h3>Таблица: почему не окупается</h3>
+        <div id="ads-table"></div>
+      </div>
+    </div>
+    <div class="callout red" style="margin-top:14px" id="ads-callout"></div>
+  </section>
+
+  <section id="oos">
+    <h2><span class="n">6</span>Причина №3: 22 дня пустого склада у бестселлера (органайзер B203)</h2>
+    <p class="lead">Главный по оборачиваемости товар в октябре распродали за 3 дня — и 22 дня карточка была пуста. Новая партия приехала только 27 октября.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Остаток и продажи B203, сентябрь–октябрь</h3>
+        <div id="chart-b203"></div>
+        <div class="legend"><i style="background:#2f6bff"></i>остаток на складе, шт <i style="background:#0e9f6e"></i>продажи, шт/день
+          <i style="background:#ffd3da"></i>простой 05–26 октября</div>
+      </div>
+      <div class="card">
+        <h3>Сколько это стоит</h3>
+        <div class="mrow" style="margin:6px 0 14px">
+          <div class="m"><div class="t">Продано в сентябре</div><div class="v" id="b203-sep">—</div></div>
+          <div class="m"><div class="t">Продано в октябре</div><div class="v" style="color:var(--red)" id="b203-oct">—</div></div>
+          <div class="m"><div class="t">Упущенная маржа</div><div class="v" style="color:var(--red)" id="b203-loss">—</div></div>
+        </div>
+        <ul class="tight" id="b203-facts"></ul>
+        <div class="callout">Темп продаж до обнуления — ≈29 шт/день, вклад с единицы ≈ 508 ₽. Запас нужно держать по темпу <b>последних 2 недель</b>, а не месяца: в сентябре закупили 408 шт при продажах 826 — это и привело к нулю 4 октября.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="returns">
+    <h2><span class="n">7</span>Причина №4: возвраты удвоились — размер и брак</h2>
+    <p class="lead">Доля возвратов: 4,1% (авг) → 6,5% (сен) → 7,0% (окт). Каждый возврат стоит 185 ₽ логистики туда-обратно (с 1 сентября), а брак ещё и списывается по себестоимости.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Возвраты по причинам, шт в месяц</h3>
+        <div id="chart-reasons"></div>
+        <div class="legend" id="reasons-legend"></div>
+      </div>
+      <div class="card">
+        <h3>Худи A101: проблема с размером S</h3>
+        <div id="chart-a101"></div>
+        <div class="note">Размерные возвраты худи по месяцам: <b>6 → 43 → 78 шт</b>. Похоже, сентябрьская партия шьёт маломерку S: с неё возвращается почти каждый третий покупатель.</div>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card"><div class="klabel">Прямые расходы на возвраты, сен+окт</div><div class="big red" id="ret-cost">—</div>
+        <div class="note">логистика туда + обратно + списанный брак</div></div>
+      <div class="card"><div class="klabel">Брак, шт в месяц</div><div class="big red">37 → 46 → 100</div>
+        <div class="note">в октябре 54 из 100 — акционные футболки A102 (бракованная партия)</div></div>
+      <div class="card"><div class="klabel">Возврат худи A101 в октябре</div><div class="big red">18%</div>
+        <div class="note">против 2–5% у товаров для дома — из-за маломерного размера S (31% возвратов) и брака</div></div>
+    </div>
+  </section>
+
+  <section id="pl">
+    <h2><span class="n">8</span>P&amp;L по месяцам (детально)</h2>
+    <div class="card" style="overflow-x:auto">
+      <table id="pl-table"></table>
+      <div class="note">Чистая выручка = отгрузки − возвраты. Себестоимость — по проданным (не возвращённым) штукам + списанный брак. Комиссия 25% начисляется на чистую выручку (при возврате комиссия сторнируется).</div>
+    </div>
+  </section>
+
+  <section id="unit">
+    <h2><span class="n">9</span>Вклад с единицы по всем товарам (октябрь)</h2>
+    <p class="lead">Сколько приносит один проданный штука после комиссии, логистики и закупки — и сколько стоит его реклама.</p>
+    <div class="card" style="overflow-x:auto"><table id="ue-table"></table></div>
+  </section>
+
+  <section id="plan">
+    <h2><span class="n">10</span>Что делать — по порядку</h2>
+    <div class="card actions" id="actions"></div>
+  </section>
+
+  <footer>
+    <b>Методика и допущения.</b> Источники: продажи.csv, возвраты.csv, реклама.csv, остатки.csv, тарифы-себестоимость-акции.txt (отчёты личного кабинета за 01.08–31.10.2026).
+    Комиссия 25% во всех месяцах; логистика до покупателя 75 ₽/шт (август), 110 ₽/шт (сентябрь–октябрь); обратная логистика при возврате 50/75 ₽ за штуку.
+    Возвраты: выручка и комиссия сторнируются, логистика «туда» не возвращается, возврат по причинам, кроме брака, идёт обратно в сток, брак списывается по себестоимости.
+    Эффект рекламы оценён консервативной атрибуцией («заказы с рекламы»), без органического хало-эффекта.
+    Закупки восстановлены из уравнения остатков: приход = Δостаток + отгрузки − возвраты в сток.
+    Не учтены: хранение, эквайринг, штрафы, сроки выплат (поступления денег с маркетплейса запаздывают — это усиливает кассовый разрыв).
+    Потери по причинам — сравнение с августовской нормой / контрфактом «как без ошибки»; в сумме они независимы и не пересекаются (реклама футболки учтена в блоке про акцию).
+  </footer>
+</main>
+
+<script>
+const DATA = {"months":[{"label":"Август","units":3317,"gross":4962330,"ret_u":137,"ret_amt":220830,"net":4741500,"cogs":1591150,"comm":1185375,"logf":248775,"rlog":6850,"bad_u":37,"bad_c":19150,"ads":391586,"profit":1317764,"rate":0.0413,"mar":0.2779},{"label":"Сентябрь","units":3891,"gross":5671090,"ret_u":251,"ret_amt":422690,"net":5248400,"cogs":1762400,"comm":1312100,"logf":428010,"rlog":18825,"bad_u":46,"bad_c":24450,"ads":874491,"profit":852574,"rate":0.0645,"mar":0.1624},{"label":"Октябрь","units":5562,"gross":6247360,"ret_u":390,"ret_amt":511588,"net":5735772,"cogs":2297600,"comm":1433943,"logf":611820,"rlog":29250,"bad_u":100,"bad_c":39450,"ads":959832,"profit":403327,"rate":0.0701,"mar":0.0703}],"skus":[{"sku":"A101","name":"Худи оверсайз","cost":900.0,"mm":[{"label":"Август","price":2490.0,"qty":464,"contrib":892.5,"ad_spend":90149,"ad_ord":80,"ad_net":-21698,"cpa":1127,"ret_rate":0.06},{"label":"Сентябрь","price":2490.0,"qty":522,"contrib":857.5,"ad_spend":99285,"ad_ord":94,"ad_net":-23880,"cpa":1056,"ret_rate":0.161},{"label":"Октябрь","price":2490.0,"qty":604,"contrib":857.5,"ad_spend":124930,"ad_ord":107,"ad_net":-39611,"cpa":1168,"ret_rate":0.175}]},{"sku":"A102","name":"Футболка базовая","cost":300.0,"mm":[{"label":"Август","price":990.0,"qty":559,"contrib":367.5,"ad_spend":43855,"ad_ord":99,"ad_net":-8975,"cpa":443,"ret_rate":0.05},{"label":"Сентябрь","price":990.0,"qty":580,"contrib":332.5,"ad_spend":45693,"ad_ord":106,"ad_net":-12722,"cpa":431,"ret_rate":0.076},{"label":"Октябрь","price":544.0,"qty":2570,"contrib":-2.0,"ad_spend":109928,"ad_ord":500,"ad_net":-110858,"cpa":220,"ret_rate":0.07}]},{"sku":"A103","name":"Свитшот","cost":700.0,"mm":[{"label":"Август","price":1990.0,"qty":324,"contrib":717.5,"ad_spend":52828,"ad_ord":54,"ad_net":-15683,"cpa":978,"ret_rate":0.074},{"label":"Сентябрь","price":1990.0,"qty":312,"contrib":682.5,"ad_spend":49710,"ad_ord":52,"ad_net":-16509,"cpa":956,"ret_rate":0.054},{"label":"Октябрь","price":1990.0,"qty":359,"contrib":682.5,"ad_spend":57388,"ad_ord":57,"ad_net":-21213,"cpa":1007,"ret_rate":0.067}]},{"sku":"B201","name":"Плед флисовый","cost":600.0,"mm":[{"label":"Август","price":1690.0,"qty":299,"contrib":592.5,"ad_spend":37215,"ad_ord":47,"ad_net":-10518,"cpa":792,"ret_rate":0.027},{"label":"Сентябрь","price":1690.0,"qty":358,"contrib":557.5,"ad_spend":47576,"ad_ord":56,"ad_net":-18370,"cpa":850,"ret_rate":0.039},{"label":"Октябрь","price":1690.0,"qty":464,"contrib":557.5,"ad_spend":62652,"ad_ord":81,"ad_net":-20661,"cpa":773,"ret_rate":0.032}]},{"sku":"B202","name":"Подушка декоративная","cost":300.0,"mm":[{"label":"Август","price":890.0,"qty":321,"contrib":292.5,"ad_spend":22277,"ad_ord":53,"ad_net":-7415,"cpa":420,"ret_rate":0.022},{"label":"Сентябрь","price":890.0,"qty":524,"contrib":257.5,"ad_spend":212205,"ad_ord":275,"ad_net":-145960,"cpa":772,"ret_rate":0.044},{"label":"Октябрь","price":890.0,"qty":541,"contrib":257.5,"ad_spend":222704,"ad_ord":282,"ad_net":-155181,"cpa":790,"ret_rate":0.046}]},{"sku":"B203","name":"Органайзер для косметики","cost":350.0,"mm":[{"label":"Август","price":1290.0,"qty":757,"contrib":542.5,"ad_spend":78790,"ad_ord":138,"ad_net":-7017,"cpa":571,"ret_rate":0.03},{"label":"Сентябрь","price":1290.0,"qty":826,"contrib":507.5,"ad_spend":81741,"ad_ord":152,"ad_net":-9577,"cpa":538,"ret_rate":0.04},{"label":"Октябрь","price":1290.0,"qty":219,"contrib":507.5,"ad_spend":22963,"ad_ord":40,"ad_net":-4086,"cpa":574,"ret_rate":0.046}]},{"sku":"C301","name":"Термокружка","cost":400.0,"mm":[{"label":"Август","price":1190.0,"qty":367,"contrib":417.5,"ad_spend":34998,"ad_ord":59,"ad_net":-11383,"cpa":593,"ret_rate":0.035},{"label":"Сентябрь","price":1190.0,"qty":562,"contrib":382.5,"ad_spend":308616,"ad_ord":296,"ad_net":-202700,"cpa":1043,"ret_rate":0.044},{"label":"Октябрь","price":1190.0,"qty":597,"contrib":382.5,"ad_spend":329553,"ad_ord":310,"ad_net":-219292,"cpa":1063,"ret_rate":0.042}]},{"sku":"C302","name":"Набор полотенец","cost":650.0,"mm":[{"label":"Август","price":1790.0,"qty":226,"contrib":617.5,"ad_spend":31474,"ad_ord":33,"ad_net":-11938,"cpa":954,"ret_rate":0.027},{"label":"Сентябрь","price":1790.0,"qty":207,"contrib":582.5,"ad_spend":29665,"ad_ord":29,"ad_net":-13862,"cpa":1023,"ret_rate":0.053},{"label":"Октябрь","price":1790.0,"qty":208,"contrib":582.5,"ad_spend":29714,"ad_ord":32,"ad_net":-12381,"cpa":929,"ret_rate":0.019}]}],"ad_sku":[{"sku":"A101","name":"Худи оверсайз","spend":314364,"ordq":281,"margin":229175,"spend_so":224215,"margin_so":160724,"net_so":-63491,"cpa_q":1119,"contrib":[892.5,857.5,857.5]},{"sku":"A102","name":"Футболка базовая","spend":199476,"ordq":705,"margin":66921,"spend_so":155621,"margin_so":32041,"net_so":-123580,"cpa_q":283,"contrib":[367.5,332.5,-2.0]},{"sku":"A103","name":"Свитшот","spend":159926,"ordq":163,"margin":106521,"spend_so":107098,"margin_so":69376,"net_so":-37722,"cpa_q":981,"contrib":[717.5,682.5,682.5]},{"sku":"B201","name":"Плед флисовый","spend":147443,"ordq":184,"margin":97894,"spend_so":110228,"margin_so":71197,"net_so":-39031,"cpa_q":801,"contrib":[592.5,557.5,557.5]},{"sku":"B202","name":"Подушка декоративная","spend":457186,"ordq":610,"margin":148630,"spend_so":434909,"margin_so":133768,"net_so":-301141,"cpa_q":749,"contrib":[292.5,257.5,257.5]},{"sku":"B203","name":"Органайзер для косметики","spend":183494,"ordq":330,"margin":162814,"spend_so":104704,"margin_so":91041,"net_so":-13663,"cpa_q":556,"contrib":[542.5,507.5,507.5]},{"sku":"C301","name":"Термокружка","spend":673167,"ordq":665,"margin":239792,"spend_so":638169,"margin_so":216177,"net_so":-421992,"cpa_q":1012,"contrib":[417.5,382.5,382.5]},{"sku":"C302","name":"Набор полотенец","spend":90853,"ordq":94,"margin":52672,"spend_so":59379,"margin_so":33136,"net_so":-26243,"cpa_q":967,"contrib":[617.5,582.5,582.5]}],"ad_m":{"Август":{"spend":391586,"ordq":563,"margin":296959,"net":-94627},"Сентябрь":{"spend":874491,"ordq":1060,"margin":430911,"net":-443580},"Октябрь":{"spend":959832,"ordq":1409,"margin":376549,"net":-583283}},"sink23":-723133,"reasons":{"Август|брак":37,"Август|не подошел размер":22,"Август|не подошел цвет":44,"Август|передумал":34,"Сентябрь|брак":46,"Сентябрь|маломерит":24,"Сентябрь|не подошел размер":38,"Сентябрь|не подошел цвет":63,"Сентябрь|передумал":80,"Октябрь|брак":100,"Октябрь|маломерит":50,"Октябрь|не подошел размер":81,"Октябрь|не подошел цвет":89,"Октябрь|передумал":70},"a101_size":{"S":{"sold":467,"ret":144,"rate":0.3083511777301927},"M":{"sold":637,"ret":45,"rate":0.0706436420722135},"L":{"sold":486,"ret":29,"rate":0.059670781893004114}},"size_ret_ms":{"Август":6,"Сентябрь":43,"Октябрь":78},"bad_oct_a102":54,"ret_direct_q":217010,"ret_direct_so":180735,"b203":{"oos_days":22,"run_rate":28.7,"lost":320063,"series":[["2026-09-01",1602,24],["2026-09-02",1571,31],["2026-09-03",1553,18],["2026-09-04",1532,21],["2026-09-05",1501,31],["2026-09-06",1460,41],["2026-09-07",1637,26],["2026-09-08",1603,34],["2026-09-09",1572,31],["2026-09-10",1544,28],["2026-09-11",1515,29],["2026-09-12",1486,29],["2026-09-13",1457,29],["2026-09-14",1637,25],["2026-09-15",1609,28],["2026-09-16",1590,19],["2026-09-17",1566,24],["2026-09-18",1546,20],["2026-09-19",1514,32],["2026-09-20",1480,34],["2026-09-21",335,25],["2026-09-22",306,29],["2026-09-23",278,28],["2026-09-24",248,30],["2026-09-25",223,25],["2026-09-26",196,27],["2026-09-27",161,35],["2026-09-28",130,31],["2026-09-29",107,23],["2026-09-30",88,19],["2026-10-01",61,27],["2026-10-02",33,28],["2026-10-03",2,31],["2026-10-04",0,2],["2026-10-05",0,0],["2026-10-06",0,0],["2026-10-07",0,0],["2026-10-08",0,0],["2026-10-09",0,0],["2026-10-10",0,0],["2026-10-11",0,0],["2026-10-12",0,0],["2026-10-13",0,0],["2026-10-14",0,0],["2026-10-15",0,0],["2026-10-16",0,0],["2026-10-17",0,0],["2026-10-18",0,0],["2026-10-19",0,0],["2026-10-20",0,0],["2026-10-21",0,0],["2026-10-22",0,0],["2026-10-23",0,0],["2026-10-24",0,0],["2026-10-25",0,0],["2026-10-26",0,0],["2026-10-27",671,29],["2026-10-28",655,16],["2026-10-29",629,26],["2026-10-30",596,33],["2026-10-31",569,27]],"qty_sep":826,"qty_oct":219},"purch":{"Август":2038950,"Сентябрь":1765850,"Октябрь":2552000},"purch_sku":{"Август":{"A101":585,"A102":718,"A103":370,"B201":366,"B202":405,"B203":978,"C301":443,"C302":273},"Сентябрь":{"A101":516,"A102":589,"A103":323,"B201":374,"B202":536,"B203":408,"C301":587,"C302":209},"Октябрь":{"A101":563,"A102":2505,"A103":345,"B201":445,"B202":551,"C301":606,"C302":204,"B203":700}},"inv":[{"sku":"A101","name":"Худи оверсайз","stock":1004,"vel":19.5,"days":52,"frozen":903600,"excess":114503},{"sku":"A102","name":"Футболка базовая","stock":1022,"vel":82.9,"days":12,"frozen":306600,"excess":0},{"sku":"A103","name":"Свитшот","stock":948,"vel":11.6,"days":82,"frozen":663600,"excess":298810},{"sku":"B201","name":"Плед флисовый","stock":967,"vel":15.0,"days":65,"frozen":580200,"excess":176071},{"sku":"B202","name":"Подушка декоративная","stock":1011,"vel":17.5,"days":58,"frozen":303300,"excess":67703},{"sku":"B203","name":"Органайзер для косметики","stock":569,"vel":28.7,"days":20,"frozen":199150,"excess":0},{"sku":"C301","name":"Термокружка","stock":1017,"vel":19.3,"days":53,"frozen":406800,"excess":60155},{"sku":"C302","name":"Набор полотенец","stock":946,"vel":6.7,"days":141,"frozen":614900,"excess":418642}],"tot_frozen":3978150,"tot_excess":1135884,"losses":{"tariff":346880,"tariff_units":9453,"tariff_rets":641,"promo":262225,"promo_sep":147157,"promo_oct":-115068,"disc":1146220,"a102_purch_oct":2505,"oos":320063,"ad_sink":723133,"ad_waste_so":1026863,"ret_cost_so":180735,"ret_cost_q":217010},"ledger_total":1833036,"ledger":[{"id":"ads","title":"Неокупаемая реклама","sub":"подушка B202 + термокружка C301 (сен+окт)","v":723133},{"id":"ads_all","title":"Все кампании в минус по атрибуции","sub":"сен+окт, без футболки","v":-903283,"hidden":true},{"id":"oos","title":"Out-of-stock органайзера B203","sub":"22 дня пустого склада","v":-320063},{"id":"tariff","title":"Рост тарифов логистики с 01.09","sub":"+35 ₽/отправление, +25 ₽/возврат","v":-346880},{"id":"promo","title":"Акция −45% на футболки A102","sub":"цена ниже точки безубыточности","v":-262225},{"id":"ret","title":"Расходы на возвраты","sub":"логистика туда/обратно + списанный брак","v":-180735}],"cash_delta":{"Август":-721186,"Сентябрь":-913276,"Октябрь":-2148673},"cum_profit":2573665,"cum_purch":6356800,"tariff":{"sep_oct":{"comm":0.25,"log":110,"rlog":75},"aug":{"comm":0.25,"log":75,"rlog":50}},"promo":{"sku":"A102","pct":45,"from_":990,"to":544,"start":"01.10.2026","end":"31.10.2026"}};
+
+/* ================= helpers ================= */
+const nf = new Intl.NumberFormat('ru-RU');
+const f  = v => nf.format(Math.round(v));
+const fb = v => nf.format(Math.round(v)) + ' ₽';
+const fm = v => Math.abs(v) >= 1e6 ? (v/1e6).toFixed(2).replace('.', ',') + ' млн' : nf.format(Math.round(v/1000)) + ' тыс';
+const fmR = v => fm(v) + ' ₽';
+const pct = (v, d=1) => (v*100).toFixed(d).replace('.', ',') + '%';
+const svg = (w, h, inner) => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">${inner}</svg>`;
+const T = (x, y, s, cls, anchor='start', extra='') => `<text class="${cls||'svg-t'}" x="${x}" y="${y}" text-anchor="${anchor}" ${extra}>${s}</text>`;
+
+const M = DATA.months, L = DATA.losses, AD = DATA.ad_sku, B = DATA.b203;
+const C = {red:'#e0263f', green:'#0e9f6e', blue:'#2f6bff', lblue:'#9db8f7', grey:'#c8d2e4'};
+
+/* ================= chips ================= */
+document.getElementById('chips').innerHTML = [
+  `<span class="chip good">выручка <b>4,74 → 5,74 млн ₽ (+21%)</b></span>`,
+  `<span class="chip bad">прибыль <b>1,32 → 0,40 млн ₽ (−69%)</b></span>`,
+  `<span class="chip bad">рентабельность <b>27,8% → 7,0%</b></span>`,
+  `<span class="chip bad">расход на рекламу <b>×2,4: 0,39 → 0,96 млн ₽</b></span>`,
+  `<span class="chip bad">возвраты <b>4,1% → 7,0%</b></span>`,
+].join('');
+
+/* ================= KPI strip ================= */
+(function(){
+  const rows=[
+    {t:'Чистая выручка', aug:M[0].net, sep:M[1].net, oct:M[2].net, cls:'blue',
+     v:fmR, d:`+${pct(M[2].net/M[0].net-1,0)} к августу`, dcls:'pos'},
+    {t:'Отгружено, шт', aug:M[0].units, sep:M[1].units, oct:M[2].units, cls:'',
+     v:f, d:`+${pct(M[2].units/M[0].units-1,0)} к августу`, dcls:'pos'},
+    {t:'Операционная прибыль', aug:M[0].profit, sep:M[1].profit, oct:M[2].profit, cls:'red',
+     v:fmR, d:`−${pct(1-M[2].profit/M[0].profit,0)} к августу`, dcls:'neg'},
+    {t:'Рентабельность', aug:M[0].mar, sep:M[1].mar, oct:M[2].mar, cls:'',
+     v:x=>pct(x), d:'−20,8 п.п. за квартал', dcls:'neg'},
+    {t:'Реклама (расход)', aug:M[0].ads, sep:M[1].ads, oct:M[2].ads, cls:'',
+     v:fmR, d:`доля в выручке ${pct(M[0].ads/M[0].gross)} → ${pct(M[2].ads/M[2].gross)}`, dcls:'neg'},
+    {t:'Доля возвратов', aug:M[0].rate, sep:M[1].rate, oct:M[2].rate, cls:'',
+     v:x=>pct(x), d:`${M[0].ret_u} → ${M[2].ret_u} шт в месяц`, dcls:'neg'},
+  ];
+  document.getElementById('kpis').innerHTML = rows.map(r=>
+    `<div class="kpi ${r.cls}"><div class="klabel">${r.t}</div>
+     <div class="v">${r.v(r.oct)}</div>
+     <div class="d">авг ${r.v(r.aug)} · сен ${r.v(r.sep)}<br><span class="${r.dcls}">${r.d}</span></div></div>`).join('');
+})();
+
+/* ================= chart 1: revenue vs profit ================= */
+(function(){
+  const w=560,h=290,pl=52,pr=56,pt=26,pb=34,maxV=6.4e6;
+  const X=i=>pl+(w-pl-pr)*(i+0.5)/3, Y=v=>pt+(1-v/maxV)*(h-pt-pb), Y2=v=>pt+(1-v/0.3)*(h-pt-pb);
+  let s='';
+  for(let g=0;g<=4;g++){const v=maxV*g/4;
+    s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#edf1f7"/>`+T(pl-8,Y(v)+4,(v/1e6).toFixed(1).replace('.',','),'svg-t','end');}
+  for(let g=0;g<=3;g++){const v=g*.1; s+=T(w-pr+10,Y2(v)+4,(v*100).toFixed(0)+'%','svg-t','start','fill="#e0263f"');}
+  const bw=30;
+  M.forEach((m,i)=>{
+    s+=`<rect x="${X(i)-bw-3}" y="${Y(m.net)}" width="${bw}" height="${h-pb-Y(m.net)}" rx="4" fill="${C.lblue}"><title>${m.label}: чистая выручка ${fb(m.net)}</title></rect>`;
+    s+=`<rect x="${X(i)+3}" y="${Y(m.profit)}" width="${bw}" height="${h-pb-Y(m.profit)}" rx="4" fill="${C.green}"><title>${m.label}: прибыль ${fb(m.profit)}</title></rect>`;
+    s+=T(X(i)-bw/2-3,Y(m.net)-6,(m.net/1e6).toFixed(2).replace('.',','),'svg-b','middle');
+    s+=T(X(i)+bw/2+3,Y(m.profit)-6,(m.profit/1e6).toFixed(2).replace('.',','),'svg-b','middle','fill="#0b7d56"');
+    s+=T(X(i),h-12,m.label,'svg-b','middle','fill="#131c2b"');
+  });
+  const P=M.map((m,i)=>[X(i),Y2(m.mar)]);
+  s+=`<polyline points="${P.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${C.red}" stroke-width="2.5" stroke-dasharray="1 0"/>`;
+  P.forEach((p,i)=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${C.red}"><title>${M[i].label}: рентабельность ${pct(M[i].mar)}</title></circle>`;
+    s+=T(p[0]+10,p[1]-8,pct(M[i].mar),'svg-b','start','fill="#e0263f"');});
+  s+=T(pl-8,14,'млн ₽','svg-t','end')+T(w-pr+10,14,'%','svg-t','start','fill="#e0263f"');
+  document.getElementById('chart-revprofit').innerHTML=svg(w,h,s);
+})();
+
+/* ================= chart 2: costs stacked ================= */
+(function(){
+  const w=560,h=290,pl=52,pr=20,pt=26,pb=34,maxV=5.6e6;
+  const items=[['cogs','себестоимость',C.grey],['comm','комиссия 25%','#8fa5c7'],['logf','логистика туда','#6d84a8'],['rlog','обратная логистика','#f59e0b'],['ads','реклама',C.red]];
+  const Y=v=>pt+(1-v/maxV)*(h-pt-pb);
+  let s='';
+  for(let g=0;g<=4;g++){const v=maxV*g/4;s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#edf1f7"/>`+T(pl-8,Y(v)+4,(v/1e6).toFixed(1).replace('.',','),'svg-t','end');}
+  M.forEach((m,i)=>{
+    const x=pl+22+i*(w-pl-pr-44)/3, bw=(w-pl-pr-44)/3-34; let acc=0;
+    items.forEach(([k,lab,col])=>{const v=m[k];
+      s+=`<rect x="${x}" y="${Y(acc+v)}" width="${bw}" height="${Y(acc)-Y(acc+v)}" fill="${col}"><title>${lab}: ${fb(v)}</title></rect>`;acc+=v;});
+    s+=T(x+bw/2,Y(acc)-6,fmR(acc),'svg-t','middle')+T(x+bw/2,h-12,m.label,'svg-b','middle','fill="#131c2b"');
+  });
+  s+=T(pl-8,14,'млн ₽','svg-t','end');
+  document.getElementById('chart-costs').innerHTML=svg(w,h,s);
+})();
+
+/* ================= ledger ================= */
+(function(){
+  const rows=[
+    {t:'Реклама без юнит-экономики', s:'подушка B202 и термокружка C301: заказ стоил дороже, чем заработал', v:L.ad_sink, href:'#ads', col:'red'},
+    {t:'Out-of-stock бестселлера', s:'органайзер B203 — 22 дня нулевого остатка (05–26 октября)', v:L.oos, href:'#oos', col:'red'},
+    {t:'Рост тарифов логистики', s:'с 01.09: +35 ₽ за отправление, +25 ₽ за возврат · внешний фактор', v:L.tariff, href:'#pl', col:'grey'},
+    {t:'Акция −45% на футболки', s:'цена 544 ₽ ниже точки безубыточности (546 ₽); минус маржа и реклама акции', v:L.promo, href:'#promo', col:'red'},
+    {t:'Возвраты', s:'482 возврата за квартал: логистика туда/обратно + списанный брак', v:L.ret_cost_so, href:'#returns', col:'amber'},
+  ].sort((a,b)=>b.v-a.v);
+  const maxV=Math.max(...rows.map(r=>r.v));
+  document.getElementById('ledger-rows').innerHTML=rows.map(r=>
+    `<a class="tl" href="${r.href}"><div class="ledger-row">
+      <div><div class="t1">${r.t}</div><div class="t2">${r.s}</div></div>
+      <div><div class="bar-track"><div class="bar-fill ${r.col}" style="width:${(r.v/maxV*100).toFixed(0)}%"></div></div></div>
+      <div class="sum">−${f(r.v)} ₽</div></div></a>`).join('');
+  const total=rows.reduce((a,r)=>a+r.v,0);
+  document.getElementById('ledger-total').textContent='−'+fmR(total);
+  document.getElementById('ledger-managed').textContent='−'+fmR(total-L.tariff);
+  document.getElementById('ledger-ext').textContent='−'+fmR(L.tariff);
+  document.getElementById('tldr-loss').textContent=fmR(total);
+  document.getElementById('tldr-cash').textContent=fmR(DATA.cum_purch-DATA.cum_profit);
+})();
+
+/* ================= cash ================= */
+(function(){
+  const w=560,h=272,pl=52,pr=16,pt=26,pb=34,maxV=3e6;
+  const Y=v=>pt+(1-v/maxV)*(h-pt-pb);
+  let s='';
+  for(let g=0;g<=3;g++){const v=maxV*g/3;s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#edf1f7"/>`+T(pl-8,Y(v)+4,(v/1e6).toFixed(1).replace('.',','),'svg-t','end');}
+  ['Август','Сентябрь','Октябрь'].forEach((l,i)=>{
+    const pur=DATA.purch[l], prf=M[i].profit;
+    const x=pl+16+i*(w-pl-pr-32)/3, bw=((w-pl-pr-32)/3-40)/2;
+    s+=`<rect x="${x}" y="${Y(pur)}" width="${bw}" height="${Y(0)-Y(pur)}" rx="4" fill="${C.red}"><title>закуплено: ${fb(pur)}</title></rect>`;
+    s+=`<rect x="${x+bw+10}" y="${Y(prf)}" width="${bw}" height="${Y(0)-Y(prf)}" rx="4" fill="${C.green}"><title>прибыль: ${fb(prf)}</title></rect>`;
+    s+=T(x+bw/2,Y(pur)-6,fm(pur),'svg-b','middle','fill="#a4133c"');
+    s+=T(x+bw+10+bw/2,Y(prf)-6,fm(prf),'svg-b','middle','fill="#0b7d56"');
+    s+=T(x+bw+5,h-12,l,'svg-b','middle','fill="#131c2b"');
+  });
+  s+=T(pl-8,14,'млн ₽','svg-t','end');
+  document.getElementById('chart-cash').innerHTML=svg(w,h,s);
+  const cd=DATA.cash_delta;
+  document.getElementById('cash-callout').innerHTML=
+    `Закупки каждый месяц больше прибыли: авг <b class="neg">−${fm(-cd['Август'])}</b>, сен <b class="neg">−${fm(-cd['Сентябрь'])}</b>, окт <b class="neg">−${fm(-cd['Октябрь'])} ₽</b>. `+
+    `За квартал прибыль +${fmR(DATA.cum_profit)}, а на товар потрачено ${fmR(DATA.cum_purch)}: разница <b>${fmR(DATA.cum_purch-DATA.cum_profit)}</b> ушла со счёта в остатки. `+
+    `Реклама (−${fmR(M[0].ads+M[1].ads+M[2].ads)} за квартал) обычно тоже оплачивается с этого же баланса — поэтому деньги «тают» быстрее, чем показывает P&L.`;
+})();
+
+/* ================= days of cover ================= */
+(function(){
+  const inv=[...DATA.inv].sort((a,b)=>b.days-a.days);
+  const maxD=Math.max(...inv.map(i=>i.days),60);
+  const w=560,rowH=27,h=inv.length*rowH+44,pl=158,pr=120;
+  let s='';
+  inv.forEach((r,i)=>{
+    const y=12+i*rowH, wd=Math.max(4,(r.days/maxD)*(w-pl-pr));
+    const col=r.days>60?C.red:r.days>45?'#d97706':C.green;
+    s+=T(0,y+12,r.name,'svg-t','start','font-size="12" fill="#131c2b"');
+    s+=`<rect x="${pl}" y="${y}" width="${wd}" height="15" rx="3" fill="${col}"><title>${r.days} дней запаса · ${r.stock} шт · заморожено ${fb(r.frozen)}</title></rect>`;
+    s+=T(pl+wd+6,y+12,`${r.days} дн · ${fm(r.frozen)} ₽`,'svg-b','start','font-size="11"');
+  });
+  const x45=pl+(45/maxD)*(w-pl-pr);
+  s+=`<line x1="${x45}" x2="${x45}" y1="6" y2="${h-30}" stroke="#131c2b" stroke-dasharray="4 3"/>`+T(x45,h-12,'норматив 45 дн','svg-t','middle');
+  document.getElementById('chart-days').innerHTML=svg(w,h,s);
+  const slow=inv.filter(i=>i.days>45);
+  document.getElementById('frozen-callout').innerHTML=
+    `В товаре на 31.10 заморожено <b>${fmR(DATA.tot_frozen)}</b> по закупке; сверх 45-дневного норматива — <b>${fmR(DATA.tot_excess)}</b> `+
+    `(полотенца C302 — 141 день, свитшоты A103 — 82, плед B201 — 65). У органайзера B203 наоборот 20 дней при темпе 29 шт/день — он следующий на обнуление. `+
+    `Правило: закупка ≤ 45 дней по темпу последних 2 недель. Это самый быстрый источник свободных денег.`;
+})();
+
+/* ================= A102 promo ================= */
+(function(){
+  const a102=DATA.skus.find(x=>x.sku==='A102').mm;
+  const vals=a102.map(m=>m.contrib), labs=a102.map(m=>m.label), qtys=a102.map(m=>m.qty);
+  const w=560,h=272,pl=52,pr=16,pt=32,pb=46,maxV=420,minV=-90;
+  const Y=v=>pt+(maxV-v)/(maxV-minV)*(h-pt-pb);
+  let s=T(pl-8,14,'₽/шт','svg-t','end');
+  for(let g=0;g<=4;g++){const v=g*100;s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#edf1f7"/>`+T(pl-8,Y(v)+4,String(v),'svg-t','end');}
+  s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(0)}" y2="${Y(0)}" stroke="#131c2b" stroke-width="1.5"/>`;
+  vals.forEach((v,i)=>{
+    const bw=96,x=pl+36+i*(w-pl-pr-72)/3,col=v<0?C.red:C.green;
+    s+=`<rect x="${x}" y="${Math.min(Y(v),Y(0))}" width="${bw}" height="${Math.abs(Y(v)-Y(0))}" rx="5" fill="${col}"><title>${labs[i]}: ${v.toFixed(1)} ₽ на штуку, отгружено ${qtys[i]}</title></rect>`;
+    s+=T(x+bw/2,v<0?Y(v)+20:Y(v)-8,(v>0?'+':'−')+Math.abs(v).toFixed(1).replace('.',','),'svg-b','middle','font-size="14" fill="'+(v<0?'#a4133c':'#0b7d56')+'"');
+    s+=T(x+bw/2,h-26,labs[i],'svg-b','middle','fill="#131c2b"');
+    s+=T(x+bw/2,h-10,v<0?'цена 544 ₽ · акция −45%':'цена 990 ₽','svg-t','middle');
+  });
+  document.getElementById('chart-a102ue').innerHTML=svg(w,h,s);
+  document.getElementById('a102-oct').textContent='−'+f(-L.promo_oct)+' ₽';
+  document.getElementById('a102-sep').textContent='+'+f(L.promo_sep)+' ₽';
+  document.getElementById('a102-loss').textContent='−'+f(L.promo)+' ₽';
+  document.getElementById('a102-facts').innerHTML=`
+    <li>Отгружено в октябре: <b>2 570 шт против 580 в сентябре (+343%)</b> — акция разогнала штуки, но не деньги.</li>
+    <li>Скидка покупателям: <b>446 ₽ × 2 570 = ${fb(L.disc)}</b> — оплачено из вашей маржи.</li>
+    <li>Итог по футболке: октябрь <b class="neg">−115 068 ₽</b> против <b class="pos">+147 157 ₽</b> в сентябре (вклад минус реклама).</li>
+    <li>Под акцию закуплено <b>2 505 шт</b> на <b>${fb(L.a102_purch_oct*300)}</b> живыми деньгами; на 31.10 нераспроданными лежат 1 022 шт (306,6 тыс. ₽).</li>
+    <li>Сопутствующий урон: <b>54 шт брака</b> из акционной партии + 181 возврат.</li>`;
+})();
+
+/* ================= ads ================= */
+(function(){
+  const rows=[...AD].sort((a,b)=>a.net_so-b.net_so);
+  const w=560,rowH=36,h=rows.length*rowH+46,pl=150,mid=pl+(w-pl-14)*0.55;
+  const maxV=Math.max(...rows.map(r=>Math.max(r.spend_so,r.margin_so,1)));
+  const sc=v=>v/maxV*((w-pl)*0.52);
+  let s='';
+  rows.forEach((r,i)=>{
+    const y=16+i*rowH, bad=r.net_so<-60000;
+    s+=T(0,y+11,r.name,'svg-t','start','font-size="12" fill="'+(bad?'#a4133c':'#131c2b')+'" font-weight="'+(bad?'700':'400')+'"');
+    s+=`<rect x="${mid-sc(r.spend_so)}" y="${y}" width="${sc(r.spend_so)}" height="11" rx="2" fill="${C.grey}"><title>расход сен+окт: ${fb(r.spend_so)}</title></rect>`;
+    s+=`<rect x="${mid}" y="${y+13}" width="${Math.max(sc(r.margin_so),1)}" height="11" rx="2" fill="#7ad1b2"><title>маржа с рекламных заказов: ${fb(r.margin_so)}</title></rect>`;
+    s+=T(mid-sc(r.spend_so)-6,y+9,'−'+fm(r.spend_so),'svg-t','end','font-size="10"');
+    s+=T(w,y+17,(r.net_so<0?'−':'+')+f(Math.abs(r.net_so))+' ₽','svg-b','end','font-size="11.5" fill="'+(r.net_so<0?'#e0263f':'#0e9f6e')+'"');
+  });
+  s+=`<line x1="${mid}" x2="${mid}" y1="6" y2="${h-30}" stroke="#e4e9f2"/>`
+    +T(mid-4,h-10,'← расход','svg-t','end')+T(mid+4,h-10,'маржа с рекламы →','svg-t','start');
+  document.getElementById('chart-ads').innerHTML=svg(w,h,s);
+
+  document.getElementById('ads-table').innerHTML=`<table>
+    <thead><tr><th>Товар</th><th>CPA, ₽</th><th>Вклад/шт в окт, ₽</th><th>Итог сен+окт</th></tr></thead><tbody>${
+    rows.map(a=>{const c=DATA.skus.find(x=>x.sku===a.sku).mm[2].contrib;
+      return `<tr class="${a.net_so<-60000?'hl':''}"><td>${a.name}</td><td>${f(a.cpa_q)}</td>
+      <td class="${c<100?'neg':''}">${c.toFixed(1).replace('.',',')}</td>
+      <td class="${a.net_so<0?'neg':'pos'}">${a.net_so<0?'−':'+'}${f(Math.abs(a.net_so))} ₽</td></tr>`}).join('')}</tbody></table>
+    <div class="note">CPA — средняя стоимость рекламного заказа за квартал. Правило окупаемости: CPA ≤ 60–70% вклада с единицы.</div>`;
+
+  document.getElementById('ads-callout').innerHTML=
+    `<b>1,07 из 1,83 млн ₽ рекламного бюджета сентября–октября (58%) ушло на подушку B202 и термокружку C301</b> — товары с вкладом 258–383 ₽/шт, `+
+    `где рекламный заказ стоил 749–1 063 ₽. Только эти два товара дали <b class="neg">−${f(L.ad_sink)} ₽</b>; по атрибуции «в минус» за сен+окт ушло ~1,03 млн ₽. `+
+    `Даже если реклама подтягивает органику — разрыв CPA и маржи в 2–3 раза не отыгрывается никаким хало-эффектом.`;
+})();
+
+/* ================= B203 out-of-stock ================= */
+(function(){
+  const series=B.series;
+  const w=560,h=292,pl=46,pr=46,pt=16,pb=30;
+  const n=series.length,maxS=Math.max(...series.map(r=>r[1]),100),maxQ=Math.max(...series.map(r=>r[2]),10);
+  const X=i=>pl+i*(w-pl-pr)/(n-1),Y=v=>pt+(1-v/maxS)*(h-pt-pb),Yq=v=>pt+(1-v/(maxQ*1.6))*(h-pt-pb);
+  let s='';
+  const i0=series.findIndex(r=>r[0]>='2026-10-05');
+  let i1=series.findIndex(r=>r[0]>'2026-10-26'); if(i1<0)i1=n-1;
+  s+=`<rect x="${X(i0)}" y="${pt}" width="${X(i1)-X(i0)}" height="${h-pt-pb}" fill="#ffd3da" opacity=".6"><title>05–26 октября: товара нет на складе, продаж нет</title></rect>`;
+  for(let g=0;g<=2;g++){const v=maxS*g/2;s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#edf1f7"/>`+T(pl-6,Y(v)+4,f(v),'svg-t','end');}
+  s+=`<polyline points="${series.map((r,i)=>`${X(i)},${Y(r[1])}`).join(' ')}" fill="none" stroke="${C.blue}" stroke-width="2.2"/>`;
+  series.forEach((r,i)=>{if(r[2]>0)s+=`<line x1="${X(i)}" x2="${X(i)}" y1="${Yq(0)}" y2="${Yq(r[2])}" stroke="${C.green}" stroke-width="2.6" opacity=".75"><title>${r[0]}: продано ${r[2]} шт</title></line>`;});
+  [['2026-09-01','01.09'],['2026-09-15','15.09'],['2026-10-01','01.10'],['2026-10-15','15.10'],['2026-10-31','31.10']].forEach(([d,lab])=>{
+    const i=series.findIndex(r=>r[0]>=d); s+=T(X(i),h-8,lab,'svg-t','middle');});
+  s+=T(w-pr+4,Y(maxS)+4,f(maxS),'svg-t','start')+T(w-pr+4,h-8,'шт','svg-t','start');
+  s+=T(X(i0)+4,pt+12,'простой 22 дня','svg-b','start','fill="#a4133c"');
+  document.getElementById('chart-b203').innerHTML=svg(w,h,s);
+  document.getElementById('b203-sep').textContent=f(B.qty_sep)+' шт';
+  document.getElementById('b203-oct').textContent=f(B.qty_oct)+' шт (−73%)';
+  document.getElementById('b203-loss').textContent='−'+f(B.lost)+' ₽';
+  document.getElementById('b203-facts').innerHTML=`
+    <li>Склад обнулился <b>4 октября</b>, продажи встали, реклама сама отключилась; <b>700 шт</b> приехало только <b>27 октября</b>.</li>
+    <li>Темп до обнуления — <b>${B.run_rate.toFixed(1).replace('.',',')} шт/день</b>. Потеря за простой: ≈ ${f(22*B.run_rate)} шт × 508 ₽ вклада = <b class="neg">${fb(B.lost)}</b>.</li>
+    <li>Причина в плане закупки: в сентябре купили 408 шт, продали 826 — запас таял три недели и сгорел в первые дни октября.</li>
+    <li>Карточка-донор трафика: без него просели и переливы на смежные товары.</li>`;
+})();
+
+/* ================= returns ================= */
+(function(){
+  const reasons=['брак','не подошел цвет','не подошел размер','маломерит','передумал'];
+  const cols={'брак':C.red,'не подошел цвет':'#f59e0b','не подошел размер':'#6366f1','маломерит':'#0ea5e9','передумал':'#94a3b8'};
+  const ms=['Август','Сентябрь','Октябрь'];
+  const data=reasons.map(r=>ms.map((m,i)=>DATA.reasons[m+'|'+r]||0));
+  const tots=ms.map((m,i)=>data.reduce((a,r)=>a+r[i],0));
+  const maxTot=Math.max(...tots)*1.18;
+  const w=560,h=252,pl=42,pr=14,pt=26,pb=30;
+  const Y=v=>pt+(1-v/maxTot)*(h-pt-pb);
+  let s='';
+  for(let g=0;g<=3;g++){const v=Math.round(maxTot*g/3);s+=`<line x1="${pl}" x2="${w-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#edf1f7"/>`+T(pl-6,Y(v)+4,String(v),'svg-t','end');}
+  ms.forEach((m,i)=>{
+    const bw=104,x=pl+36+i*(w-pl-pr-72)/3; let acc=0;
+    reasons.forEach((r,j)=>{const v=data[j][i];if(!v)return;
+      s+=`<rect x="${x}" y="${Y(acc+v)}" width="${bw}" height="${Y(acc)-Y(acc+v)}" fill="${cols[r]}" opacity="${j===0&&i===2?1:.92}"><title>${r}: ${v} шт</title></rect>`;acc+=v;});
+    s+=T(x+bw/2,Y(acc)-7,`${acc} шт · ${pct(M[i].rate)}`,'svg-b','middle','fill="#a4133c"');
+    s+=T(x+bw/2,h-8,m,'svg-b','middle','fill="#131c2b"');
+  });
+  document.getElementById('chart-reasons').innerHTML=svg(w,h,s);
+  document.getElementById('reasons-legend').innerHTML=reasons.map(r=>`<span><i style="background:${cols[r]}"></i>${r}</span>`).join('');
+
+  const sz=['S','M','L'];
+  const rates=sz.map(k=>DATA.a101_size[k].rate),sold=sz.map(k=>DATA.a101_size[k].sold),ret=sz.map(k=>DATA.a101_size[k].ret);
+  const w2=560,h2=212,pl2=42,pt2=36,pb2=42,maxR=.36;
+  const Y2=v=>pt2+(1-v/maxR)*(h2-pt2-pb2);
+  let s2='';
+  for(let g=0;g<=3;g++){const v=g*.1;s2+=`<line x1="${pl2}" x2="${w2-14}" y1="${Y2(v)}" y2="${Y2(v)}" stroke="#edf1f7"/>`+T(pl2-6,Y2(v)+4,(v*100).toFixed(0)+'%','svg-t','end');}
+  sz.forEach((k,i)=>{
+    const bw=88,x=pl2+52+i*(w2-pl2-100)/3;
+    s2+=`<rect x="${x}" y="${Y2(rates[i])}" width="${bw}" height="${Y2(0)-Y2(rates[i])}" rx="5" fill="${i===0?C.red:C.lblue}"><title>размер ${k}: ${ret[i]} возвратов из ${sold[i]} продаж</title></rect>`;
+    s2+=T(x+bw/2,Y2(rates[i])-7,(rates[i]*100).toFixed(0)+'%','svg-b','middle','font-size="14" fill="'+(i===0?'#a4133c':'#131c2b')+'"');
+    s2+=T(x+bw/2,h2-22,'размер '+k,'svg-b','middle','fill="#131c2b"');
+    s2+=T(x+bw/2,h2-8,`${ret[i]} из ${sold[i]} продаж`,'svg-t','middle');
+  });
+  document.getElementById('chart-a101').innerHTML=svg(w2,h2,s2);
+  document.getElementById('ret-cost').textContent='−'+f(L.ret_cost_so)+' ₽';
+})();
+
+/* ================= P&L table ================= */
+(function(){
+  const negRow=(name,key,cls='')=>`<tr class="${cls}"><td>${name}</td>${M.map(m=>`<td>−${f(m[key])}</td>`).join('')}
+    <td class="${M[2][key]>M[0][key]?'neg':'pos'}">−${f(M[2][key]-M[0][key])}</td></tr>`;
+  document.getElementById('pl-table').innerHTML=`
+  <thead><tr><th>Показатель</th><th>Август</th><th>Сентябрь</th><th>Октябрь</th><th>Окт − Авг</th></tr></thead><tbody>
+  <tr><td>Отгружено, шт</td>${M.map(m=>`<td>${f(m.units)}</td>`).join('')}<td class="pos">+${f(M[2].units-M[0].units)}</td></tr>
+  <tr><td>Выручка валовая</td>${M.map(m=>`<td>${f(m.gross)}</td>`).join('')}<td class="pos">+${f(M[2].gross-M[0].gross)}</td></tr>
+  <tr><td>Возвраты, ₽</td>${M.map(m=>`<td>−${f(m.ret_amt)}</td>`).join('')}<td class="neg">−${f(M[2].ret_amt-M[0].ret_amt)}</td></tr>
+  <tr class="sep"><td><b>Чистая выручка</b></td>${M.map(m=>`<td><b>${f(m.net)}</b></td>`).join('')}<td class="pos"><b>+${f(M[2].net-M[0].net)}</b></td></tr>
+  ${negRow('Себестоимость проданного (+ списанный брак)','cogs')}
+  ${negRow('Комиссия маркетплейса 25%','comm')}
+  ${negRow('Логистика до покупателя','logf')}
+  ${negRow('Обратная логистика возвратов','rlog')}
+  ${negRow('Реклама','ads')}
+  <tr class="sep hl"><td><b>Операционная прибыль</b></td>${M.map(m=>`<td class="${m.profit<M[0].profit?'neg':''}"><b>${f(m.profit)}</b></td>`).join('')}
+    <td class="neg"><b>−${f(M[0].profit-M[2].profit)}</b></td></tr>
+  <tr><td>Рентабельность</td>${M.map(m=>`<td>${pct(m.mar)}</td>`).join('')}<td class="neg">−20,8 п.п.</td></tr>
+  <tr><td>Доля возвратов, шт</td>${M.map(m=>`<td>${pct(m.rate)} (${m.ret_u} шт)</td>`).join('')}<td class="neg">+2,9 п.п.</td></tr>
+  <tr><td>Брак, шт</td>${M.map(m=>`<td>${m.bad_u}</td>`).join('')}<td class="neg">+63</td></tr>
+  </tbody>`;
+})();
+
+/* ================= unit economics ================= */
+(function(){
+  const rows=DATA.skus.map(sk=>{const o=sk.mm[2];
+    return {name:sk.name,sku:sk.sku,cost:sk.cost,price:o.price,qty:o.qty,contrib:o.contrib,
+            adpu:o.qty?o.ad_spend/o.qty:0,ret_rate:o.ret_rate};})
+    .sort((a,b)=>(b.contrib-b.adpu)-(a.contrib-a.adpu));
+  document.getElementById('ue-table').innerHTML=`<thead><tr>
+    <th>Товар</th><th>Цена</th><th>Комиссия</th><th>Логистика</th><th>Закупка</th><th>Вклад/шт</th><th>Реклама/шт</th><th>Вклад − реклама</th><th>Возвраты</th></tr></thead><tbody>${
+    rows.map(r=>{const netC=r.contrib-r.adpu;
+      return `<tr class="${netC<50?'hl':''}"><td>${r.name} <span class="mut">${r.sku}</span></td>
+      <td>${f(r.price)}</td><td class="mut">−${f(r.price*0.25)}</td><td class="mut">−110</td><td class="mut">−${f(r.cost)}</td>
+      <td class="${r.contrib<0?'neg':''}"><b>${r.contrib.toFixed(1).replace('.',',')}</b></td>
+      <td>−${r.adpu.toFixed(0)}</td><td class="${netC<0?'neg':netC<250?'':'pos'}"><b>${netC.toFixed(0)}</b></td>
+      <td class="${r.ret_rate>0.1?'neg':''}">${r.ret_rate!=null?pct(r.ret_rate,1):'—'}</td></tr>`}).join('')}</tbody>`;
+})();
+
+/* ================= actions ================= */
+(function(){
+  const acts=[
+    {p:1,t:'Перестать докупать заказы дороже, чем они зарабатывают',
+     d:'Ввести правило: CPA ≤ 60–70% вклада с единицы. Сегодня оно нарушено у всех 8 товаров; сильнее всего — B202 (CPA 749 при вкладе 258) и C301 (1 012 при 383). Ставки по этим двум снизить в 2–3 раза или паузировать на неделю и посмотреть на органику. Худи/свитшот/плед оставить, но урезать дневной лимит.',
+     e:'+330…360 тыс ₽/мес'},
+    {p:2,t:'Выйти из акции −45% на футболки',
+     d:'Цена 544 ₽ ниже точки безубыточности 546 ₽ — каждая продажа в минусе. Максимальная скидка при текущих тарифах ≈ 30% (693 ₽ = ноль); рабочая — 20–25% (742–792 ₽, вклад 109–147 ₽). Остаток 1 022 шт допродавать по 790 ₽ без рекламного слива.',
+     e:'+130…260 тыс ₽/мес'},
+    {p:3,t:'Не обнулять бестселлеры — починить план B203',
+     d:'Закупать по темпу последних 2 недель: органайзер продаётся ~29 шт/день, вклад 508 ₽/шт — это ~300 тыс. ₽ маржи в месяц. На складе 569 шт = 20 дней — следующий заказ нужен уже сейчас, с буфером 3 недели (≈ +1 800 шт/мес). Включить автозаказ при остатке < 25 дней.',
+     e:'+~300 тыс ₽/мес'},
+    {p:4,t:'Починить маломерку худи A101 (размер S)',
+     d:'Возвраты S — 31% против 6–7% у M/L, всплеск с сентября (6→43→78 шт/мес) = новая партия шьёт меньше. Замерить партию по таблице, исправить размерную сетку и фото на карточке, предупредить «маломерит, берите на размер больше»; с поставщиком — замена или компенсация S-партии.',
+     e:'−80…100 тыс ₽/мес'},
+    {p:5,t:'Работать с браком: акты и претензии поставщику',
+     d:'Брак вырос с 37 до 100 шт/мес; в октябре 54 из них — акционные футболки A102 (бракованная партия). Стоимость брака за квартал — 83,1 тыс. ₽ (списанная закупка). Усилить приёмку, оформить претензии, сменить фабрику на проблемных позициях. Тарифный рост (+35 ₽) компенсировать ценой на неакционные SKU: +30–50 ₽ на полотенца/пледы не повлияют на конверсию.',
+     e:'+25…35 тыс ₽/мес'},
+    {p:6,t:'Кассовая дисциплина: закупка ≤ 45 дней запаса',
+     d:'Полотенца C302 (141 день), свитшоты A103 (82), плед B201 (65) — пауза закупок до нормализации: это ~1,1 млн ₽ уже лежащих на складах денег. Общую закупку вести по правилу «прибыль месяца ≥ закупка месяца» — иначе счёт всегда будет пустеть, каким бы красивым ни был рост продаж.',
+     e:'+1,1 млн ₽ из остатков'},
+  ];
+  document.getElementById('actions').innerHTML=acts.map(a=>`<div class="act">
+    <div class="pr ${a.p<=2?'p1':a.p<=4?'p2':''}">${a.p}</div>
+    <div><b>${a.t}</b><div class="d">${a.d}</div></div>
+    <div class="eff">${a.e}</div></div>`).join('');
+})();
+
+</script>
+</body>
+</html>

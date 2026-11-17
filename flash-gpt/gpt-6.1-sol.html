@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Прибыль магазина на маркетплейсе за август, сентябрь и октябрь 2026 года">
+<title>Прибыль магазина · Август–октябрь 2026</title>
+<style>
+:root{
+  --paper:#f5f6f2;--white:#fff;--ink:#172822;--muted:#54635b;--line:#dce3db;
+  --forest:#13332b;--dark:#0c2922;--green:#246147;--lime:#d9f49a;--pale:#edf4e6;
+  --red:#a43c31;--coral:#f7e8e2;--bar:#c46e62;--gain:#54876b;
+  font-family:Inter,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--paper);
+  font-variant-numeric:tabular-nums
+}
+*{box-sizing:border-box}
+body{margin:0;font-size:15px;line-height:1.5}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+button,select,summary{cursor:pointer}
+:focus-visible{outline:3px solid #6a9942;outline-offset:4px}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{line-height:1.12;letter-spacing:-.035em}
+h2{font-size:clamp(27px,3vw,39px)}
+h3{font-size:22px}
+.wrap{max-width:1280px;margin:auto;padding-inline:36px}
+.top{background:var(--dark);color:#fff}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:720;white-space:nowrap}
+.mark{width:23px;height:22px;position:relative;display:inline-block}
+.mark::before,.mark::after{content:"";width:8px;border-radius:2px;background:var(--lime);position:absolute;bottom:3px}
+.mark::before{height:11px;left:2px}.mark::after{height:18px;left:13px}
+nav{display:flex;gap:22px;font-size:13px;color:#e0ebe4;flex-wrap:wrap}
+nav a{text-decoration:none}nav a:hover{text-decoration:underline}
+.hero{background:var(--forest);color:#fff;border-top:1px solid #315248;padding:44px 0 68px}
+.hero-inner{display:grid;grid-template-columns:1.12fr .88fr;gap:36px;align-items:center}
+.kicker{font-size:13px;color:#d4e7d9;font-weight:650}
+h1{font-size:clamp(39px,4.9vw,62px);margin:12px 0 16px;max-width:670px;line-height:1.02;letter-spacing:-.052em}
+.hero p:not(.kicker){font-size:17px;color:#d8e7dc;max-width:530px}
+.hero strong{color:var(--lime)}
+.trend{background:#1e4036;border:1px solid #3d5b4e;border-radius:17px;padding:21px 24px}
+.trend-head{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:13px;color:#d2e4d7;margin-bottom:12px}
+.trend-head strong{font-size:16px;color:#fff}
+.trend-row{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(100px,auto);gap:12px;align-items:center;font-size:13px;margin:12px 0}
+.trend-track{overflow:hidden;height:13px;border-radius:4px;background:#315449}
+.trend-fill{display:block;height:100%;background:#bfe485;border-radius:4px}
+.trend-row:last-child .trend-fill{background:#f2a494}
+.trend-row b{text-align:right;font-size:16px;white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:-31px;position:relative}
+.kpi{border:1px solid var(--line);background:var(--white);padding:17px 20px;border-radius:13px;min-width:0}
+.kpi .title{color:var(--muted);font-size:13px;font-weight:640}
+.kpi b{display:block;font-size:clamp(22px,2.6vw,35px);white-space:nowrap;letter-spacing:-.047em;line-height:1.14;margin:7px 0}
+.kpi small{display:block;font-size:12px;color:var(--muted)}
+.kpi small.neg{color:var(--red)}.kpi small.pos{color:var(--green)}
+section{scroll-margin-top:16px;margin-top:36px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:16px}
+.section-head p,.sub{color:var(--muted);font-size:14px;margin-top:7px}
+.panel{border:1px solid var(--line);background:var(--white);border-radius:16px;padding:22px 24px;min-width:0}
+.overview{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+.section-head .control{flex-shrink:0}
+.panel-heading{margin-bottom:12px}
+.actions{display:grid;gap:11px;padding:0;margin:0;list-style:none;counter-reset:actions}
+.actions li{display:grid;grid-template-columns:30px 1fr;column-gap:10px;border-top:1px solid var(--line);padding-top:11px}
+.actions li:first-child{border-top:0;padding-top:0}
+.actions li::before{counter-increment:actions;content:counter(actions);grid-row:span 2;width:26px;height:26px;border-radius:50%;background:var(--pale);color:var(--green);display:grid;place-items:center;font-weight:750;font-size:13px}
+.actions strong{line-height:1.35}
+.actions p{font-size:13px;color:var(--muted);margin-top:3px}
+.neg{color:var(--red)}.pos{color:var(--green)}
+.chart-title{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-block:3px 10px}
+.chart-title b{font-size:25px;white-space:nowrap;letter-spacing:-.03em}
+.factors{display:grid;gap:3px}
+.factor{display:grid;grid-template-columns:minmax(170px,1.05fr) minmax(120px,1fr) 100px;align-items:center;gap:10px;font-size:13px;min-height:30px}
+.factor .amount{text-align:right;font-weight:700;white-space:nowrap}
+.factor-track{height:14px;border-radius:4px;position:relative;background:#f2f5f1}
+.factor-track::after{content:"";display:block;position:absolute;left:50%;top:-2px;bottom:-2px;border-left:1px solid #a9b8ad}
+.factor-bar{background:var(--bar);position:absolute;height:100%;border-radius:3px;min-width:0}
+.factor-bar.up{background:var(--gain)}
+.note{color:var(--muted);font-size:13px;margin-top:12px}
+.control{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+label{font-size:13px;font-weight:630}
+select,input{min-height:38px;border:1px solid #bdcbbf;border-radius:7px;padding:6px 9px;background:#fff}
+input{width:min(270px,100%)}
+details{border-top:1px solid var(--line);margin-top:16px;padding:12px 0 0}
+details summary{color:var(--forest);font-weight:680}
+details[open] summary{margin-bottom:12px}
+.table-scroll{width:100%;overflow-x:auto;scrollbar-color:#a2b6a7 #f0f4ee}
+.scroll-note{display:none}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border-bottom:1px solid #e7ece7;text-align:right;padding:9px 11px;white-space:nowrap}
+thead th{background:#eff3ee;color:#41574b;font-size:12px;font-weight:700;vertical-align:bottom;line-height:1.25}
+th:first-child,td:first-child{text-align:left}
+tbody th{font-weight:570}
+tbody tr:last-child>*{border-bottom:0}
+.highlight>*{background:#e9f1e8;font-weight:760}
+.income>*{background:#f4f7f2;font-weight:715}
+table small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+#sku-table th:first-child{min-width:188px}
+#sku-table thead button{background:transparent;border:0;padding:0;font-weight:inherit;color:inherit;text-align:inherit}
+#sku-table thead button:hover{text-decoration:underline}
+.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.emphasis{border-left:3px solid #779c58;padding-left:13px;margin-top:12px;font-size:14px}
+.detail-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.detail-pair > div{border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.detail-pair b{font-size:20px;display:block;letter-spacing:-.03em}
+.detail-pair span{display:block;color:var(--muted);font-size:13px}
+.calendar{display:grid;grid-template-columns:repeat(31,minmax(0,1fr));gap:3px;margin-top:15px}
+.day{height:27px;display:grid;place-items:center;font-size:10px;border-radius:3px;color:#24533b;background:#deeddf}
+.day.zero{background:#e9b3a8;color:#4a241e}
+.cash-note{background:#f1f5ed;border-radius:10px;padding:12px 15px;margin-top:12px;font-size:14px}
+.definition{padding-left:20px;color:var(--muted);font-size:14px}
+.definition li{margin:6px 0}
+.audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+footer{margin-top:36px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:17px 0 25px}
+.letter{background:var(--dark);color:#f4fcf2}
+.letter p{max-width:850px;margin-top:12px;color:#e1efe5}
+.letter h2{color:#fff}
+.letter strong{color:var(--lime)}
+@media(max-width:1000px){
+  .overview,.hero-inner{grid-template-columns:1fr}
+  .hero-inner{gap:22px}.trend{max-width:620px}
+  .hero{padding-top:32px}
+}
+@media(max-width:720px){
+  .wrap{padding-inline:16px}
+  .top .wrap{padding-block:12px;display:block}
+  nav{margin-top:8px;gap:6px 15px}
+  .hero{padding-bottom:52px}
+  .kpis,.section-grid,.audit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .section-grid,.audit-grid{grid-template-columns:1fr}
+  .section-head{align-items:start;flex-direction:column}
+  .panel{padding:16px}
+  .factor{grid-template-columns:minmax(108px,1fr) minmax(36px,.57fr) 83px;gap:6px;font-size:12px}
+  .factor-track{height:12px}
+  .kpi{padding:13px}
+  .scroll-note{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}
+  .calendar{gap:2px}.day{font-size:8px;height:22px}
+}
+@media(max-width:400px){
+  .trend{padding:14px}.trend-row{grid-template-columns:57px 1fr 94px;gap:7px}
+  .trend-row b{font-size:14px}
+  .calendar{grid-template-columns:repeat(16,minmax(0,1fr))}
+  .chart-title b{font-size:21px}
+}
+@media print{
+  body{background:#fff}.top nav{display:none}.hero,.letter{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .wrap{padding:0}.panel,.kpi{break-inside:avoid}.overview,.section-grid{display:block}.overview>.panel,.section-grid>.panel{margin-bottom:12px}
+  .kpis{margin-top:12px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="mark" aria-hidden="true"></span>Прибыль магазина</div>
+    <nav aria-label="Разделы">
+      <a href="#drivers">Причины</a><a href="#pnl">Доходы и расходы</a><a href="#sku">Товары</a><a href="#cash">Остатки и деньги</a><a href="#method">Источники</a>
+    </nav>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="kicker">Маркетплейс · Август–октябрь 2026</p>
+      <h1>Продаж больше,<br>прибыль втрое ниже</h1>
+      <p>К октябрю оборот вырос на <strong id="hero-sales"></strong>, а расчётная прибыль упала на <strong id="hero-profit"></strong> к августу.</p>
+    </div>
+    <div class="trend" id="trend" aria-label="Расчётная прибыль по месяцам"></div>
+  </div>
+</div>
+<main class="wrap">
+  <div class="kpis" id="kpis" aria-label="Октябрь в сравнении с августом"></div>
+  <section id="drivers">
+    <div class="section-head">
+      <div><h2>Почему упала прибыль</h2><p>Вклад факторов в рублях. Сумма строк равна изменению прибыли.</p></div>
+      <div class="control"><label for="bridge-select">Сравнить</label>
+        <select id="bridge-select"><option value="08-10">Август → Октябрь</option><option value="08-09">Август → Сентябрь</option><option value="09-10">Сентябрь → Октябрь</option></select>
+      </div>
+    </div>
+    <div class="overview">
+      <div class="panel">
+        <div class="chart-title"><h3>Изменение прибыли</h3><b id="bridge-total" class="neg"></b></div>
+        <div class="factors" id="factors" aria-live="polite"></div>
+        <p class="note" id="bridge-check"></p>
+        <details>
+          <summary>Вклад по каждому артикулу и метод расчёта</summary>
+          <div id="bridge-detail" class="table-scroll" tabindex="0" aria-label="Разложение по артикулам"></div>
+          <ul class="definition">
+            <li>Объём считают по каждому артикулу с прибылью на отгрузку базового месяца. Так учитывается изменение долей товаров. В базе уже есть прежние расходы на рекламу и возвраты на отгрузку.</li>
+            <li>Реклама и возвраты показывают отклонение от уровня базового месяца после пересчёта на новый объём. Для возвратов здесь используют обычную цену и базовый тариф. Начисления идут по дате возврата, поэтому результат зависит от перехода возвратов между месяцами.</li>
+            <li>Тарифный эффект равен разнице ставок на фактических отгрузках и возвратах. Эффект цены учитывает комиссию 25% и корректируется на возвраты именно по акционной цене.</li>
+          </ul>
+        </details>
+      </div>
+      <aside class="panel">
+        <h3 class="panel-heading">Что сделать в первую очередь</h3>
+        <ol class="actions" id="actions"></ol>
+      </aside>
+    </div>
+  </section>
+  <section id="pnl">
+    <div class="section-head"><div><h2>Доходы и расходы по месяцам</h2><p>Суммы в рублях. Продажи, возвраты и реклама отражены по дате события.</p></div></div>
+    <div class="panel">
+      <p class="scroll-note">Прокрутите таблицу вправо, чтобы увидеть все месяцы.</p>
+      <div id="pnl-table" class="table-scroll" tabindex="0" aria-label="Доходы и расходы"></div>
+      <p class="note">Комиссия по тарифу 25% во все три месяца. В расчёте комиссия сторнируется на возврате, себестоимость возвращённой единицы восстанавливается, доставка к покупателю списывается на каждую отгрузку. При полном списании всего отмеченного брака прибыль октября была бы ниже ещё на 39 450 ₽. Факт списания в выгрузках отсутствует.</p>
+    </div>
+  </section>
+  <section id="sku">
+    <div class="section-head">
+      <div><h2>Прибыль по товарам</h2><p>До рекламы = чистая выручка за вычетом комиссии, логистики и себестоимости.</p></div>
+      <div class="control"><label for="sku-month">Месяц</label>
+        <select id="sku-month"><option value="2026-10">Октябрь</option><option value="2026-09">Сентябрь</option><option value="2026-08">Август</option></select>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="control" style="margin-bottom:12px"><label for="sku-filter">Найти товар</label><input id="sku-filter" type="search" placeholder="Артикул или название"></div>
+      <div id="sku-table" class="table-scroll" tabindex="0" aria-label="Прибыль по артикулам" aria-live="polite"></div>
+      <details>
+        <summary>Прибыль каждого товара за все три месяца</summary>
+        <div id="sku-all" class="table-scroll" tabindex="0" aria-label="Прибыль по товарам и месяцам"></div>
+      </details>
+    </div>
+  </section>
+  <section id="operations">
+    <div class="section-head"><div><h2>Детали по главным причинам</h2></div></div>
+    <div class="section-grid">
+      <article class="panel">
+        <h3>Реклама B202 и C301</h3>
+        <div class="detail-pair" id="ad-impact"></div>
+        <p class="emphasis">У обоих товаров цена клика с августа по октябрь изменилась мало, а доля кликов с заказом упала примерно вдвое. Октябрьский рекламный расход каждого товара превысил всю его прибыль до рекламы.</p>
+        <div id="ad-table" class="table-scroll" tabindex="0" aria-label="Рекламные показатели"></div>
+        <p class="note">Цена заказа = расход ÷ заказы, отнесённые кабинетом к рекламе. Доля кликов с заказом = такие заказы ÷ клики. Дополнительные продажи от рекламы требуют проверки на контрольном периоде или с контрольной группой.</p>
+      </article>
+      <article class="panel">
+        <h3>Акция A102</h3>
+        <div class="detail-pair" id="promo-impact"></div>
+        <p class="emphasis" id="promo-text"></p>
+        <p class="note" id="promo-note"></p>
+        <details id="other-fees">
+          <summary>Сколько добавили новые тарифы</summary>
+          <div id="fee-table" class="table-scroll" tabindex="0" aria-label="Эффект изменения тарифов"></div>
+          <p class="note">С 1 сентября доставка выросла с 75 до 110 ₽ за штуку, обратная логистика с 50 до 75 ₽. Доплата рассчитана от ставок августа на фактическом количестве штук каждого месяца.</p>
+        </details>
+      </article>
+      <article class="panel">
+        <h3>Возвраты худи A101</h3>
+        <p class="emphasis" id="return-text"></p>
+        <div id="return-focus" class="table-scroll" tabindex="0" aria-label="Доля возвратов худи по размерам"></div>
+        <p class="note">Сравнение по дате продажи. Берём отгрузки с 1-го по 21-е число каждого месяца, оставляя как минимум 10 дней на возврат. Все наблюдаемые интервалы между продажей и возвратом в файле лежат в пределах 3–10 дней.</p>
+        <details>
+          <summary>Возвраты всего магазина по причинам</summary>
+          <div id="reason-table" class="table-scroll" tabindex="0" aria-label="Причины возвратов и денежный эффект"></div>
+          <p class="note">Потеря относительно продажи без возврата = возвращённая цена минус сторно комиссии и восстановленная себестоимость плюс обратная доставка. Прямая доставка уже понесена. Расходы при возможном списании брака приведены отдельно в отчёте о доходах и расходах.</p>
+          <div id="cohort-table" class="table-scroll" tabindex="0" aria-label="Полнота возвратов по месяцам продаж"></div>
+          <p class="note">За август выгрузка начинается с продаж августа. Отражено 50 возвратов августовских продаж в сентябре и 58 сентябрьских в октябре. Возвраты после 31 октября отсутствуют. Поэтому для сравнения долей предпочтителен одинаковый срок наблюдения.</p>
+        </details>
+      </article>
+      <article class="panel">
+        <h3>Дефицит органайзера B203</h3>
+        <div id="calendar" class="calendar" aria-label="Остаток B203 на конец каждого дня октября"></div>
+        <p class="note">Красным выделены дни с нулевым остатком на конец дня.</p>
+        <div class="detail-pair" id="stock-impact"></div>
+        <p class="emphasis" id="stock-text"></p>
+        <p class="note">Оценка от обычной скорости продаж до и после дефицита, по цене 1 290 ₽. Из ожидаемых продаж вычтены 2 фактические штуки. Оценка прибыли учитывает октябрьские тарифы, сентябрьскую долю возвратов 4,5% и сэкономленный рекламный бюджет. Эту оценку и эффект объёма в разложении складывать нельзя.</p>
+      </article>
+    </div>
+  </section>
+  <section id="cash">
+    <div class="section-head"><div><h2>Остатки и деньги</h2><p>Остаток на полке оценён по закупочной цене. Данные о выплатах и платежах отсутствуют.</p></div></div>
+    <div class="panel">
+      <div id="cash-table" class="table-scroll" tabindex="0" aria-label="Остатки и оценка поступлений товара"></div>
+      <p class="cash-note" id="cash-text"></p>
+      <p class="note">Поступления оценены по положительным дневным изменениям остатка после добавления отгрузок за этот день. Такой прирост может включать приёмку, перемещения, возвраты и корректировки. Август рассчитан со 2-го числа, поскольку остатка на 31 июля в файлах нет. Рост оценённой стоимости поступлений показывает возможную нагрузку на оборотные средства. Чтобы сверить остаток денег, нужны выплаты маркетплейса, банковские операции, оплаты поставщикам, налоги и прочие списания.</p>
+      <p class="note" id="anomaly-text"></p>
+      <details>
+        <summary>Запасы по товарам на 31 октября</summary>
+        <div id="stock-table" class="table-scroll" tabindex="0" aria-label="Остатки на 31 октября"></div>
+        <p class="note">Дни запаса рассчитаны по скорости октябрьских отгрузок. Для B203 использованы 5 дней после пополнения, чтобы дефицит не занижал оценку спроса.</p>
+      </details>
+    </div>
+  </section>
+  <section class="panel letter" id="letter">
+    <h2>Короткое письмо</h2>
+    <p>Здравствуйте!</p>
+    <p>С августа по октябрь оборот вырос на <strong>26%</strong>, а расчётная прибыль упала на <strong>894 тыс. ₽</strong>. В октябре акция на футболку A102 дала убыток <strong>151 тыс. ₽</strong>, а подушка B202 и термокружка C301 вместе ушли в минус на <strong>210 тыс. ₽</strong> после рекламы.</p>
+    <p>Сначала остановите акцию по 544 ₽ и ограничьте рекламу этих двух товаров. Затем проверьте, куда делись 1 120 органайзеров B203, и установите порог пополнения. Проверьте реальные замеры худи A101 размера S. Для сверки денег с прибылью сопоставьте выплаты площадки и оплаты поставщикам с банковской выпиской.</p>
+  </section>
+  <section class="panel" id="method">
+    <h2>Источники и границы расчёта</h2>
+    <div class="audit-grid">
+      <div>
+        <p class="sub">Из папки «выгрузки»</p>
+        <div id="source-table" class="table-scroll" tabindex="0" aria-label="Источники и количество записей"></div>
+      </div>
+      <ul class="definition">
+        <li>Все 482 строки возвратов связаны с продажами по дате, артикулу, размеру и цене. Количество возвратов по каждому ключу укладывается в объём продаж. В выгрузках нет полностью совпадающих строк.</li>
+        <li>По рекламе у B203 отсутствуют 22 строки, по одной на день без отгрузок во время дефицита. В итог включён расход, отражённый в отчёте.</li>
+        <li>Расчётная прибыль включает только доступные статьи. Налоги, хранение, штрафы, списания и прочие расходы могут влиять на итог. Порядок сторно комиссии следует сверить с отчётом о взаиморасчётах площадки.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">Период расчёта 01.08–31.10.2026 · Все суммы в рублях</div></footer>
+<script type="application/json" id="data">{"skus":{"A101":["Худи оверсайз",900.0],"A102":["Футболка базовая",300.0],"A103":["Свитшот",700.0],"B201":["Плед флисовый",600.0],"B202":["Подушка декоративная",300.0],"B203":["Органайзер для косметики",350.0],"C301":["Термокружка",400.0],"C302":["Набор полотенец",650.0]},"monthly":{"2026-08":{"qty":3317,"gross":4962330.0,"refunds":220830.0,"nret":137,"fee":1185375.0,"fwd":248775.0,"back":6850.0,"cogs":1572000.0,"ads":391586.0,"impressions":4114981,"clicks":130703,"orders":563,"retLoss":98022.5,"bad":37,"badCost":19150.0,"refRefunds":220830.0,"priceLoss":0.0,"preAds":1728500.0,"profit":1336914.0,"net":4741500.0,"margin":0.2819601391964568,"cpa":695.5346358792185,"adBreakEven":3070.159857904085,"stock":8544,"stockValue":4359650.0,"zeroDays":0,"cohortReturns":187,"coveredQty":2206,"coveredRet":114,"extraFwd":0.0,"extraBack":0.0,"invIn":2051100.0,"invOut":0.0,"carry":0},"2026-09":{"qty":3891,"gross":5671090.0,"refunds":422690.0,"nret":251,"fee":1312100.0,"fwd":428010.0,"back":18825.0,"cogs":1737950.0,"ads":874491.0,"impressions":9264824,"clicks":301022,"orders":1060,"retLoss":191142.5,"bad":46,"badCost":24450.0,"refRefunds":422690.0,"priceLoss":0.0,"preAds":1751515.0,"profit":877024.0,"net":5248400.0,"margin":0.16710311714046186,"cpa":824.9915094339623,"adBreakEven":1652.372641509434,"stock":7092,"stockValue":3863000.0,"zeroDays":0,"cohortReturns":259,"coveredQty":2700,"coveredRet":180,"extraFwd":136185.0,"extraBack":6275.0,"invIn":1778000.0,"invOut":392000.0,"carry":50},"2026-10":{"qty":5562,"gross":6247360.0,"refunds":511588.0,"nret":390,"fee":1433943.0,"fwd":611820.0,"back":29250.0,"cogs":2258150.0,"ads":959832.0,"impressions":10144741,"clicks":334203,"orders":1409,"retLoss":213841.0,"bad":100,"badCost":39450.0,"refRefunds":588300.0,"priceLoss":802131.0,"preAds":1402609.0,"profit":442777.0,"net":5735772.0,"margin":0.07719571140554402,"cpa":681.2150461320085,"adBreakEven":995.4641589779986,"stock":7484,"stockValue":3978150.0,"zeroDays":23,"cohortReturns":332,"coveredQty":3682,"coveredRet":293,"extraFwd":194670.0,"extraBack":9750.0,"invIn":2572400.0,"invOut":0.0,"carry":58}},"bySku":{"2026-08":{"A101":{"qty":464,"gross":1155360.0,"refunds":69720.0,"nret":28,"fee":271410.0,"fwd":34800.0,"back":1400.0,"cogs":392400.0,"ads":90149.0,"impressions":954358,"clicks":29652,"orders":80,"retLoss":28490.0,"bad":5,"badCost":4500.0,"refRefunds":69720.0,"priceLoss":0.0,"preAds":385630.0,"profit":295481.0,"net":1085640.0,"margin":0.27217217493828527,"cpa":1126.8625,"adBreakEven":4820.375,"stock":1026,"stockValue":923400.0,"stockDays":68.54741379310344,"zeroDays":0,"cohortReturns":39,"coveredQty":300,"coveredRet":23,"extraFwd":0.0,"extraBack":0.0,"invIn":531000.0,"invOut":0.0},"A102":{"qty":559,"gross":553410.0,"refunds":27720.0,"nret":28,"fee":131422.5,"fwd":41925.0,"back":1400.0,"cogs":159300.0,"ads":43855.0,"impressions":459374,"clicks":14722,"orders":99,"retLoss":13790.0,"bad":6,"badCost":1800.0,"refRefunds":27720.0,"priceLoss":0.0,"preAds":191642.5,"profit":147787.5,"net":525690.0,"margin":0.28113051418136165,"cpa":442.979797979798,"adBreakEven":1935.7828282828282,"stock":1065,"stockValue":319500.0,"stockDays":59.0608228980322,"zeroDays":0,"cohortReturns":38,"coveredQty":371,"coveredRet":22,"extraFwd":0.0,"extraBack":0.0,"invIn":217200.0,"invOut":0.0},"A103":{"qty":324,"gross":644760.0,"refunds":47760.0,"nret":24,"fee":149250.0,"fwd":24300.0,"back":1200.0,"cogs":210000.0,"ads":52828.0,"impressions":564955,"clicks":17710,"orders":54,"retLoss":20220.0,"bad":5,"badCost":3500.0,"refRefunds":47760.0,"priceLoss":0.0,"preAds":212250.0,"profit":159422.0,"net":597000.0,"margin":0.2670385259631491,"cpa":978.2962962962963,"adBreakEven":3930.5555555555557,"stock":949,"stockValue":664300.0,"stockDays":90.79938271604938,"zeroDays":0,"cohortReturns":31,"coveredQty":215,"coveredRet":20,"extraFwd":0.0,"extraBack":0.0,"invIn":261100.0,"invOut":0.0},"B201":{"qty":299,"gross":505310.0,"refunds":13520.0,"nret":8,"fee":122947.5,"fwd":22425.0,"back":400.0,"cogs":174600.0,"ads":37215.0,"impressions":382551,"clicks":12101,"orders":47,"retLoss":5740.0,"bad":5,"badCost":3000.0,"refRefunds":13520.0,"priceLoss":0.0,"preAds":171417.5,"profit":134202.5,"net":491790.0,"margin":0.2728857845828504,"cpa":791.8085106382979,"adBreakEven":3647.18085106383,"stock":969,"stockValue":581400.0,"stockDays":100.4648829431438,"zeroDays":0,"cohortReturns":14,"coveredQty":197,"coveredRet":4,"extraFwd":0.0,"extraBack":0.0,"invIn":220800.0,"invOut":0.0},"B202":{"qty":321,"gross":285690.0,"refunds":6230.0,"nret":7,"fee":69865.0,"fwd":24075.0,"back":350.0,"cogs":94200.0,"ads":22277.0,"impressions":232051,"clicks":7645,"orders":53,"retLoss":2922.5,"bad":1,"badCost":300.0,"refRefunds":6230.0,"priceLoss":0.0,"preAds":90970.0,"profit":68693.0,"net":279460.0,"margin":0.24580619766692907,"cpa":420.3207547169811,"adBreakEven":1716.4150943396226,"stock":984,"stockValue":295200.0,"stockDays":95.02803738317758,"zeroDays":0,"cohortReturns":9,"coveredQty":212,"coveredRet":6,"extraFwd":0.0,"extraBack":0.0,"invIn":121500.0,"invOut":0.0},"B203":{"qty":757,"gross":976530.0,"refunds":29670.0,"nret":23,"fee":236715.0,"fwd":56775.0,"back":1150.0,"cogs":256900.0,"ads":78790.0,"impressions":825374,"clicks":26178,"orders":138,"retLoss":15352.5,"bad":9,"badCost":3150.0,"refRefunds":29670.0,"priceLoss":0.0,"preAds":395320.0,"profit":316530.0,"net":946860.0,"margin":0.33429440466383625,"cpa":570.9420289855072,"adBreakEven":2864.6376811594205,"stock":1626,"stockValue":569100.0,"stockDays":66.58652575957728,"zeroDays":0,"cohortReturns":28,"coveredQty":514,"coveredRet":21,"extraFwd":0.0,"extraBack":0.0,"invIn":344050.0,"invOut":0.0},"C301":{"qty":367,"gross":436730.0,"refunds":15470.0,"nret":13,"fee":105315.0,"fwd":27525.0,"back":650.0,"cogs":141600.0,"ads":34998.0,"impressions":370564,"clicks":11882,"orders":59,"retLoss":7052.5,"bad":4,"badCost":1600.0,"refRefunds":15470.0,"priceLoss":0.0,"preAds":146170.0,"profit":111172.0,"net":421260.0,"margin":0.2639035275127,"cpa":593.1864406779661,"adBreakEven":2477.4576271186443,"stock":978,"stockValue":391200.0,"stockDays":82.61035422343325,"zeroDays":0,"cohortReturns":18,"coveredQty":248,"coveredRet":13,"extraFwd":0.0,"extraBack":0.0,"invIn":178000.0,"invOut":0.0},"C302":{"qty":226,"gross":404540.0,"refunds":10740.0,"nret":6,"fee":98450.0,"fwd":16950.0,"back":300.0,"cogs":143000.0,"ads":31474.0,"impressions":325754,"clicks":10813,"orders":33,"retLoss":4455.0,"bad":2,"badCost":1300.0,"refRefunds":10740.0,"priceLoss":0.0,"preAds":135100.0,"profit":103626.0,"net":393800.0,"margin":0.2631437277805993,"cpa":953.7575757575758,"adBreakEven":4093.939393939394,"stock":947,"stockValue":615550.0,"stockDays":129.89823008849558,"zeroDays":0,"cohortReturns":10,"coveredQty":149,"coveredRet":5,"extraFwd":0.0,"extraBack":0.0,"invIn":177450.0,"invOut":0.0}},"2026-09":{"A101":{"qty":522,"gross":1299780.0,"refunds":209160.0,"nret":84,"fee":272655.0,"fwd":57420.0,"back":6300.0,"cogs":394200.0,"ads":99285.0,"impressions":1036727,"clicks":34038,"orders":94,"retLoss":87570.0,"bad":11,"badCost":9900.0,"refRefunds":209160.0,"priceLoss":0.0,"preAds":360045.0,"profit":260760.0,"net":1090620.0,"margin":0.2390933597403312,"cpa":1056.223404255319,"adBreakEven":3830.2659574468084,"stock":1030,"stockValue":927000.0,"stockDays":59.195402298850574,"zeroDays":0,"cohortReturns":99,"coveredQty":350,"coveredRet":61,"extraFwd":18270.0,"extraBack":2100.0,"invIn":473400.0,"invOut":0.0},"A102":{"qty":580,"gross":574200.0,"refunds":43560.0,"nret":44,"fee":132660.0,"fwd":63800.0,"back":3300.0,"cogs":160800.0,"ads":45693.0,"impressions":478975,"clicks":15574,"orders":106,"retLoss":22770.0,"bad":7,"badCost":2100.0,"refRefunds":43560.0,"priceLoss":0.0,"preAds":170080.0,"profit":124387.0,"net":530640.0,"margin":0.2344093924317805,"cpa":431.0660377358491,"adBreakEven":1604.5283018867924,"stock":1074,"stockValue":322200.0,"stockDays":55.55172413793103,"zeroDays":0,"cohortReturns":43,"coveredQty":400,"coveredRet":30,"extraFwd":20300.0,"extraBack":1100.0,"invIn":176700.0,"invOut":0.0},"A103":{"qty":312,"gross":620880.0,"refunds":33830.0,"nret":17,"fee":146762.5,"fwd":34320.0,"back":1275.0,"cogs":206500.0,"ads":49710.0,"impressions":534945,"clicks":17865,"orders":52,"retLoss":14747.5,"bad":1,"badCost":700.0,"refRefunds":33830.0,"priceLoss":0.0,"preAds":198192.5,"profit":148482.5,"net":587050.0,"margin":0.2529299037560685,"cpa":955.9615384615385,"adBreakEven":3811.394230769231,"stock":961,"stockValue":672700.0,"stockDays":92.40384615384616,"zeroDays":0,"cohortReturns":14,"coveredQty":218,"coveredRet":9,"extraFwd":10920.0,"extraBack":425.0,"invIn":226800.0,"invOut":0.0},"B201":{"qty":358,"gross":605020.0,"refunds":23660.0,"nret":14,"fee":145340.0,"fwd":39380.0,"back":1050.0,"cogs":206400.0,"ads":47576.0,"impressions":486472,"clicks":15714,"orders":56,"retLoss":10395.0,"bad":5,"badCost":3000.0,"refRefunds":23660.0,"priceLoss":0.0,"preAds":189190.0,"profit":141614.0,"net":581360.0,"margin":0.24359089032613182,"cpa":849.5714285714286,"adBreakEven":3378.3928571428573,"stock":985,"stockValue":591000.0,"stockDays":82.54189944134079,"zeroDays":0,"cohortReturns":10,"coveredQty":252,"coveredRet":7,"extraFwd":12530.0,"extraBack":350.0,"invIn":224400.0,"invOut":0.0},"B202":{"qty":524,"gross":466360.0,"refunds":20470.0,"nret":23,"fee":111472.5,"fwd":57640.0,"back":1725.0,"cogs":150300.0,"ads":212205.0,"impressions":2297455,"clicks":76991,"orders":275,"retLoss":10177.5,"bad":6,"badCost":1800.0,"refRefunds":20470.0,"priceLoss":0.0,"preAds":124752.5,"profit":-87452.5,"net":445890.0,"margin":-0.19613021148713808,"cpa":771.6545454545454,"adBreakEven":453.6454545454545,"stock":998,"stockValue":299400.0,"stockDays":57.13740458015267,"zeroDays":0,"cohortReturns":25,"coveredQty":366,"coveredRet":21,"extraFwd":18340.0,"extraBack":575.0,"invIn":161400.0,"invOut":0.0},"B203":{"qty":826,"gross":1065540.0,"refunds":42570.0,"nret":33,"fee":255742.5,"fwd":90860.0,"back":2475.0,"cogs":277550.0,"ads":81741.0,"impressions":864727,"clicks":28538,"orders":152,"retLoss":22852.5,"bad":4,"badCost":1400.0,"refRefunds":42570.0,"priceLoss":0.0,"preAds":396342.5,"profit":314601.5,"net":1022970.0,"margin":0.3075373666871951,"cpa":537.7697368421053,"adBreakEven":2607.5164473684213,"stock":88,"stockValue":30800.0,"stockDays":3.196125907990315,"zeroDays":0,"cohortReturns":37,"coveredQty":579,"coveredRet":27,"extraFwd":28910.0,"extraBack":825.0,"invIn":142800.0,"invOut":392000.0},"C301":{"qty":562,"gross":668780.0,"refunds":29750.0,"nret":25,"fee":159757.5,"fwd":61820.0,"back":1875.0,"cogs":214800.0,"ads":308616.0,"impressions":3245210,"clicks":101886,"orders":296,"retLoss":14187.5,"bad":9,"badCost":3600.0,"refRefunds":29750.0,"priceLoss":0.0,"preAds":200777.5,"profit":-107838.5,"net":639030.0,"margin":-0.16875342315697228,"cpa":1042.6216216216217,"adBreakEven":678.3023648648649,"stock":1006,"stockValue":402400.0,"stockDays":53.70106761565836,"zeroDays":0,"cohortReturns":22,"coveredQty":389,"coveredRet":18,"extraFwd":19670.0,"extraBack":625.0,"invIn":236000.0,"invOut":0.0},"C302":{"qty":207,"gross":370530.0,"refunds":19690.0,"nret":11,"fee":87710.0,"fwd":22770.0,"back":825.0,"cogs":127400.0,"ads":29665.0,"impressions":320313,"clicks":10416,"orders":29,"retLoss":8442.5,"bad":3,"badCost":1950.0,"refRefunds":19690.0,"priceLoss":0.0,"preAds":112135.0,"profit":82470.0,"net":350840.0,"margin":0.2350644168281838,"cpa":1022.9310344827586,"adBreakEven":3866.7241379310344,"stock":950,"stockValue":617500.0,"stockDays":137.68115942028984,"zeroDays":0,"cohortReturns":9,"coveredQty":146,"coveredRet":7,"extraFwd":7245.0,"extraBack":275.0,"invIn":136500.0,"invOut":0.0}},"2026-10":{"A101":{"qty":604,"gross":1503960.0,"refunds":263940.0,"nret":106,"fee":310005.0,"fwd":66440.0,"back":7950.0,"cogs":448200.0,"ads":124930.0,"impressions":1319466,"clicks":43122,"orders":107,"retLoss":110505.0,"bad":6,"badCost":5400.0,"refRefunds":263940.0,"priceLoss":0.0,"preAds":407425.0,"profit":282495.0,"net":1240020.0,"margin":0.2278148739536459,"cpa":1167.5700934579438,"adBreakEven":3807.7102803738317,"stock":1004,"stockValue":903600.0,"stockDays":51.52980132450331,"zeroDays":0,"cohortReturns":80,"coveredQty":403,"coveredRet":67,"extraFwd":21140.0,"extraBack":2650.0,"invIn":520200.0,"invOut":0.0},"A102":{"qty":2570,"gross":1398080.0,"refunds":102478.0,"nret":181,"fee":323900.5,"fwd":282700.0,"back":13575.0,"cogs":716700.0,"ads":109928.0,"impressions":1174378,"clicks":39222,"orders":500,"retLoss":36133.5,"bad":54,"badCost":16200.0,"refRefunds":179190.0,"priceLoss":802131.0,"preAds":-41273.5,"profit":-151201.5,"net":1295602.0,"margin":-0.11670366362509474,"cpa":219.856,"adBreakEven":-82.547,"stock":1022,"stockValue":306600.0,"stockDays":12.32762645914397,"zeroDays":0,"cohortReturns":172,"coveredQty":1728,"coveredRet":153,"extraFwd":89950.0,"extraBack":4525.0,"invIn":755400.0,"invOut":0.0},"A103":{"qty":359,"gross":714410.0,"refunds":47760.0,"nret":24,"fee":166662.5,"fwd":39490.0,"back":1800.0,"cogs":234500.0,"ads":57388.0,"impressions":598092,"clicks":19794,"orders":57,"retLoss":20820.0,"bad":6,"badCost":4200.0,"refRefunds":47760.0,"priceLoss":0.0,"preAds":224197.5,"profit":166809.5,"net":666650.0,"margin":0.2502205055126378,"cpa":1006.8070175438596,"adBreakEven":3933.2894736842104,"stock":948,"stockValue":663600.0,"stockDays":81.86072423398329,"zeroDays":0,"cohortReturns":20,"coveredQty":232,"coveredRet":19,"extraFwd":12565.0,"extraBack":600.0,"invIn":242200.0,"invOut":0.0},"B201":{"qty":464,"gross":784160.0,"refunds":25350.0,"nret":15,"fee":189702.5,"fwd":51040.0,"back":1125.0,"cogs":269400.0,"ads":62652.0,"impressions":650342,"clicks":20158,"orders":81,"retLoss":11137.5,"bad":7,"badCost":4200.0,"refRefunds":25350.0,"priceLoss":0.0,"preAds":247542.5,"profit":184890.5,"net":758810.0,"margin":0.2436584915855089,"cpa":773.4814814814815,"adBreakEven":3056.08024691358,"stock":967,"stockValue":580200.0,"stockDays":64.60560344827586,"zeroDays":0,"cohortReturns":13,"coveredQty":311,"coveredRet":11,"extraFwd":16240.0,"extraBack":375.0,"invIn":267600.0,"invOut":0.0},"B202":{"qty":541,"gross":481490.0,"refunds":22250.0,"nret":25,"fee":114810.0,"fwd":59510.0,"back":1875.0,"cogs":154800.0,"ads":222704.0,"impressions":2332916,"clicks":77068,"orders":282,"retLoss":11062.5,"bad":13,"badCost":3900.0,"refRefunds":22250.0,"priceLoss":0.0,"preAds":128245.0,"profit":-94459.0,"net":459240.0,"margin":-0.20568548035885376,"cpa":789.7304964539007,"adBreakEven":454.7695035460993,"stock":1011,"stockValue":303300.0,"stockDays":57.931608133086876,"zeroDays":0,"cohortReturns":21,"coveredQty":366,"coveredRet":20,"extraFwd":18935.0,"extraBack":625.0,"invIn":166200.0,"invOut":0.0},"B203":{"qty":219,"gross":282510.0,"refunds":12900.0,"nret":10,"fee":67402.5,"fwd":24090.0,"back":750.0,"cogs":73150.0,"ads":22963.0,"impressions":238131,"clicks":6862,"orders":40,"retLoss":6925.0,"bad":6,"badCost":2100.0,"refRefunds":12900.0,"priceLoss":0.0,"preAds":104217.5,"profit":81254.5,"net":269610.0,"margin":0.3013779162493973,"cpa":574.075,"adBreakEven":2605.4375,"stock":569,"stockValue":199150.0,"stockDays":80.54337899543378,"zeroDays":23,"cohortReturns":1,"coveredQty":88,"coveredRet":1,"extraFwd":7665.0,"extraBack":250.0,"invIn":245000.0,"invOut":0.0},"C301":{"qty":597,"gross":710430.0,"refunds":29750.0,"nret":25,"fee":170170.0,"fwd":65670.0,"back":1875.0,"cogs":228800.0,"ads":329553.0,"impressions":3517467,"clicks":117362,"orders":310,"retLoss":14187.5,"bad":7,"badCost":2800.0,"refRefunds":29750.0,"priceLoss":0.0,"preAds":214165.0,"profit":-115388.0,"net":680680.0,"margin":-0.1695187165775401,"cpa":1063.074193548387,"adBreakEven":690.8548387096774,"stock":1017,"stockValue":406800.0,"stockDays":52.80904522613066,"zeroDays":0,"cohortReturns":23,"coveredQty":413,"coveredRet":20,"extraFwd":20895.0,"extraBack":625.0,"invIn":243200.0,"invOut":0.0},"C302":{"qty":208,"gross":372320.0,"refunds":7160.0,"nret":4,"fee":91290.0,"fwd":22880.0,"back":300.0,"cogs":132600.0,"ads":29714.0,"impressions":313949,"clicks":10615,"orders":32,"retLoss":3070.0,"bad":1,"badCost":650.0,"refRefunds":7160.0,"priceLoss":0.0,"preAds":118090.0,"profit":88376.0,"net":365160.0,"margin":0.2420199364662066,"cpa":928.5625,"adBreakEven":3690.3125,"stock":946,"stockValue":614900.0,"stockDays":140.9903846153846,"zeroDays":0,"cohortReturns":2,"coveredQty":141,"coveredRet":2,"extraFwd":7280.0,"extraBack":100.0,"invIn":132600.0,"invOut":0.0}}},"bridges":{"08-10":{"details":{"A101":{"volume":89153.75,"price":0.0,"returns":-70768.87931034483,"outbound":-21140.0,"inbound":-2650.0,"ads":-7580.870689655174,"change":-12986.0},"A102":{"volume":531664.8703041145,"price":-802131.0,"returns":-25743.0366726297,"outbound":-89950.0,"inbound":-4525.0,"ads":91695.1663685152,"change":-298989.0},"A103":{"volume":17221.51234567901,"price":0.0,"returns":2184.259259259259,"outbound":-12565.0,"inbound":-600.0,"ads":1146.7283950617275,"change":7387.5},"B201":{"volume":74058.23578595318,"price":0.0,"returns":-1854.9414715719067,"outbound":-16240.0,"inbound":-375.0,"ads":-4900.294314381266,"change":50688.0},"B202":{"volume":47079.314641744546,"price":0.0,"returns":-5512.040498442368,"outbound":-18935.0,"inbound":-625.0,"ads":-185159.27414330217,"change":-163152.0},"B203":{"volume":-224957.91281373843,"price":0.0,"returns":-2233.523778071334,"outbound":-7665.0,"inbound":-250.0,"ads":-169.06340819022444,"change":-235275.5},"C301":{"volume":69671.82561307901,"price":0.0,"returns":-2090.177111716621,"outbound":-20895.0,"inbound":-625.0,"ads":-272621.6485013624,"change":-226560.0},"C302":{"volume":-8253.398230088496,"price":0.0,"returns":1130.1769911504425,"outbound":-7280.0,"inbound":-100.0,"ads":-746.7787610619489,"change":-15250.0}},"totals":{"volume":595638.1976467434,"price":-802131.0,"returns":-104888.16259236705,"outbound":-194670.0,"inbound":-9750.0,"ads":-378336.0350543763,"change":-894137.0},"grouped":[["Реклама · термокружка C301",-272621.6485013624],["Реклама · подушка B202",-185159.27414330217],["Цена по акции · футболка A102",-802131.0],["Объём · органайзер B203",-224957.91281373843],["Тариф доставки к покупателю",-194670.0],["Тариф обратной логистики",-9750.0],["Возвраты · худи A101",-70768.87931034483],["Возвраты · остальные товары",-34119.283282022225],["Реклама · остальные товары",79444.88759028833],["Объём · остальные товары",820596.1104604818]]},"08-09":{"details":{"A101":{"volume":36935.125,"price":0.0,"returns":-53418.75,"outbound":-18270.0,"inbound":-2100.0,"ads":2132.625,"change":-34721.0},"A102":{"volume":5551.945438282648,"price":0.0,"returns":-7361.949910554564,"outbound":-20300.0,"inbound":-1100.0,"ads":-190.49552772808966,"change":-23400.5},"A103":{"volume":-5904.518518518518,"price":0.0,"returns":5148.6111111111095,"outbound":-10920.0,"inbound":-425.0,"ads":1161.4074074074015,"change":-10939.5},"B201":{"volume":26481.42976588629,"price":0.0,"returns":-3172.357859531772,"outbound":-12530.0,"inbound":-350.0,"ads":-3017.571906354511,"change":7411.5},"B202":{"volume":43441.36760124611,"price":0.0,"returns":-4831.814641744549,"outbound":-18340.0,"inbound":-575.0,"ads":-175840.05295950157,"change":-156145.5},"B203":{"volume":28851.47952443857,"price":0.0,"returns":-5275.630779392337,"outbound":-28910.0,"inbound":-825.0,"ads":4230.651254953758,"change":-1928.5},"C301":{"volume":59069.59128065395,"price":0.0,"returns":-2762.758855585831,"outbound":-19670.0,"inbound":-625.0,"ads":-255022.33242506813,"change":-219010.5},"C302":{"volume":-8711.920353982301,"price":0.0,"returns":-4087.0353982300885,"outbound":-7245.0,"inbound":-275.0,"ads":-837.0442477876095,"change":-21156.0}},"totals":{"volume":185714.49973800674,"price":0.0,"returns":-75761.68633392804,"outbound":-136185.0,"inbound":-6275.0,"ads":-427382.81340407877,"change":-459890.0},"grouped":[["Реклама · термокружка C301",-255022.33242506813],["Реклама · подушка B202",-175840.05295950157],["Цена по акции · футболка A102",0.0],["Объём · органайзер B203",28851.47952443857],["Тариф доставки к покупателю",-136185.0],["Тариф обратной логистики",-6275.0],["Возвраты · худи A101",-53418.75],["Возвраты · остальные товары",-22342.93633392804],["Реклама · остальные товары",3479.5719804909495],["Объём · остальные товары",156863.02021356818]]},"09-10":{"details":{"A101":{"volume":40962.29885057471,"price":0.0,"returns":-9178.793103448275,"outbound":0.0,"inbound":0.0,"ads":-10048.505747126444,"change":21735.0},"A102":{"volume":426776.0862068965,"price":-802131.0,"returns":7227.155172413797,"outbound":0.0,"inbound":0.0,"ads":92539.25862068968,"change":-275588.5},"A103":{"volume":22367.55608974359,"price":0.0,"returns":-3850.9214743589764,"outbound":0.0,"inbound":0.0,"ads":-189.63461538461706,"change":18327.0},"B201":{"volume":41930.40223463687,"price":0.0,"returns":2335.3491620111727,"outbound":0.0,"inbound":0.0,"ads":-989.2513966480474,"change":43276.5},"B202":{"volume":-2837.1994274809163,"price":0.0,"returns":-554.813931297711,"outbound":0.0,"inbound":0.0,"ads":-3614.4866412213887,"change":-7006.5},"B203":{"volume":-231190.2064164649,"price":0.0,"returns":-866.0441888619853,"outbound":0.0,"inbound":0.0,"ads":-1290.7493946731229,"change":-233347.0},"C301":{"volume":-6715.9208185053385,"price":0.0,"returns":883.5631672597865,"outbound":0.0,"inbound":0.0,"ads":-1717.1423487544525,"change":-7549.5},"C302":{"volume":398.40579710144925,"price":0.0,"returns":5413.285024154589,"outbound":0.0,"inbound":0.0,"ads":94.30917874396255,"change":5906.0}},"totals":{"volume":291691.422516502,"price":-802131.0,"returns":1408.7798278723976,"outbound":0.0,"inbound":0.0,"ads":74783.79765562556,"change":-434247.0},"grouped":[["Реклама · термокружка C301",-1717.1423487544525],["Реклама · подушка B202",-3614.4866412213887],["Цена по акции · футболка A102",-802131.0],["Объём · органайзер B203",-231190.2064164649],["Тариф доставки к покупателю",0.0],["Тариф обратной логистики",0.0],["Возвраты · худи A101",-9178.793103448275],["Возвраты · остальные товары",10587.572931320672],["Реклама · остальные товары",80115.4266456014],["Объём · остальные товары",522881.62893296685]]}},"cohorts":{"2026-08":[{"sku":"A101","size":"L","qty":145,"coveredQty":100,"nret":9,"coveredRet":7,"loss":9182.5,"r_передумал":3,"l_передумал":3052.5,"r_не подошел цвет":2,"l_не подошел цвет":2035.0,"r_не подошел размер":3,"l_не подошел размер":3077.5,"r_брак":1,"l_брак":1017.5},{"sku":"A101","size":"M","qty":190,"coveredQty":115,"nret":14,"coveredRet":5,"loss":14395.0,"r_не подошел цвет":4,"l_не подошел цвет":4095.0,"r_брак":5,"l_брак":5112.5,"r_не подошел размер":3,"l_не подошел размер":3102.5,"r_передумал":2,"l_передумал":2085.0},{"sku":"A101","size":"S","qty":129,"coveredQty":85,"nret":16,"coveredRet":11,"loss":16380.0,"r_передумал":3,"l_передумал":3052.5,"r_не подошел цвет":6,"l_не подошел цвет":6105.0,"r_не подошел размер":5,"l_не подошел размер":5137.5,"r_брак":2,"l_брак":2085.0},{"sku":"A102","size":"L","qty":181,"coveredQty":127,"nret":11,"coveredRet":9,"loss":5442.5,"r_не подошел цвет":4,"l_не подошел цвет":1970.0,"r_брак":3,"l_брак":1477.5,"r_не подошел размер":3,"l_не подошел размер":1477.5,"r_передумал":1,"l_передумал":517.5},{"sku":"A102","size":"M","qty":223,"coveredQty":138,"nret":15,"coveredRet":10,"loss":7412.5,"r_не подошел цвет":5,"l_не подошел цвет":2462.5,"r_не подошел размер":3,"l_не подошел размер":1477.5,"r_передумал":4,"l_передумал":1995.0,"r_брак":3,"l_брак":1477.5},{"sku":"A102","size":"S","qty":155,"coveredQty":106,"nret":12,"coveredRet":3,"loss":6110.0,"r_не подошел цвет":4,"l_не подошел цвет":2020.0,"r_не подошел размер":3,"l_не подошел размер":1502.5,"r_брак":2,"l_брак":1035.0,"r_передумал":3,"l_передумал":1552.5},{"sku":"A103","size":"L","qty":98,"coveredQty":67,"nret":10,"coveredRet":4,"loss":8525.0,"r_брак":1,"l_брак":842.5,"r_не подошел цвет":3,"l_не подошел цвет":2552.5,"r_не подошел размер":4,"l_не подошел размер":3420.0,"r_передумал":2,"l_передумал":1710.0},{"sku":"A103","size":"M","qty":124,"coveredQty":78,"nret":9,"coveredRet":6,"loss":7607.5,"r_брак":4,"l_брак":3370.0,"r_передумал":2,"l_передумал":1710.0,"r_не подошел цвет":1,"l_не подошел цвет":842.5,"r_не подошел размер":2,"l_не подошел размер":1685.0},{"sku":"A103","size":"S","qty":102,"coveredQty":70,"nret":12,"coveredRet":10,"loss":10160.0,"r_не подошел размер":6,"l_не подошел размер":5105.0,"r_передумал":3,"l_передумал":2527.5,"r_не подошел цвет":3,"l_не подошел цвет":2527.5},{"sku":"B201","size":"","qty":299,"coveredQty":197,"nret":14,"coveredRet":4,"loss":10195.0,"r_не подошел цвет":5,"l_не подошел цвет":3662.5,"r_передумал":2,"l_передумал":1460.0,"r_брак":7,"l_брак":5072.5},{"sku":"B202","size":"","qty":321,"coveredQty":212,"nret":9,"coveredRet":6,"loss":3807.5,"r_не подошел цвет":4,"l_не подошел цвет":1695.0,"r_передумал":4,"l_передумал":1695.0,"r_брак":1,"l_брак":417.5},{"sku":"B203","size":"","qty":757,"coveredQty":514,"nret":28,"coveredRet":21,"loss":18815.0,"r_брак":9,"l_брак":6007.5,"r_передумал":14,"l_передумал":9420.0,"r_не подошел цвет":5,"l_не подошел цвет":3387.5},{"sku":"C301","size":"","qty":367,"coveredQty":248,"nret":18,"coveredRet":13,"loss":9890.0,"r_не подошел цвет":6,"l_не подошел цвет":3280.0,"r_передумал":7,"l_передумал":3872.5,"r_брак":5,"l_брак":2737.5},{"sku":"C302","size":"","qty":226,"coveredQty":149,"nret":10,"coveredRet":5,"loss":7525.0,"r_брак":3,"l_брак":2252.5,"r_не подошел цвет":6,"l_не подошел цвет":4530.0,"r_передумал":1,"l_передумал":742.5}],"2026-09":[{"sku":"A101","size":"L","qty":166,"coveredQty":116,"nret":13,"coveredRet":8,"loss":13552.5,"r_брак":4,"l_брак":4170.0,"r_передумал":2,"l_передумал":2085.0,"r_не подошел размер":7,"l_не подошел размер":7297.5},{"sku":"A101","size":"M","qty":206,"coveredQty":138,"nret":19,"coveredRet":13,"loss":19807.5,"r_передумал":3,"l_передумал":3127.5,"r_не подошел цвет":4,"l_не подошел цвет":4170.0,"r_брак":7,"l_брак":7297.5,"r_не подошел размер":5,"l_не подошел размер":5212.5},{"sku":"A101","size":"S","qty":150,"coveredQty":96,"nret":67,"coveredRet":40,"loss":69847.5,"r_маломерит":31,"l_маломерит":32317.5,"r_передумал":19,"l_передумал":19807.5,"r_не подошел размер":17,"l_не подошел размер":17722.5},{"sku":"A102","size":"L","qty":170,"coveredQty":116,"nret":12,"coveredRet":9,"loss":6210.0,"r_передумал":3,"l_передумал":1552.5,"r_не подошел размер":5,"l_не подошел размер":2587.5,"r_не подошел цвет":2,"l_не подошел цвет":1035.0,"r_брак":2,"l_брак":1035.0},{"sku":"A102","size":"M","qty":232,"coveredQty":156,"nret":18,"coveredRet":14,"loss":9315.0,"r_брак":8,"l_брак":4140.0,"r_передумал":7,"l_передумал":3622.5,"r_не подошел размер":3,"l_не подошел размер":1552.5},{"sku":"A102","size":"S","qty":178,"coveredQty":128,"nret":13,"coveredRet":7,"loss":6727.5,"r_не подошел размер":7,"l_не подошел размер":3622.5,"r_не подошел цвет":5,"l_не подошел цвет":2587.5,"r_передумал":1,"l_передумал":517.5},{"sku":"A103","size":"L","qty":96,"coveredQty":65,"nret":2,"coveredRet":1,"loss":1735.0,"r_не подошел размер":1,"l_не подошел размер":867.5,"r_не подошел цвет":1,"l_не подошел цвет":867.5},{"sku":"A103","size":"M","qty":122,"coveredQty":88,"nret":9,"coveredRet":6,"loss":7807.5,"r_не подошел цвет":4,"l_не подошел цвет":3470.0,"r_не подошел размер":1,"l_не подошел размер":867.5,"r_передумал":3,"l_передумал":2602.5,"r_брак":1,"l_брак":867.5},{"sku":"A103","size":"S","qty":94,"coveredQty":65,"nret":3,"coveredRet":2,"loss":2602.5,"r_не подошел цвет":1,"l_не подошел цвет":867.5,"r_брак":1,"l_брак":867.5,"r_не подошел размер":1,"l_не подошел размер":867.5},{"sku":"B201","size":"","qty":358,"coveredQty":252,"nret":10,"coveredRet":7,"loss":7425.0,"r_брак":3,"l_брак":2227.5,"r_не подошел цвет":5,"l_не подошел цвет":3712.5,"r_передумал":2,"l_передумал":1485.0},{"sku":"B202","size":"","qty":524,"coveredQty":366,"nret":25,"coveredRet":21,"loss":11062.5,"r_брак":7,"l_брак":3097.5,"r_не подошел цвет":8,"l_не подошел цвет":3540.0,"r_передумал":10,"l_передумал":4425.0},{"sku":"B203","size":"","qty":826,"coveredQty":579,"nret":37,"coveredRet":27,"loss":25622.5,"r_передумал":16,"l_передумал":11080.0,"r_не подошел цвет":12,"l_не подошел цвет":8310.0,"r_брак":9,"l_брак":6232.5},{"sku":"C301","size":"","qty":562,"coveredQty":389,"nret":22,"coveredRet":18,"loss":12485.0,"r_брак":9,"l_брак":5107.5,"r_не подошел цвет":10,"l_не подошел цвет":5675.0,"r_передумал":3,"l_передумал":1702.5},{"sku":"C302","size":"","qty":207,"coveredQty":146,"nret":9,"coveredRet":7,"loss":6907.5,"r_не подошел цвет":6,"l_не подошел цвет":4605.0,"r_брак":2,"l_брак":1535.0,"r_передумал":1,"l_передумал":767.5}],"2026-10":[{"sku":"A101","size":"L","qty":175,"coveredQty":118,"nret":7,"coveredRet":7,"loss":7297.5,"r_брак":3,"l_брак":3127.5,"r_передумал":2,"l_передумал":2085.0,"r_не подошел размер":2,"l_не подошел размер":2085.0},{"sku":"A101","size":"M","qty":241,"coveredQty":164,"nret":12,"coveredRet":9,"loss":12510.0,"r_передумал":3,"l_передумал":3127.5,"r_не подошел размер":2,"l_не подошел размер":2085.0,"r_не подошел цвет":7,"l_не подошел цвет":7297.5},{"sku":"A101","size":"S","qty":188,"coveredQty":121,"nret":61,"coveredRet":51,"loss":63592.5,"r_передумал":9,"l_передумал":9382.5,"r_маломерит":43,"l_маломерит":44827.5,"r_не подошел размер":9,"l_не подошел размер":9382.5},{"sku":"A102","size":"L","qty":789,"coveredQty":534,"nret":55,"coveredRet":50,"loss":10065.0,"r_брак":28,"l_брак":5124.0,"r_не подошел размер":14,"l_не подошел размер":2562.0,"r_не подошел цвет":11,"l_не подошел цвет":2013.0,"r_передумал":2,"l_передумал":366.0},{"sku":"A102","size":"M","qty":1020,"coveredQty":673,"nret":71,"coveredRet":62,"loss":12993.0,"r_не подошел цвет":23,"l_не подошел цвет":4209.0,"r_не подошел размер":16,"l_не подошел размер":2928.0,"r_брак":14,"l_брак":2562.0,"r_передумал":18,"l_передумал":3294.0},{"sku":"A102","size":"S","qty":761,"coveredQty":521,"nret":46,"coveredRet":41,"loss":8418.0,"r_не подошел цвет":21,"l_не подошел цвет":3843.0,"r_не подошел размер":13,"l_не подошел размер":2379.0,"r_брак":7,"l_брак":1281.0,"r_передумал":5,"l_передумал":915.0},{"sku":"A103","size":"L","qty":98,"coveredQty":55,"nret":7,"coveredRet":7,"loss":6072.5,"r_не подошел размер":3,"l_не подошел размер":2602.5,"r_передумал":2,"l_передумал":1735.0,"r_брак":1,"l_брак":867.5,"r_не подошел цвет":1,"l_не подошел цвет":867.5},{"sku":"A103","size":"M","qty":150,"coveredQty":91,"nret":7,"coveredRet":7,"loss":6072.5,"r_не подошел цвет":2,"l_не подошел цвет":1735.0,"r_не подошел размер":3,"l_не подошел размер":2602.5,"r_передумал":2,"l_передумал":1735.0},{"sku":"A103","size":"S","qty":111,"coveredQty":86,"nret":6,"coveredRet":5,"loss":5205.0,"r_передумал":2,"l_передумал":1735.0,"r_брак":4,"l_брак":3470.0},{"sku":"B201","size":"","qty":464,"coveredQty":311,"nret":13,"coveredRet":11,"loss":9652.5,"r_брак":7,"l_брак":5197.5,"r_не подошел цвет":3,"l_не подошел цвет":2227.5,"r_передумал":3,"l_передумал":2227.5},{"sku":"B202","size":"","qty":541,"coveredQty":366,"nret":21,"coveredRet":20,"loss":9292.5,"r_брак":12,"l_брак":5310.0,"r_не подошел цвет":4,"l_не подошел цвет":1770.0,"r_передумал":5,"l_передумал":2212.5},{"sku":"B203","size":"","qty":219,"coveredQty":88,"nret":1,"coveredRet":1,"loss":692.5,"r_брак":1,"l_брак":692.5},{"sku":"C301","size":"","qty":597,"coveredQty":413,"nret":23,"coveredRet":20,"loss":13052.5,"r_не подошел цвет":7,"l_не подошел цвет":3972.5,"r_передумал":10,"l_передумал":5675.0,"r_брак":6,"l_брак":3405.0},{"sku":"C302","size":"","qty":208,"coveredQty":141,"nret":2,"coveredRet":2,"loss":1535.0,"r_не подошел цвет":1,"l_не подошел цвет":767.5,"r_брак":1,"l_брак":767.5}]},"reasons":{"2026-08":{"брак":{"qty":37,"refunds":57630.0,"loss":25922.5,"badCost":19150.0},"не подошел цвет":{"qty":44,"refunds":71460.0,"loss":31295.0,"badCost":0},"передумал":{"qty":34,"refunds":52960.0,"loss":24020.0,"badCost":0},"не подошел размер":{"qty":22,"refunds":38780.0,"loss":16785.0,"badCost":0}},"2026-09":{"передумал":{"qty":80,"refunds":131000.0,"loss":60050.0,"badCost":0},"брак":{"qty":46,"refunds":71340.0,"loss":32505.0,"badCost":24450.0},"не подошел размер":{"qty":38,"refunds":73120.0,"loss":32090.0,"badCost":0},"не подошел цвет":{"qty":63,"refunds":87470.0,"loss":41477.5,"badCost":0},"маломерит":{"qty":24,"refunds":59760.0,"loss":25020.0,"badCost":0}},"2026-10":{"брак":{"qty":100,"refunds":99746.0,"loss":42859.5,"badCost":39450.0},"не подошел размер":{"qty":81,"refunds":109012.0,"loss":44334.0,"badCost":0},"маломерит":{"qty":50,"refunds":124500.0,"loss":52125.0,"badCost":0},"не подошел цвет":{"qty":89,"refunds":88680.0,"loss":35935.0,"badCost":0},"передумал":{"qty":70,"refunds":89650.0,"loss":38587.5,"badCost":0}}},"retMatrix":[[137,50,0],[0,201,58],[0,0,332]],"stockOut":{"ranges":{"before":{"n":569,"days":21,"daily":27.095238095238095,"estimated":621.1904761904761,"gross":801335.7142857142,"profit":233318.90075521736,"adSaved":62665.95238095238},"after":{"n":131,"days":5,"daily":26.2,"estimated":600.6,"gross":774774.0,"profit":224889.70254237286,"adSaved":61284.200000000004}},"dates":["2026-10-04","2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-17","2026-10-18","2026-10-19","2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-26"],"sales":2,"retRate":0.044794188861985475,"unitBeforeAds":476.48002421307507,"missingAdDays":22},"stockTrend":[{"day":"2026-08-01","stock":1374,"sold":26},{"day":"2026-08-02","stock":1349,"sold":25},{"day":"2026-08-03","stock":1522,"sold":19},{"day":"2026-08-04","stock":1500,"sold":22},{"day":"2026-08-05","stock":1478,"sold":22},{"day":"2026-08-06","stock":1453,"sold":25},{"day":"2026-08-07","stock":1429,"sold":24},{"day":"2026-08-08","stock":1400,"sold":29},{"day":"2026-08-09","stock":1376,"sold":24},{"day":"2026-08-10","stock":1551,"sold":19},{"day":"2026-08-11","stock":1526,"sold":25},{"day":"2026-08-12","stock":1499,"sold":27},{"day":"2026-08-13","stock":1469,"sold":30},{"day":"2026-08-14","stock":1446,"sold":23},{"day":"2026-08-15","stock":1421,"sold":25},{"day":"2026-08-16","stock":1394,"sold":27},{"day":"2026-08-17","stock":1565,"sold":26},{"day":"2026-08-18","stock":1546,"sold":19},{"day":"2026-08-19","stock":1524,"sold":22},{"day":"2026-08-20","stock":1498,"sold":26},{"day":"2026-08-21","stock":1469,"sold":29},{"day":"2026-08-22","stock":1443,"sold":26},{"day":"2026-08-23","stock":1419,"sold":24},{"day":"2026-08-24","stock":1586,"sold":32},{"day":"2026-08-25","stock":1561,"sold":25},{"day":"2026-08-26","stock":1536,"sold":25},{"day":"2026-08-27","stock":1519,"sold":17},{"day":"2026-08-28","stock":1500,"sold":19},{"day":"2026-08-29","stock":1473,"sold":27},{"day":"2026-08-30","stock":1444,"sold":29},{"day":"2026-08-31","stock":1626,"sold":19},{"day":"2026-09-01","stock":1602,"sold":24},{"day":"2026-09-02","stock":1571,"sold":31},{"day":"2026-09-03","stock":1553,"sold":18},{"day":"2026-09-04","stock":1532,"sold":21},{"day":"2026-09-05","stock":1501,"sold":31},{"day":"2026-09-06","stock":1460,"sold":41},{"day":"2026-09-07","stock":1637,"sold":26},{"day":"2026-09-08","stock":1603,"sold":34},{"day":"2026-09-09","stock":1572,"sold":31},{"day":"2026-09-10","stock":1544,"sold":28},{"day":"2026-09-11","stock":1515,"sold":29},{"day":"2026-09-12","stock":1486,"sold":29},{"day":"2026-09-13","stock":1457,"sold":29},{"day":"2026-09-14","stock":1637,"sold":25},{"day":"2026-09-15","stock":1609,"sold":28},{"day":"2026-09-16","stock":1590,"sold":19},{"day":"2026-09-17","stock":1566,"sold":24},{"day":"2026-09-18","stock":1546,"sold":20},{"day":"2026-09-19","stock":1514,"sold":32},{"day":"2026-09-20","stock":1480,"sold":34},{"day":"2026-09-21","stock":335,"sold":25},{"day":"2026-09-22","stock":306,"sold":29},{"day":"2026-09-23","stock":278,"sold":28},{"day":"2026-09-24","stock":248,"sold":30},{"day":"2026-09-25","stock":223,"sold":25},{"day":"2026-09-26","stock":196,"sold":27},{"day":"2026-09-27","stock":161,"sold":35},{"day":"2026-09-28","stock":130,"sold":31},{"day":"2026-09-29","stock":107,"sold":23},{"day":"2026-09-30","stock":88,"sold":19},{"day":"2026-10-01","stock":61,"sold":27},{"day":"2026-10-02","stock":33,"sold":28},{"day":"2026-10-03","stock":2,"sold":31},{"day":"2026-10-04","stock":0,"sold":2},{"day":"2026-10-05","stock":0,"sold":0},{"day":"2026-10-06","stock":0,"sold":0},{"day":"2026-10-07","stock":0,"sold":0},{"day":"2026-10-08","stock":0,"sold":0},{"day":"2026-10-09","stock":0,"sold":0},{"day":"2026-10-10","stock":0,"sold":0},{"day":"2026-10-11","stock":0,"sold":0},{"day":"2026-10-12","stock":0,"sold":0},{"day":"2026-10-13","stock":0,"sold":0},{"day":"2026-10-14","stock":0,"sold":0},{"day":"2026-10-15","stock":0,"sold":0},{"day":"2026-10-16","stock":0,"sold":0},{"day":"2026-10-17","stock":0,"sold":0},{"day":"2026-10-18","stock":0,"sold":0},{"day":"2026-10-19","stock":0,"sold":0},{"day":"2026-10-20","stock":0,"sold":0},{"day":"2026-10-21","stock":0,"sold":0},{"day":"2026-10-22","stock":0,"sold":0},{"day":"2026-10-23","stock":0,"sold":0},{"day":"2026-10-24","stock":0,"sold":0},{"day":"2026-10-25","stock":0,"sold":0},{"day":"2026-10-26","stock":0,"sold":0},{"day":"2026-10-27","stock":671,"sold":29},{"day":"2026-10-28","stock":655,"sold":16},{"day":"2026-10-29","stock":629,"sold":26},{"day":"2026-10-30","stock":596,"sold":33},{"day":"2026-10-31","stock":569,"sold":27}],"promo":{"returned":172,"back":12900.0,"qty":2570,"retained":2398,"breakeven":625.4812343619683,"cohortProfit":-146544.0},"anomalies":[["2026-09-21","B203",1480,335,25,-1120]]}</script>
+<script>
+'use strict';
+const data = JSON.parse(document.getElementById('data').textContent);
+const {monthly,bySku,skus,bridges,cohorts,reasons,stockOut,promo} = data;
+const months = Object.keys(monthly);
+const names = ['Август','Сентябрь','Октябрь'];
+const [aug,sep,oct] = months.map(m => monthly[m]);
+const [augSKU,sepSKU,octSKU] = months.map(m => bySku[m]);
+const num = (v,dec=0) => v.toLocaleString('ru-RU',{maximumFractionDigits:dec,minimumFractionDigits:dec});
+const money = (v,dec=0) => num(v,dec) + ' ₽';
+const sign = (v,dec=0) => (v<0 ? '−' : v>0 ? '+' : '') + num(Math.abs(v),dec);
+const signed = (v,dec=0) => sign(v,dec)+' ₽';
+const pct = (v,dec=1) => num(v*100,dec)+'%';
+const rate = (v,base) => v/base-1;
+const percentChange = (v,base) => sign(rate(v,base)*100,1)+'%';
+const spaced = (v) => num(v/1000,1)+' тыс. ₽';
+const color = v => v < 0 ? 'neg' : v > 0 ? 'pos' : '';
+const paint = (v,text) => '<span class="'+color(v)+'">'+text+'</span>';
+const escape = s => String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const el = id => document.getElementById(id);
+const put = (id,html) => {el(id).innerHTML=html;};
+const cell = (value,type) => '<'+type+(type==='th' ? ' scope="row"' : '')+'>'+value+'</'+type+'>';
+function table(id,headers,rows,footer='') {
+  const head = headers.map(h=>typeof h==='string'
+    ? '<th scope="col">'+h+'</th>'
+    : '<th scope="col" aria-sort="'+h.sort+'">'+h.label+'</th>').join('');
+  const body = rows.map(r=>'<tr class="'+(r.cls||'')+'">'+r.values.map((v,i)=>cell(v,i ? 'td' : 'th')).join('')+'</tr>').join('');
+  put(id,'<table><thead><tr>'+head+'</tr></thead><tbody>'+body+'</tbody>'+footer+'</table>');
+}
+const row = (...values) => ({values});
+const groupedRow = (cls,...values) => ({cls,values});
+const skuTitle = k => escape(skus[k][0])+'<small>'+escape(k)+'</small>';
+const pair = (value,label,cls='') => '<div><b class="'+cls+'">'+value+'</b><span>'+label+'</span></div>';
+const fmtPeriod = (d) => d.slice(8)+'.'+d.slice(5,7);
+const lossBeforeAd = (v) => paint(v,money(v));
+const adSkus = ['B202','C301'];
+const adSpend = adSkus.reduce((s,k)=>s+octSKU[k].ads,0);
+const adPnl = adSkus.reduce((s,k)=>s+octSKU[k].profit,0);
+const budgetLimit = adSpend+adPnl;
+const promoLoss = octSKU.A102.priceLoss;
+const stockLossMin = stockOut.ranges.after.profit;
+const stockLossMax = stockOut.ranges.before.profit;
+el('hero-sales').textContent=pct(rate(oct.gross,aug.gross),0);
+el('hero-profit').textContent=pct(-rate(oct.profit,aug.profit),0);
+put('trend','<div class="trend-head"><strong>Расчётная прибыль</strong><span>₽ за месяц</span></div>'+
+  months.map((m,i)=>'<div class="trend-row"><span>'+names[i]+'</span><span class="trend-track" aria-hidden="true"><i class="trend-fill" style="width:'+(monthly[m].profit/aug.profit*100)+'%"></i></span><b>'+num(monthly[m].profit)+'</b></div>').join(''));
+const kpis=[
+  ['Оборот октября',num(oct.gross/1e6,2)+' млн ₽',percentChange(oct.gross,aug.gross)+' к августу','pos'],
+  ['Прибыль октября',money(oct.profit),percentChange(oct.profit,aug.profit)+' к августу','neg'],
+  ['Маржа октября',pct(oct.margin),sign((oct.margin-aug.margin)*100,1)+' п. п. к августу','neg'],
+  ['Отгружено в октябре',num(oct.qty)+' шт.',percentChange(oct.qty,aug.qty)+' к августу','pos']
+];
+put('kpis',kpis.map(([label,value,change,cls])=>'<article class="kpi"><div class="title">'+label+'</div><b>'+value+'</b><small class="'+cls+'">'+change+'</small></article>').join(''));
+put('actions',[
+  ['Пересчитать цену футболки A102', 'Остановить акцию по 544 ₽. При октябрьских расходах расчётный порог '+money(Math.ceil(promo.breakeven))+' за штуку до налогов. Заложить целевую маржу поверх порога.'],
+  ['Сократить рекламу B202 и C301','В октябре суммарно потрачено '+money(adSpend)+'. Сравнить прибыль и выкуп при меньшем бюджете на каждом товаре.'],
+  ['Проверить склад B203 и порог заказа','Сверить движение 1 120 шт. 21 сентября. Планировать пополнение от спроса 26–27 шт. в день и срока поставки.'],
+  ['Перемерить худи A101 размера S','Проверить фактические мерки и партию, обновить таблицу размеров. Отследить возвраты первых трёх недель после правки.']
+].map(([heading,body])=>'<li><strong>'+heading+'</strong><p>'+body+'</p></li>').join(''));
+function renderBridge(){
+  const key=el('bridge-select').value;
+  const [first,last]=key.split('-').map(m=>'2026-'+m);
+  const bridge=bridges[key];
+  const effects=bridge.grouped.filter(([_,amount])=>Math.abs(amount)>0.005).sort((a,b)=>a[1]-b[1]);
+  const scale=Math.max(...effects.map(e=>Math.abs(e[1])));
+  el('bridge-total').textContent=signed(bridge.totals.change);
+  put('factors',effects.map(([label,value])=>{
+    const width=Math.abs(value)/scale*49.5;
+    return '<div class="factor"><span>'+escape(label)+'</span><div class="factor-track" aria-hidden="true"><i class="factor-bar '+(value>0 ? 'up' : '')+'" style="width:'+width+'%;left:'+(value>0?50:50-width)+'%"></i></div><span class="amount '+color(value)+'">'+signed(value)+'</span></div>';
+  }).join(''));
+  const [negative,positive]=effects.reduce(([n,p],[_,v])=>v<0?[n+v,p]:[n,p+v],[0,0]);
+  put('bridge-check','Прибыль '+money(monthly[first].profit)+' → '+money(monthly[last].profit)+'. Ухудшения '+signed(negative)+', улучшения '+signed(positive)+'. Округление строк может дать разницу в 1 ₽.');
+  const fields=['volume','price','returns','outbound','inbound','ads','change'];
+  const detailRows=Object.entries(bridge.details).map(([k,x])=>{
+    const values=fields.map(f=>paint(x[f],signed(x[f],2)));
+    return row(k,...values);
+  });
+  table('bridge-detail',['Артикул','Объём','Цена','Возвраты','Тариф доставки','Тариф возврата','Реклама','Итого'],detailRows);
+}
+el('bridge-select').addEventListener('change',renderBridge);
+renderBridge();
+const pnlLines=[
+  ['Отгружено, шт.','qty',num],['Возвращено в месяце, шт.','nret',num],
+  ['Оборот до возвратов','gross',money],['Возвраты покупателям','refunds',v=>signed(-v)],
+  ['Чистая выручка','net',money,'income'],['Комиссия','fee',v=>signed(-v)],
+  ['Доставка к покупателю','fwd',v=>signed(-v)],['Обратная логистика','back',v=>signed(-v)],
+  ['Себестоимость выкупленного','cogs',v=>signed(-v)],['Реклама','ads',v=>signed(-v)],
+  ['Расчётная прибыль','profit',money,'highlight'],['Маржа от чистой выручки','margin',pct,'highlight']
+];
+table('pnl-table',['Показатель',...names,'Октябрь к августу'],pnlLines.map(([label,field,fmt,cls])=>{
+  const delta=oct[field]-aug[field];
+  const change=field==='margin' ? sign(delta*100,1)+' п. п.' : ['qty','nret'].includes(field) ? sign(delta) : signed(delta*(fmt===money ? 1 : -1));
+  return groupedRow(cls||'',label,...months.map(m=>fmt(monthly[m][field])),change);
+}));
+const columns=[
+  ['qty','Отгружено, шт.',num],
+  ['net','Чистая выручка',money],
+  ['preAds','До рекламы',lossBeforeAd],
+  ['ads','Реклама',money],
+  ['profit','Прибыль',lossBeforeAd],
+  ['margin','Маржа',v=>paint(v,pct(v))],
+  ['coveredRate','Возвраты¹',pct]
+];
+let sortField='profit', sortDir=1;
+function renderSKU(){
+  const m=el('sku-month').value;
+  const query=el('sku-filter').value.trim().toLowerCase();
+  const viewSku = Object.entries(bySku[m]).map(([k,o])=>[k,{...o,coveredRate:o.coveredRet/o.coveredQty}]);
+  const filtered = viewSku.filter(([k])=>(k+' '+skus[k][0]).toLowerCase().includes(query))
+    .sort((a,b)=>(a[1][sortField]-b[1][sortField])*sortDir);
+  const headers=['Товар',...columns.map(([field,label])=>({sort:field===sortField ? (sortDir===1?'ascending':'descending') : 'none',
+    label:'<button type="button" data-sort="'+field+'">'+label+(field===sortField ? (sortDir===1?' ↑':' ↓') : '')+'</button>'}))];
+  if (!filtered.length) {
+    put('sku-table','<p>По этому запросу товары не найдены.</p>');
+    return;
+  }
+  table('sku-table',headers,filtered.map(([k,x])=>row(skuTitle(k),...columns.map(([f,_,fmt])=>fmt(x[f])))),
+    '<tfoot><tr><td colspan="8" style="text-align:left;white-space:normal">¹ Доля возвратов от продаж с 1-го по 21-е число выбранного месяца.</td></tr></tfoot>');
+}
+el('sku-month').addEventListener('change',renderSKU);
+el('sku-filter').addEventListener('input',renderSKU);
+el('sku-table').addEventListener('click',event=>{
+  const button=event.target.closest('button[data-sort]');
+  if (!button) return;
+  const field=button.dataset.sort;
+  sortDir=sortField===field ? -sortDir : -1;
+  sortField=field;
+  renderSKU();
+  el('sku-table').querySelector('[data-sort="'+field+'"]').focus();
+});
+renderSKU();
+table('sku-all',['Товар',...names,'Октябрь к августу'],Object.keys(skus).map(k=>
+  row(skuTitle(k),...months.map(m=>lossBeforeAd(bySku[m][k].profit)),
+    paint(octSKU[k].profit-augSKU[k].profit,signed(octSKU[k].profit-augSKU[k].profit)))));
+put('ad-impact',pair(money(adSpend),'Реклама двух товаров в октябре')+pair(signed(adPnl),'Их суммарная прибыль в октябре','neg'));
+table('ad-table',['Товар / месяц','Расход','Прибыль','Цена заказа','Заказ / клик'],adSkus.flatMap(k=>
+  months.map((m,i)=>{
+    const x=bySku[m][k];
+    return row(k+' · '+names[i].toLowerCase(),money(x.ads),lossBeforeAd(x.profit),money(x.cpa),pct(x.orders/x.clicks,2));
+  })));
+el('ad-table').insertAdjacentHTML('afterend','<p class="note">При октябрьском объёме продаж расчётный потолок общих рекламных расходов до нулевой прибыли равен '+money(budgetLimit)+'. Изменение бюджета может изменить продажи.</p>');
+put('promo-impact',pair(signed(octSKU.A102.profit),'Расчётная прибыль A102 за октябрь','neg')+pair(signed(-promoLoss),'Эффект цены при тех же объёмах','neg'));
+put('promo-text','Цена упала с 990 до 544 ₽. Даже у выкупленной футболки до рекламы оставалось −2 ₽ за штуку (544 × 75% − 300 − 110). В октябре отгрузили '+num(promo.qty)+' шт. против '+num(sepSKU.A102.qty)+' в сентябре.');
+put('promo-note','Цена безубыточности '+money(promo.breakeven,2)+' рассчитана по октябрьским продажам и связанным с ними '+num(promo.returned)+' возвратам, видимым до 31 октября. Эффект цены '+money(promoLoss)+' моделирует ту же отгрузку и выкуп по 990 ₽. Изменение спроса при другой цене неизвестно.');
+const tDaysFwd=sep.extraFwd+oct.extraFwd, tDaysBack=sep.extraBack+oct.extraBack;
+table('fee-table',['Доплата к августовским ставкам','Сентябрь','Октябрь','За два месяца'],[
+  row('Доставка',money(sep.extraFwd),money(oct.extraFwd),money(tDaysFwd)),
+  row('Обратная логистика',money(sep.extraBack),money(oct.extraBack),money(tDaysBack)),
+  groupedRow('highlight','Всего',money(sep.extraFwd+sep.extraBack),money(oct.extraFwd+oct.extraBack),money(tDaysFwd+tDaysBack))
+]);
+const focusData = months.map(m=>cohorts[m].filter(x=>x.sku==='A101'));
+const hoodieSizeS = focusData.map(x=>x.find(o=>o.size==='S'));
+const sizeRet = hoodieSizeS.slice(1).reduce((total,r)=>total+(r['r_маломерит']||0)+(r['r_не подошел размер']||0),0);
+const sizeLoss = hoodieSizeS.slice(1).reduce((total,r)=>total+(r['l_маломерит']||0)+(r['l_не подошел размер']||0),0);
+put('return-text','У размера S доля возвратов выросла с '+pct(hoodieSizeS[0].coveredRet/hoodieSizeS[0].coveredQty)+' до '+pct(hoodieSizeS[2].coveredRet/hoodieSizeS[2].coveredQty)+'. У сентябрьских и октябрьских продаж S отмечено '+num(sizeRet)+' возвратов по причинам «маломерит» и «не подошёл размер». Это '+money(sizeLoss)+' потерянной прибыли относительно тех же отгрузок без этих возвратов.');
+table('return-focus',['Размер',...names],['S','M','L'].map(size=>row(size,...focusData.map(month=>{
+  const x=month.find(o=>o.size===size);
+  return pct(x.coveredRet/x.coveredQty)+'<small>'+x.coveredRet+' / '+x.coveredQty+' шт.</small>';
+}))));
+const causes=['маломерит','не подошел размер','брак','не подошел цвет','передумал'];
+table('reason-table',['Причина',...names],causes.map(cause=>row(escape(cause.replace('шел','шёл')),...months.map(m=>{
+  const x=reasons[m][cause];
+  return x ? money(x.loss)+'<small>'+x.qty+' шт.</small>' : '0 ₽<small>0 шт.</small>';
+}))).concat([groupedRow('highlight','Потеря прибыли',...months.map(m=>money(monthly[m].retLoss))),
+  row('Возможное списание брака',...months.map(m=>money(monthly[m].badCost)))]));
+table('cohort-table',['Месяц продажи','Возвратов видно','Для продаж 1–21-го'],months.map((m,i)=>
+  row(names[i],pct(monthly[m].cohortReturns/monthly[m].qty)+'<small>'+num(monthly[m].cohortReturns)+' / '+num(monthly[m].qty)+' шт.</small>',
+    pct(monthly[m].coveredRet/monthly[m].coveredQty)+'<small>'+num(monthly[m].coveredRet)+' / '+num(monthly[m].coveredQty)+' шт.</small>')));
+put('calendar',data.stockTrend.filter(x=>x.day.startsWith('2026-10')).map(x=>
+  '<span class="day '+(x.stock===0?'zero':'')+'" title="'+fmtPeriod(x.day)+', остаток '+x.stock+' шт., отгружено '+x.sold+' шт.">'+Number(x.day.slice(8))+'</span>').join(''));
+const range = (a,b,fmt=num) => fmt(a)+'–'+fmt(b);
+put('stock-impact',pair(num(stockOut.dates.length)+' дня','Нулевой остаток, 4–26 октября')+
+  pair(range(stockLossMin/1000,stockLossMax/1000)+' тыс. ₽','Оценка упущенной прибыли','neg'));
+put('stock-text','Оценка упущенных продаж '+range(stockOut.ranges.after.estimated,stockOut.ranges.before.estimated)+' шт., или '+range(stockOut.ranges.after.gross/1000,stockOut.ranges.before.gross/1000)+' тыс. ₽ оборота. До дефицита темп составлял '+num(stockOut.ranges.before.daily,1)+' шт. в день, после пополнения '+num(stockOut.ranges.after.daily,1)+'.');
+table('cash-table',['Показатель',...names],[
+  row('Запас на конец месяца, шт.',...months.map(m=>num(monthly[m].stock))),
+  groupedRow('income','Стоимость запаса на конец месяца',...months.map(m=>money(monthly[m].stockValue))),
+  row('Оценка поступлений по движению остатков',...months.map(m=>money(monthly[m].invIn)))
+]);
+put('cash-text','В октябре оценка поступлений выросла на <strong>'+money(oct.invIn-sep.invIn)+'</strong> к сентябрю. Из этого прироста <strong>'+money(octSKU.A102.invIn-sepSKU.A102.invIn)+'</strong> приходится на футболку A102. Запас на конец месяца вырос на <strong>'+money(oct.stockValue-sep.stockValue)+'</strong>, в том числе на '+money(octSKU.B203.stockValue-sepSKU.B203.stockValue)+' по B203.');
+const [,dropK,stockBefore,stockAfter,sold,extra]=data.anomalies[0];
+put('anomaly-text','21 сентября остаток B203 упал с '+num(stockBefore)+' до '+num(stockAfter)+' шт. при '+num(sold)+' отгрузках. Ещё <strong>'+num(-extra)+' шт. ('+money(-extra*skus[dropK][1])+')</strong> не объясняются продажами. Проверьте инвентаризацию, перемещения и списания. Возможный убыток от списания в прибыль не включён.');
+table('stock-table',['Товар','Остаток, шт.','По закупочной цене','Дней запаса'],Object.keys(octSKU)
+  .sort((a,b)=>octSKU[b].stockValue-octSKU[a].stockValue)
+  .map(k=>row(skuTitle(k),num(octSKU[k].stock),money(octSKU[k].stockValue),
+    num(k==='B203'?octSKU[k].stock/stockOut.ranges.after.daily:octSKU[k].stockDays,1))));
+table('source-table',['Отчёт','Строк','Охват'],[
+  row('продажи.csv',num(1260),'1 авг. – 31 окт.'),
+  row('возвраты.csv',482,'5 авг. – 31 окт.'),
+  row('реклама.csv',714,'1 авг. – 31 окт.'),
+  row('остатки.csv',736,'1 авг. – 31 окт.'),
+  row('себестоимость.csv',8,'8 артикулов'),
+  row('тарифы.csv',2,'1 авг. – 31 окт.'),
+  row('акции.csv',1,'1–31 окт.')
+]);
+</script>
+</body>
+</html>
