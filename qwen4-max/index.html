@@ -38,7 +38,7 @@
     padding-right: max(16px, env(safe-area-inset-right, 0px));
     padding-block: 40px 64px;
   }
-  .page { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+  .page { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
   a { color: var(--gold); text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
 
@@ -91,6 +91,27 @@
     .lead { font-size: 16px; }
   }
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+  details.tz { border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; background: var(--panel); }
+  details.tz summary { cursor: pointer; font-weight: 700; }
+  details.tz p { margin-top: 10px; }
+  /* viewer:start */
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tab { border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 12px; padding: 10px 14px; cursor: pointer; font-family: var(--text); font-size: 15px; font-weight: 700; display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+  .tab small { font-family: var(--mono); font-weight: 500; font-size: 12.5px; color: var(--muted); }
+  .tab[aria-selected="true"] { border-color: var(--gold); background: rgba(233, 200, 107, 0.12); }
+  .tab[aria-selected="true"] small { color: var(--gold); }
+  .tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .viewer { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }
+  .vmeta { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; padding: 14px 18px; border-bottom: 1px solid var(--line); min-width: 0; }
+  .vmeta .vname { font-weight: 800; font-size: 18px; }
+  .vmeta .vstat { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .vmeta .vstat b { color: var(--ink); font-family: var(--mono); }
+  .vmeta .vscore { margin-left: auto; background: var(--gold); color: var(--ground); font-family: var(--mono); font-weight: 700; padding: 3px 12px; border-radius: 999px; }
+  .vmeta .vnote { flex-basis: 100%; font-size: 14px; color: var(--muted); }
+  .vmeta .vopen { flex-basis: 100%; font-size: 14px; }
+  .viewer iframe { display: block; width: 100%; height: min(80vh, 860px); min-height: 520px; border: 0; background: #fff; }
+  h3.sub { margin: 14px 0 0; font-size: 18px; }
+  /* viewer:end */
 </style>
 
 </head>
@@ -99,7 +120,7 @@
   <header>
     <div class="brand">@NeuralProfit · личные тесты</div>
     <h1>Сравнение моделей <em>на живых задачах</em></h1>
-    <p class="lead">Один промпт для всех, одна попытка, без подсказок, все на видео. Баллы считаю по заранее готовому ключу с правильными ответами. Таблица к посту про Qwen4-Max.</p>
+    <p class="lead">Один промпт для всех, одна попытка, без подсказок. Ниже живые дашборды, которые собрала каждая модель: переключай вкладки и сравнивай. Таблица к посту про Qwen4-Max.</p>
     <div class="meta">
       <span class="chip">Обновлено 16 ноября 2026</span>
       <span class="chip">Моделей в таблице: 4</span>
@@ -110,7 +131,16 @@
   <section aria-labelledby="t1">
     <span class="eyebrow">Тест 1 · главный</span>
     <h2 id="t1">Почему продажи растут, а прибыль падает</h2>
-    <p class="task">Я собрала отчеты выдуманного магазина на маркетплейсе за август, сентябрь и октябрь: продажи, возвраты, реклама, остатки, тарифы, себестоимость, акции. <b>7 файлов, больше 3 000 строк, внутри 5 спрятанных причин.</b> Задание: найти причины, посчитать потери, сделать дашборд одним HTML-файлом и письмо, что делать первым. За каждую причину 1 балл, если нашла, и еще 1, если примерно верно посчитала потери. Максимум 10.</p>
+    <details class="tz"><summary>Что за задача и как считаю баллы</summary><p class="task">Я собрала отчеты выдуманного магазина на маркетплейсе за август, сентябрь и октябрь: продажи, возвраты, реклама, остатки, тарифы, себестоимость, акции. <b>7 файлов, больше 3 000 строк, внутри 5 спрятанных причин.</b> Задание: найти причины, посчитать потери, сделать дашборд одним HTML-файлом и письмо, что делать первым. За каждую причину 1 балл, если нашла, и еще 1, если примерно верно посчитала потери. Максимум 10.</p></details>
+    <!-- viewer:start -->
+    <p class="task"><b>Дашборды живые:</b> переключай вкладки и листай прямо тут. Это ровно то, что модель выдала с первой попытки, без правок.</p>
+    <div class="tabs" role="tablist" aria-label="Модели" id="tabs"></div>
+    <div class="viewer">
+      <div class="vmeta" id="vmeta"></div>
+      <iframe id="vframe" title="Дашборд выбранной модели" loading="lazy"></iframe>
+    </div>
+    <h3 class="sub">Сводная таблица</h3>
+    <!-- viewer:end -->
     <div class="table-wrap">
       <table>
         <thead><tr><th>Модель</th><th>Баллы</th><th>Время</th><th>Цена</th><th>Пропажу 1 120 шт.</th><th>Дашборд</th><th>Коротко</th></tr></thead>
@@ -218,5 +248,36 @@
   <footer>Данные магазина и договор выдуманные. Цены API посчитаны по официальным прайсам на день теста, лимиты подписок взяты из кабинетов. Тесты и таблицу веду я, @NeuralProfit.</footer>
 </div>
 
+<!-- viewerjs:start -->
+<script>
+(function () {
+  var MODELS = [{"name": "Qwen4-Max", "file": "qwen4-max.html", "score": "10/10", "time": "20:00", "cost": "бесплатно, 60% недельного лимита", "found": true, "note": "Qwen Studio, режим агента. Прибыль по месяцам совпала с ключом до тысячи. По ходу писал «Что happened за три месяца» и сам исправлял."}, {"name": "Claude Opus 5.5", "file": "opus.html", "score": "10/10", "time": "7:49", "cost": "≈ $2,70 по API", "found": true, "note": "Приложение Claude, агент. Самый быстрый. Завысил цифру потерь в шапке дашборда."}, {"name": "Claude Sonnet 5.5", "file": "sonnet.html", "score": "10/10", "time": "10:44", "cost": "≈ $2,45 по API", "found": true, "note": "Приложение Claude, агент. Самый наглядный: график по неделям и план до кнопок в кабинете."}, {"name": "Kimi K3.1 Pro", "file": "kimi.html", "score": "9,5/10", "time": "≈ 21:00", "cost": "≈ $1,70", "found": false, "note": "Claude Code в терминале, API Moonshot. Стильный дизайн, но не выделила размер S у худи."}];
+  var tabs = document.getElementById('tabs');
+  var meta = document.getElementById('vmeta');
+  var frame = document.getElementById('vframe');
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+  function show(m, btn) {
+    tabs.querySelectorAll('.tab').forEach(function (t) { t.setAttribute('aria-selected', t === btn ? 'true' : 'false'); });
+    meta.textContent = '';
+    meta.appendChild(el('span', 'vname', m.name));
+    var t = el('span', 'vstat'); t.innerHTML = 'время <b></b>'; t.querySelector('b').textContent = m.time; meta.appendChild(t);
+    var c = el('span', 'vstat'); c.innerHTML = 'цена <b></b>'; c.querySelector('b').textContent = m.cost; meta.appendChild(c);
+    meta.appendChild(el('span', 'vstat', m.found ? 'пропажу 1 120 органайзеров нашла' : 'пропажу 1 120 органайзеров не заметила'));
+    meta.appendChild(el('span', 'vscore', m.score));
+    meta.appendChild(el('span', 'vnote', m.note));
+    var o = el('span', 'vopen'); var a = el('a', '', 'Открыть дашборд на весь экран'); a.href = m.file; a.target = '_blank'; a.rel = 'noopener'; o.appendChild(a); meta.appendChild(o);
+    frame.src = m.file;
+  }
+  MODELS.forEach(function (m, i) {
+    var b = el('button', 'tab'); b.type = 'button'; b.setAttribute('role', 'tab');
+    b.appendChild(el('span', '', m.name));
+    b.appendChild(el('small', '', m.score + ' · ' + m.time));
+    b.addEventListener('click', function () { show(m, b); });
+    tabs.appendChild(b);
+    if (i === 0) show(m, b);
+  });
+})();
+</script>
+<!-- viewerjs:end -->
 </body>
 </html>
