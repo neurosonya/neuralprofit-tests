@@ -94,7 +94,7 @@
   details.tz { border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; background: var(--panel); }
   details.tz summary { cursor: pointer; font-weight: 700; }
   details.tz p { margin-top: 10px; }
-  /* viewer:start */
+      /* viewer:start */
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
   .tab { border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 12px; padding: 10px 14px; cursor: pointer; font-family: var(--text); font-size: 15px; font-weight: 700; display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
   .tab small { font-family: var(--mono); font-weight: 500; font-size: 12.5px; color: var(--muted); }
@@ -120,10 +120,10 @@
   <header>
     <div class="brand">@NeuralProfit · личные тесты</div>
     <h1>Сравнение моделей <em>на живых задачах</em></h1>
-    <p class="lead">Один промпт для всех, одна попытка, без подсказок. Ниже живые дашборды, которые собрала каждая модель: переключай вкладки и сравнивай. Таблица к посту про Qwen3.8-Omni-Flash и GPT-6.1 Sol.</p>
+    <p class="lead">Один промпт для всех, одна попытка, без подсказок. Ниже живые дашборды, которые собрала каждая модель: переключай вкладки и сравнивай. Таблица к посту про GPT-6.2 Sol, GPT-6.1 Sol и Qwen3.8-Omni-Flash.</p>
     <div class="meta">
-      <span class="chip">Обновлено 16 ноября 2026</span>
-      <span class="chip">Моделей в таблице: 6</span>
+      <span class="chip">Обновлено 18 ноября 2026</span>
+      <span class="chip">Моделей в таблице: 7</span>
       <span class="chip">Тестов: 2</span>
     </div>
   </header>
@@ -181,8 +181,17 @@
             <td><a href="qwen4-max.html" target="_blank" rel="noopener">открыть</a></td>
             <td class="note">Прибыль по месяцам совпала с ключом до тысячи. Смешивал языки («Что happend») и сам исправлял</td>
           </tr>
+          <tr class="new">
+            <td class="model">GPT-6.2 Sol <span class="badge">новое</span><small>Codex, уровень High, тариф Plus</small></td>
+            <td class="score">10/10</td>
+            <td class="num">13:00</td>
+            <td class="num">1% недели<br><span class="note">6% 5-часового лимита</span></td>
+            <td class="yes">нашел</td>
+            <td><a href="gpt-6.2-sol.html" target="_blank" rel="noopener">открыть</a></td>
+            <td class="note">Прибыль по месяцам до рубля. В письме завысил потерю от скидки на футболку: 802 тыс. вместо примерно 300</td>
+          </tr>
                   <tr class="new">
-            <td class="model">GPT-6.1 Sol <span class="badge">новое</span><small>Codex, уровень High, тариф Pro</small></td>
+            <td class="model">GPT-6.1 Sol <span class="badge">новое</span><small>Codex, уровень High, тариф Plus</small></td>
             <td class="score">10/10</td>
             <td class="num">12:00</td>
             <td class="num">1% недели<br><span class="note">9% 5-часового лимита</span></td>
@@ -203,8 +212,8 @@
       </table>
     </div>
     <div class="facts">
-      <div class="fact"><b>4 из 6</b><span>заметили пропажу 1 120 органайзеров, которую я не прятала</span></div>
-      <div class="fact"><b>12 мин</b><span>GPT-6.1 Sol: третий по скорости после Opus и Sonnet</span></div>
+      <div class="fact"><b>5 из 7</b><span>заметили пропажу 1 120 органайзеров, которую я не прятала</span></div>
+      <div class="fact"><b>12 и 13 мин</b><span>GPT-6.1 Sol и новая GPT-6.2 Sol: по скорости и баллам разницы нет</span></div>
       <div class="fact"><b>0 ₽</b><span>стоили прогоны обеих Qwen на бесплатном тарифе</span></div>
     </div>
     <p class="task">* В чате Qwen Studio у Flash можно прикрепить не больше 5 файлов, поэтому тарифы, себестоимость и акции я сложила в один файл. Данные те же.</p>
@@ -242,11 +251,19 @@
             <td class="yes">0</td>
             <td class="note">Самый быстрый и структурный, добавил лимит ответственности блогера</td>
           </tr>
+          <tr class="new">
+            <td class="model">GPT-6.2 Sol <span class="badge">новое</span><small>Codex, уровень High</small></td>
+            <td class="score">8/8</td>
+            <td class="num">4:00</td>
+            <td class="num">1% недели, Plus</td>
+            <td class="yes">0</td>
+            <td class="note">Самый длинный и «юридический»: к каждому пункту готовая редакция и ссылки на законы</td>
+          </tr>
                   <tr class="new">
             <td class="model">GPT-6.1 Sol <span class="badge">новое</span><small>Codex, уровень High</small></td>
             <td class="score">8/8</td>
             <td class="num">4:00</td>
-            <td class="num">1% недели, Pro</td>
+            <td class="num">1% недели, Plus</td>
             <td class="yes">0</td>
             <td class="note">Со ссылками на законы и расчетом оплаты при отмене кампании</td>
           </tr>
@@ -275,7 +292,7 @@
 <!-- viewerjs:start -->
 <script>
 (function () {
-  var MODELS = [{"name": "GPT-6.1 Sol", "file": "gpt-6.1-sol.html", "score": "10/10", "time": "12:00", "cost": "1% недели, тариф Pro", "found": true, "note": "Codex, уровень High. Прибыль по месяцам и доплату за логистику (346 880 ₽) посчитал до рубля."}, {"name": "Qwen3.8-Omni-Flash", "file": "flash.html", "score": "10/10", "time": "26:00", "cost": "бесплатно, 30% недельного лимита", "found": false, "note": "Qwen Studio, режим агента. Самая медленная, но единственная разобрала, куда ушли деньги со счета: 3,98 млн заморожено в остатках."}, {"name": "Qwen4-Max", "file": "qwen4-max.html", "score": "10/10", "time": "20:00", "cost": "бесплатно, 60% недельного лимита", "found": true, "note": "Qwen Studio, режим агента. Прибыль по месяцам совпала с ключом до тысячи. По ходу писал «Что happened за три месяца» и сам исправлял."}, {"name": "Claude Opus 5.5", "file": "opus.html", "score": "10/10", "time": "7:49", "cost": "≈ $2,70 по API", "found": true, "note": "Приложение Claude, агент. Самый быстрый. Завысил цифру потерь в шапке дашборда."}, {"name": "Claude Sonnet 5.5", "file": "sonnet.html", "score": "10/10", "time": "10:44", "cost": "≈ $2,45 по API", "found": true, "note": "Приложение Claude, агент. Самый наглядный: график по неделям и план до кнопок в кабинете."}, {"name": "Kimi K3.1 Pro", "file": "kimi.html", "score": "9,5/10", "time": "≈ 21:00", "cost": "≈ $1,70", "found": false, "note": "Claude Code в терминале, API Moonshot. Стильный дизайн, но не выделила размер S у худи."}];
+  var MODELS = [{"name": "GPT-6.2 Sol", "file": "gpt-6.2-sol.html", "score": "10/10", "time": "13:00", "cost": "1% недели, тариф Plus", "found": true, "note": "Codex, уровень High. Прибыль по месяцам до рубля. В письме завысил потерю от скидки на футболку: 802 тыс. вместо примерно 300."}, {"name": "GPT-6.1 Sol", "file": "gpt-6.1-sol.html", "score": "10/10", "time": "12:00", "cost": "1% недели, тариф Plus", "found": true, "note": "Codex, уровень High. Прибыль по месяцам и доплату за логистику (346 880 ₽) посчитал до рубля."}, {"name": "Qwen3.8-Omni-Flash", "file": "flash.html", "score": "10/10", "time": "26:00", "cost": "бесплатно, 30% недельного лимита", "found": false, "note": "Qwen Studio, режим агента. Самая медленная, но единственная разобрала, куда ушли деньги со счета: 3,98 млн заморожено в остатках."}, {"name": "Qwen4-Max", "file": "qwen4-max.html", "score": "10/10", "time": "20:00", "cost": "бесплатно, 60% недельного лимита", "found": true, "note": "Qwen Studio, режим агента. Прибыль по месяцам совпала с ключом до тысячи. По ходу писал «Что happened за три месяца» и сам исправлял."}, {"name": "Claude Opus 5.5", "file": "opus.html", "score": "10/10", "time": "7:49", "cost": "≈ $2,70 по API", "found": true, "note": "Приложение Claude, агент. Самый быстрый. Завысил цифру потерь в шапке дашборда."}, {"name": "Claude Sonnet 5.5", "file": "sonnet.html", "score": "10/10", "time": "10:44", "cost": "≈ $2,45 по API", "found": true, "note": "Приложение Claude, агент. Самый наглядный: график по неделям и план до кнопок в кабинете."}, {"name": "Kimi K3.1 Pro", "file": "kimi.html", "score": "9,5/10", "time": "≈ 21:00", "cost": "≈ $1,70", "found": false, "note": "Claude Code в терминале, API Moonshot. Стильный дизайн, но не выделила размер S у худи."}];
   var tabs = document.getElementById('tabs');
   var meta = document.getElementById('vmeta');
   var frame = document.getElementById('vframe');
